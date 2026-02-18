@@ -15,18 +15,17 @@
     --neutral-1000: 9, 9, 9;
 
     /* Brand colors are used across all interactive elements such as buttons, links, inputs, etc. This color can define the overall feel and can elicit emotion. */
-    /* Fyndiq-ish: strong blue brand */
-    --brand-25: 245, 250, 255;
-    --brand-50: 235, 244, 255;
-    --brand-100: 204, 228, 255;
-    --brand-200: 173, 211, 255;
-    --brand-300: 148, 198, 255;
-    --brand-400: 112, 179, 255;
-    --brand-500: 77, 160, 255;
-    --brand-600: 44, 138, 245;
-    --brand-700: 12, 102, 204;
-    --brand-800: 0, 67, 143;
-    --brand-900: 0, 45, 120;
+    --brand-25: 247, 247, 247;
+    --brand-50: 238, 238, 238;
+    --brand-100: 226, 226, 226;
+    --brand-200: 198, 198, 198;
+    --brand-300: 163, 163, 163;
+    --brand-400: 115, 115, 115;
+    --brand-500: 82, 82, 82;
+    --brand-600: 64, 64, 64;
+    --brand-700: 27, 27, 27;
+    --brand-800: 22, 22, 22;
+    --brand-900: 9, 9, 9;
     
     /* Red colors are used across error states and in "destructive" actions. */
     --red-25: 254, 243, 242;
