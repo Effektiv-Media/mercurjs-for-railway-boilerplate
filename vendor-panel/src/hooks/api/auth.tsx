@@ -16,6 +16,18 @@ export const useSignInWithEmailPass = (
   return useMutation({
     mutationFn: (payload) => sdk.auth.login("seller", "emailpass", payload),
     onSuccess: async (data, variables, context) => {
+      // Vendor API calls in this panel use a Bearer token from localStorage.
+      // Medusa SDK login can return a token string (emailpass) or a redirect location (OAuth-like flows).
+      try {
+        if (typeof data === "string" && data.length) {
+          window.localStorage.setItem("medusa_auth_token", data)
+        } else if ((data as any)?.token) {
+          window.localStorage.setItem("medusa_auth_token", String((data as any).token))
+        }
+      } catch {
+        // ignore storage errors
+      }
+
       options?.onSuccess?.(data, variables, context)
     },
     ...options,
