@@ -7,6 +7,7 @@ import { BlogSection } from "./BlogSection/BlogSection"
 import { ProductListing } from "./ProductListing/ProductListing"
 import { SellerPageHeader } from "./SellerPageHeader/SellerPageHeader"
 import { Cart } from "./Cart/Cart"
+import { TrustStrip } from "./TrustStrip/TrustStrip"
 import { WishlistPage } from "./WishlistPage/WishlistPage"
 import { ProductDetailsPage } from "./ProductDetailsPage/ProductDetailsPage"
 import { AlgoliaProductsListing } from "./ProductListing/AlgoliaProductsListing"
@@ -22,6 +23,7 @@ export {
   ProductListing,
   SellerPageHeader,
   Cart,
+  TrustStrip,
   WishlistPage,
   ProductDetailsPage,
   AlgoliaProductsListing,

@@ -1,4 +1,4 @@
-import { HomeProductsCarousel } from "@/components/organisms"
+import { HomeProductsGrid } from "@/components/organisms"
 import { Product } from "@/types/product"
 
 export const HomeProductSection = async ({
@@ -17,9 +17,11 @@ export const HomeProductSection = async ({
       <h2 className="mb-6 heading-lg font-bold tracking-tight uppercase">
         {heading}
       </h2>
-      <HomeProductsCarousel
+      {/* Deal-driven storefront: dense grid is default */}
+      <HomeProductsGrid
         locale={locale}
-        sellerProducts={products.slice(0, 4)}
+        sellerProducts={products}
+        limit={24}
         home={home}
       />
     </section>

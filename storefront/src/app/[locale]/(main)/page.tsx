@@ -5,6 +5,7 @@ import {
   HomeCategories,
   HomeProductSection,
   ShopByStyleSection,
+  TrustStrip,
 } from "@/components/sections"
 
 import type { Metadata } from "next"
@@ -12,6 +13,7 @@ import { headers } from "next/headers"
 import Script from "next/script"
 import { listRegions } from "@/lib/data/regions"
 import { toHreflang } from "@/lib/helpers/hreflang"
+import { getCopy } from "@/const/copy"
 
 export async function generateMetadata({
   params,
@@ -48,9 +50,10 @@ export async function generateMetadata({
     languages = { [toHreflang(locale)]: `${baseUrl}/${locale}` }
   }
 
-  const title = "Home"
-  const description =
-    "Welcome to Mercur B2C Demo! Create a modern marketplace that you own and customize in every aspect with high-performance, fully customizable storefront."
+  const copy = getCopy(locale)
+
+  const title = copy.home.seo.title
+  const description = copy.home.seo.description
   const ogImage = "/B2C_Storefront_Open_Graph.png"
   const canonical = `${baseUrl}/${locale}`
 
@@ -122,6 +125,8 @@ export default async function Home({
     process.env.NEXT_PUBLIC_SITE_NAME ||
     "Mercur B2C Demo - Marketplace Storefront"
 
+  const copy = getCopy(locale)
+
   return (
     <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start text-primary">
       <link
@@ -162,23 +167,28 @@ export default async function Home({
 
       <Hero
         image="/images/hero/Image.jpg"
-        heading="Snag your style in a flash"
-        paragraph="Buy, sell, and discover pre-loved gems from the trendiest brands."
+        heading={copy.home.hero.heading}
+        paragraph={copy.home.hero.paragraph}
         buttons={[
-          { label: "Buy now", path: "/categories" },
+          { label: copy.home.hero.buttons.buy, path: "/categories" },
           {
-            label: "Sell now",
+            label: copy.home.hero.buttons.sell,
             path:
               process.env.NEXT_PUBLIC_VENDOR_URL ||
               "https://vendor.mercurjs.com",
           },
         ]}
       />
+
       <div className="px-4 lg:px-8 w-full">
-        <HomeProductSection heading="trending listings" locale={locale} home />
+        <TrustStrip items={copy.home.trustStrip.items} />
+      </div>
+
+      <div className="px-4 lg:px-8 w-full">
+        <HomeProductSection heading={copy.home.sections.trending} locale={locale} home />
       </div>
       <div className="px-4 lg:px-8 w-full">
-        <HomeCategories heading="SHOP BY CATEGORY" />
+        <HomeCategories heading={copy.home.sections.categories} />
       </div>
       <BannerSection />
       <ShopByStyleSection />

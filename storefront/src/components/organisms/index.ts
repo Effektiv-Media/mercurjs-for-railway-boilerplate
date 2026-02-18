@@ -17,6 +17,7 @@ import { CartSummary } from "./CartSummary/CartSummary"
 import { CartItems } from "./CartItems/CartItems"
 import { WishlistTabs } from "./WishlistTabs/WishlistTabs"
 import { HomeProductsCarousel } from "./HomeProductsCarousel/HomeProductsCarousel"
+import { HomeProductsGrid } from "./HomeProductsGrid/HomeProductsGrid"
 import { ProductGallery } from "./ProductGallery/ProductGallery"
 import { ProductDetails } from "./ProductDetails/ProductDetails"
 import { AlgoliaProductSidebar } from "./ProductSidebar/AlgoliaProductSidebar"
@@ -45,6 +46,7 @@ export {
   CartItems,
   WishlistTabs,
   HomeProductsCarousel,
+  HomeProductsGrid,
   ProductGallery,
   ProductDetails,
   AlgoliaProductSidebar,

@@ -16,16 +16,10 @@ export const ProductListingSkeleton = () => {
           <div className='rounded-sm bg-secondary h-80 border border-white animate-pulse' />
         </div>
         <div className='col-span-3'>
-          <div className='grid sm:grid-cols-2 xl:grid-cols-3'>
-            <div className='rounded-sm bg-secondary h-[600px] border border-white animate-pulse' />
-            <div className='rounded-sm bg-secondary h-[600px] border border-white animate-pulse' />
-            <div className='rounded-sm bg-secondary h-[600px] border border-white animate-pulse' />
-            <div className='rounded-sm bg-secondary h-[600px] border border-white animate-pulse' />
-            <div className='rounded-sm bg-secondary h-[600px] border border-white animate-pulse' />
-            <div className='rounded-sm bg-secondary h-[600px] border border-white animate-pulse' />
-            <div className='rounded-sm bg-secondary h-[600px] border border-white animate-pulse' />
-            <div className='rounded-sm bg-secondary h-[600px] border border-white animate-pulse' />
-            <div className='rounded-sm bg-secondary h-[600px] border border-white animate-pulse' />
+          <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-2 sm:gap-3'>
+            {Array.from({ length: 14 }).map((_, i) => (
+              <div key={i} className='rounded-sm bg-secondary aspect-[3/4] border border-white animate-pulse' />
+            ))}
           </div>
         </div>
       </div>
