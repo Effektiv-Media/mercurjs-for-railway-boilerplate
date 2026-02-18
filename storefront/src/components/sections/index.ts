@@ -8,6 +8,7 @@ import { ProductListing } from "./ProductListing/ProductListing"
 import { SellerPageHeader } from "./SellerPageHeader/SellerPageHeader"
 import { Cart } from "./Cart/Cart"
 import { TrustStrip } from "./TrustStrip/TrustStrip"
+import { DealQuickLinks } from "./DealQuickLinks/DealQuickLinks"
 import { WishlistPage } from "./WishlistPage/WishlistPage"
 import { ProductDetailsPage } from "./ProductDetailsPage/ProductDetailsPage"
 import { AlgoliaProductsListing } from "./ProductListing/AlgoliaProductsListing"
@@ -24,6 +25,7 @@ export {
   SellerPageHeader,
   Cart,
   TrustStrip,
+  DealQuickLinks,
   WishlistPage,
   ProductDetailsPage,
   AlgoliaProductsListing,

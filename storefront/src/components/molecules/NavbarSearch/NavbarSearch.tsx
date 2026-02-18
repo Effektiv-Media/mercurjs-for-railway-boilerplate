@@ -6,7 +6,11 @@ import { useSearchParams } from "next/navigation"
 import { useState } from "react"
 import { redirect } from "next/navigation"
 
-export const NavbarSearch = () => {
+export const NavbarSearch = ({
+  placeholder = "Sök efter produkter",
+}: {
+  placeholder?: string
+}) => {
   const searchParams = useSearchParams()
 
   const [search, setSearch] = useState(searchParams.get("query") || "")
@@ -24,7 +28,7 @@ export const NavbarSearch = () => {
     <form className="flex items-center" method="POST" onSubmit={submitHandler}>
       <Input
         icon={<SearchIcon />}
-        placeholder="Search product"
+        placeholder={placeholder}
         value={search}
         changeValue={setSearch}
       />

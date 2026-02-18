@@ -6,6 +6,7 @@ import {
   HomeProductSection,
   ShopByStyleSection,
   TrustStrip,
+  DealQuickLinks,
 } from "@/components/sections"
 
 import type { Metadata } from "next"
@@ -182,6 +183,10 @@ export default async function Home({
 
       <div className="px-4 lg:px-8 w-full">
         <TrustStrip items={copy.home.trustStrip.items} />
+      </div>
+
+      <div className="px-4 lg:px-8 w-full">
+        <DealQuickLinks />
       </div>
 
       <div className="px-4 lg:px-8 w-full">
