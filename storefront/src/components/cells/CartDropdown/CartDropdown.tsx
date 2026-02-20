@@ -16,7 +16,7 @@ const getItemCount = (cart: HttpTypes.StoreCart | null) => {
   return cart?.items?.reduce((acc, item) => acc + item.quantity, 0) || 0
 }
 
-export const CartDropdown = () => {
+export const CartDropdown = ({ iconColor = "#090909" }: { iconColor?: string }) => {
   const { cart } = useCartContext()
   const [open, setOpen] = useState(false)
 
@@ -78,7 +78,7 @@ export const CartDropdown = () => {
         className="relative"
         aria-label="Go to cart"
       >
-        <CartIcon size={20} />
+        <CartIcon size={20} color={iconColor} />
         {Boolean(cartItemsCount) && (
           <Badge className="absolute -top-2 -right-2 w-4 h-4 p-0">
             {cartItemsCount}

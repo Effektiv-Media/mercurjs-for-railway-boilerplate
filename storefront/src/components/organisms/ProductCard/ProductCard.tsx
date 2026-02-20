@@ -33,12 +33,12 @@ export const ProductCard = ({
   return (
     <div
       className={clsx(
-        "relative group border rounded-sm flex flex-col h-full bg-white",
-        "p-2 sm:p-3",
+        "relative group border border-slate-200 rounded-2xl flex flex-col h-full bg-white shadow-[0_1px_2px_rgba(15,23,42,0.04)] hover:shadow-[0_16px_30px_rgba(2,132,199,0.16)] transition-shadow duration-200",
+        "p-2.5 sm:p-3",
         className
       )}
     >
-      <div className="relative w-full bg-primary aspect-square">
+      <div className="relative w-full bg-slate-100 aspect-square rounded-xl overflow-hidden">
         <LocalizedClientLink
           href={`/products/${product.handle}`}
           aria-label={`View ${productName}`}
@@ -54,7 +54,7 @@ export const ProductCard = ({
                 width={400}
                 height={400}
                 sizes="(min-width: 1536px) 14vw, (min-width: 1280px) 16vw, (min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
-                className="object-cover aspect-square w-full object-center h-full transition-all duration-300"
+                className="object-cover aspect-square w-full object-center h-full transition-transform duration-300 group-hover:scale-[1.03]"
               />
             ) : (
               <Image
@@ -69,11 +69,10 @@ export const ProductCard = ({
             )}
           </div>
 
-          {/* Deal badge */}
           {isDiscount ? (
             <div className="absolute top-2 left-2 z-10">
-              <span className="inline-flex items-center rounded-full bg-red-600 text-white text-xs font-semibold px-2 py-0.5">
-                -{cheapestPrice?.percentage_diff}%
+              <span className="inline-flex items-center rounded-full bg-rose-500 text-white text-xs font-bold px-2.5 py-1 shadow-sm">
+                SPARA {cheapestPrice?.percentage_diff}%
               </span>
             </div>
           ) : null}
@@ -83,8 +82,8 @@ export const ProductCard = ({
           aria-label={`See more about ${productName}`}
           title={`See more about ${productName}`}
         >
-          <Button className="absolute rounded-sm bg-action text-action-on-primary h-auto lg:h-[48px] lg:group-hover:block hidden w-full uppercase bottom-1 z-10">
-            See More
+          <Button className="absolute rounded-full bg-cyan-600 text-white h-auto lg:h-[40px] lg:group-hover:block hidden w-[calc(100%-12px)] uppercase bottom-2 left-1.5 z-10 text-sm">
+            Kop nu
           </Button>
         </LocalizedClientLink>
       </div>
@@ -99,7 +98,7 @@ export const ProductCard = ({
               {product.title}
             </h3>
             <div className="flex items-baseline gap-2 mt-2">
-              <p className="text-[16px] leading-5 font-semibold">
+              <p className="text-[21px] leading-5 font-extrabold text-slate-900">
                 {cheapestPrice?.calculated_price}
               </p>
               {isDiscount ? (

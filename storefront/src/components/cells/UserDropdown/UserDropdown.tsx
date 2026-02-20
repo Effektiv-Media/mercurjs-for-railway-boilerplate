@@ -15,8 +15,10 @@ import { useState } from "react"
 
 export const UserDropdown = ({
   user,
+  iconColor = "#090909",
 }: {
   user: HttpTypes.StoreCustomer | null
+  iconColor?: string
 }) => {
   const [open, setOpen] = useState(false)
 
@@ -34,7 +36,7 @@ export const UserDropdown = ({
         className="relative"
         aria-label="Go to user profile"
       >
-        <ProfileIcon size={20} />
+        <ProfileIcon size={20} color={iconColor} />
       </LocalizedClientLink>
       <Dropdown show={open}>
         {user ? (

@@ -129,7 +129,7 @@ export default async function Home({
   const copy = getCopy(locale)
 
   return (
-    <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start text-primary">
+    <main className="flex flex-col gap-7 row-start-2 items-center sm:items-start text-primary bg-gradient-to-b from-sky-50/60 via-slate-50 to-slate-100 pb-10">
       <link
         rel="preload"
         as="image"
@@ -181,7 +181,7 @@ export default async function Home({
         ]}
       />
 
-      <div className="px-4 lg:px-8 w-full">
+      <div className="px-4 lg:px-8 w-full mt-1">
         <TrustStrip items={copy.home.trustStrip.items} />
       </div>
 
@@ -190,9 +190,13 @@ export default async function Home({
       </div>
 
       <div className="px-4 lg:px-8 w-full">
-        <HomeProductSection heading={copy.home.sections.trending} locale={locale} home />
+        <HomeProductSection
+          heading={copy.home.sections.trending}
+          locale={locale}
+          home
+        />
       </div>
-      <div className="px-4 lg:px-8 w-full">
+      <div className="px-4 lg:px-8 w-full bg-white rounded-2xl shadow-[0_1px_2px_rgba(15,23,42,0.05)]">
         <HomeCategories heading={copy.home.sections.categories} />
       </div>
       <BannerSection />

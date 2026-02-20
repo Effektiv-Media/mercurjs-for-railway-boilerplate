@@ -2,7 +2,6 @@
 import { HttpTypes } from "@medusajs/types"
 import LocalizedClientLink from "@/components/molecules/LocalizedLink/LocalizedLink"
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/atoms"
 
 export const HeaderCategoryNavbar = ({
   categories,
@@ -12,15 +11,17 @@ export const HeaderCategoryNavbar = ({
   onClose?: (state: boolean) => void
 }) => {
   return (
-    <nav className="flex items-center flex-col p-1 gap-1">
+    <nav className="flex items-center flex-col gap-1">
       {categories?.map(({ id, handle, name }) => (
         <LocalizedClientLink
           key={id}
           href={`/categories/${handle}`}
           onClick={() => (onClose ? onClose(false) : null)}
-          className={cn("label-md uppercase w-full")}
+          className={cn(
+            "label-md w-full rounded-lg px-3 py-2 text-white/95 hover:bg-white/15 transition-colors"
+          )}
         >
-          <Button className="w-full rounded-sm">{name}</Button>
+          {name}
         </LocalizedClientLink>
       ))}
     </nav>

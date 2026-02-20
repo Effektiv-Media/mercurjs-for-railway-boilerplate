@@ -1,22 +1,23 @@
 const links = {
   customerServices: [
-    { label: 'FAQs', path: '#' },
-    { label: 'Track Order', path: '#' },
-    { label: 'Returns', path: '#' },
-    { label: 'Delivery', path: '#' },
-    { label: 'Payment', path: '#' },
+    { label: "Vanliga fragor", path: "/om-oss" },
+    { label: "Spar order", path: "/user/orders" },
+    { label: "Returer", path: "/user/returns" },
+    { label: "Leverans", path: "/kontakt" },
+    { label: "Betalning", path: "/kontakt" },
   ],
   about: [
-    { label: 'About us', path: '#' },
-    { label: 'Blog', path: '#' },
-    { label: 'Privacy Policy', path: '#' },
-    { label: 'Terms & Conditions', path: '#' },
+    { label: "Om oss", path: "/om-oss" },
+    { label: "Kontakt", path: "/kontakt" },
+    { label: "Blogg", path: "/" },
+    { label: "Integritetspolicy", path: "/om-oss" },
+    { label: "Kopvillkor", path: "/om-oss" },
   ],
   connect: [
-    { label: 'Facebook', path: 'https://facebook.com' },
-    { label: 'Instagram', path: 'https://instagram.com' },
-    { label: 'LinekdIn', path: 'https://linkedin.com' },
+    { label: "Facebook", path: "https://facebook.com" },
+    { label: "Instagram", path: "https://instagram.com" },
+    { label: "LinkedIn", path: "https://linkedin.com" },
   ],
-};
+}
 
-export default links;
+export default links

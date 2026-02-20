@@ -7,7 +7,7 @@ import { useState } from "react"
 import { redirect } from "next/navigation"
 
 export const NavbarSearch = ({
-  placeholder = "Sök efter produkter",
+  placeholder = "Sök på Clickfynd",
 }: {
   placeholder?: string
 }) => {
@@ -25,12 +25,17 @@ export const NavbarSearch = ({
   }
 
   return (
-    <form className="flex items-center" method="POST" onSubmit={submitHandler}>
+    <form
+      className="flex items-center w-full"
+      method="POST"
+      onSubmit={submitHandler}
+    >
       <Input
         icon={<SearchIcon />}
         placeholder={placeholder}
         value={search}
         changeValue={setSearch}
+        className="w-full rounded-full border-sky-300 bg-sky-50 text-center text-lg font-medium text-slate-900 placeholder:text-slate-500 focus:border-sky-500"
       />
       <input type="submit" className="hidden" />
     </form>
