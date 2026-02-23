@@ -47,7 +47,7 @@ export function Input({
   }
 
   return (
-    <label className="label-md">
+    <label className="label-md block w-full">
       {label}
       <div className="relative mt-2">
         {icon && (

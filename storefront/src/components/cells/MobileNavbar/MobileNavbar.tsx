@@ -54,7 +54,7 @@ export const MobileNavbar = ({
                 onClick={closeMenuHandler}
                 aria-label="Close menu overlay"
               />
-              <aside className="absolute left-0 top-0 h-full w-[86%] max-w-[360px] bg-sky-700 text-white shadow-xl px-4 py-5 overflow-y-auto">
+              <aside className="absolute left-0 top-0 h-full w-[86%] max-w-[360px] bg-gradient-to-b from-violet-800 to-fuchsia-800 text-white shadow-xl px-4 py-5 overflow-y-auto">
                 <div className="flex items-center justify-between">
                   <p className="text-sm font-semibold uppercase tracking-[0.12em] text-white/80">
                     Meny
@@ -75,9 +75,9 @@ export const MobileNavbar = ({
                   href={process.env.NEXT_PUBLIC_VENDOR_URL || "https://vendor.mercurjs.com"}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-white px-4 py-2 text-sm font-semibold text-sky-800"
+                  className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-white px-4 py-2 text-sm font-semibold text-fuchsia-800"
                 >
-                  Salj med oss
+                  Bli saljare
                 </a>
                 <div className="mt-5">
                   <HeaderCategoryNavbar

@@ -9,11 +9,13 @@ export const HomeProductsGrid = async ({
   sellerProducts = [],
   limit = 24,
   home = false,
+  minTiles = 0,
 }: {
   locale: string
   sellerProducts?: Product[]
   limit?: number
   home?: boolean
+  minTiles?: number
 }) => {
   const {
     response: { products },
@@ -33,9 +35,14 @@ export const HomeProductsGrid = async ({
 
   if (!items.length) return null
 
+  const repeatedItems =
+    minTiles > 0 && items.length < minTiles
+      ? Array.from({ length: minTiles }, (_, idx) => items[idx % items.length])
+      : items
+
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-2 sm:gap-3">
-      {items.map((product) => {
+      {repeatedItems.map((product, index) => {
         const apiProduct = home
           ? (product as HttpTypes.StoreProduct)
           : products.find((p) => {
@@ -49,7 +56,7 @@ export const HomeProductsGrid = async ({
 
         return (
           <ProductCard
-            key={product.id}
+            key={`${product.id}-${index}`}
             product={product}
             api_product={apiProduct}
           />

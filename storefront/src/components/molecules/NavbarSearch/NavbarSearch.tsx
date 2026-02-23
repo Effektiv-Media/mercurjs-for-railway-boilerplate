@@ -35,7 +35,7 @@ export const NavbarSearch = ({
         placeholder={placeholder}
         value={search}
         changeValue={setSearch}
-        className="w-full rounded-full border-sky-300 bg-sky-50 text-center text-lg font-medium text-slate-900 placeholder:text-slate-500 focus:border-sky-500"
+        className="w-full rounded-full border-fuchsia-200 bg-fuchsia-50/60 text-center text-lg font-medium text-slate-900 placeholder:text-slate-500 focus:border-violet-300"
       />
       <input type="submit" className="hidden" />
     </form>

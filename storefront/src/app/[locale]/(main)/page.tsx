@@ -194,10 +194,33 @@ export default async function Home({
           heading={copy.home.sections.trending}
           locale={locale}
           home
+          badge="Populart"
+          minTiles={12}
         />
       </div>
-      <div className="px-4 lg:px-8 w-full bg-white rounded-2xl shadow-[0_1px_2px_rgba(15,23,42,0.05)]">
+
+      <div className="px-4 lg:px-8 w-full">
+        <HomeProductSection
+          heading="Nyinkommet"
+          locale={locale}
+          home
+          badge="Nya produkter"
+          minTiles={12}
+        />
+      </div>
+
+      <div className="px-4 lg:px-8 w-full">
         <HomeCategories heading={copy.home.sections.categories} />
+      </div>
+
+      <div className="px-4 lg:px-8 w-full">
+        <HomeProductSection
+          heading="Fler fynd just nu"
+          locale={locale}
+          home
+          badge="Prisvarda val"
+          minTiles={14}
+        />
       </div>
       <BannerSection />
       <ShopByStyleSection />

@@ -33,31 +33,33 @@ export const styles: Style[] = [
 
 export function ShopByStyleSection() {
   return (
-    <section className="bg-primary container">
-      <h2 className="heading-lg text-primary mb-12">SHOP BY STYLE</h2>
-      <div className="grid grid-cols-1 lg:grid-cols-2 items-center">
-        <div className="py-[52px] px-[58px] h-full border rounded-sm">
+    <section className="container">
+      <div className="rounded-3xl border border-slate-200 bg-white px-6 py-7 md:px-8 shadow-[0_10px_24px_rgba(15,23,42,0.05)]">
+        <h2 className="heading-lg text-slate-900 mb-8">SHOP BY STYLE</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-5">
+          <div className="py-3 md:py-6 md:px-3 h-full">
           {styles.map((style) => (
             <LocalizedClientLink
               key={style.id}
               href={style.href}
-              className="group flex items-center gap-4 text-primary hover:text-action transition-colors border-b border-transparent hover:border-primary w-fit pb-2 mb-8"
+              className="group flex items-center gap-4 text-slate-700 hover:text-sky-700 transition-colors w-fit pb-2 mb-5"
             >
               <span className="heading-lg">{style.name}</span>
               <ArrowRightIcon className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
             </LocalizedClientLink>
           ))}
-        </div>
-        <div className="relative hidden lg:block">
-          <Image
-            loading="lazy"
-            fetchPriority="high"
-            src="/images/shop-by-styles/Image.jpg"
-            alt="Models showcasing luxury fashion styles"
-            width={700}
-            height={600}
-            className="object-cover rounded-sm w-full h-auto"
-          />
+          </div>
+          <div className="relative hidden lg:block rounded-2xl overflow-hidden border border-slate-200">
+            <Image
+              loading="lazy"
+              fetchPriority="high"
+              src="/images/shop-by-styles/Image.jpg"
+              alt="Models showcasing luxury fashion styles"
+              width={700}
+              height={600}
+              className="object-cover w-full h-auto"
+            />
+          </div>
         </div>
       </div>
     </section>

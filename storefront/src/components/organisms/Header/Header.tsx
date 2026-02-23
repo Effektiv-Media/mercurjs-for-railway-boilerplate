@@ -38,56 +38,48 @@ export const Header = async () => {
   }
 
   return (
-    <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur-sm text-slate-900">
-      <div className="px-4 lg:px-8 pt-3 pb-2">
-        <div className="mx-auto max-w-[1320px] rounded-2xl border border-sky-100 bg-gradient-to-r from-sky-50/70 via-white to-cyan-50/50 shadow-[0_10px_30px_rgba(15,23,42,0.09)] ring-1 ring-slate-100">
-          <div className="flex py-3 px-3 lg:px-5 items-center min-h-[76px] gap-3">
-            <div className="flex items-center gap-3 shrink-0 lg:w-[260px]">
+    <header className="sticky top-0 z-30 border-b border-slate-200/70 bg-white/80 text-slate-900 backdrop-blur-md supports-[backdrop-filter]:bg-white/70">
+      <div className="px-3 sm:px-4 lg:px-8 py-3">
+        <div className="mx-auto max-w-[1320px] rounded-2xl border border-slate-200 bg-gradient-to-r from-white via-white to-slate-50 shadow-sm">
+          <div className="flex flex-wrap px-3 py-2.5 lg:px-5 lg:py-3 items-center min-h-[72px] gap-x-3 gap-y-2">
+            {/* Logo + hamburger */}
+            <div className="flex items-center gap-3 shrink-0">
               <MobileNavbar
                 parentCategories={parentCategories}
                 childrenCategories={categories}
               />
-              <div className="hidden lg:flex items-center">
-                <LocalizedClientLink href="/" className="text-2xl font-bold">
-                  <Image
-                    src="/Logo.svg"
-                    width={104}
-                    height={36}
-                    alt="Clickfynd logo"
-                    priority
-                  />
-                </LocalizedClientLink>
-              </div>
-            </div>
-            <div className="flex lg:hidden items-center">
               <LocalizedClientLink href="/" className="text-2xl font-bold">
                 <Image
                   src="/Logo.svg"
-                  width={98}
-                  height={32}
+                  width={104}
+                  height={36}
                   alt="Clickfynd logo"
                   priority
                 />
               </LocalizedClientLink>
             </div>
-            <div className="hidden lg:block flex-1 mx-auto">
+
+            {/* Desktop search – grows to fill available space */}
+            <div className="hidden lg:block flex-1">
               <NavbarSearch />
             </div>
-            <div className="flex items-center justify-end gap-2 lg:gap-4 w-full lg:w-[420px] py-2 text-slate-800">
+
+            {/* Right actions */}
+            <div className="flex items-center gap-1.5 sm:gap-2 lg:gap-4 ml-auto shrink-0 py-1 text-slate-900">
               <a
                 href={sellerCtaHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden lg:inline-flex rounded-full bg-sky-700 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-800"
+                className="hidden lg:inline-flex h-10 items-center whitespace-nowrap rounded-full border border-fuchsia-200 bg-white/90 px-4 text-sm font-semibold text-fuchsia-800 transition-colors hover:bg-fuchsia-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-300 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
               >
-                Salj med oss
+                Bli säljare
               </a>
               <div className="hidden md:block">
                 <CountrySelector regions={regions} />
               </div>
               <LocalizedClientLink
                 href="/kontakt"
-                className="hidden xl:block rounded-full border border-slate-300 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.06em] hover:bg-slate-100"
+                className="hidden xl:inline-flex h-10 items-center rounded-full border border-slate-300 bg-white/70 px-3 text-xs font-semibold uppercase tracking-[0.06em] transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
               >
                 Support
               </LocalizedClientLink>
@@ -100,7 +92,7 @@ export const Header = async () => {
               {user && (
                 <LocalizedClientLink
                   href="/user/wishlist"
-                  className="relative text-slate-900 hidden sm:block"
+                  className="relative hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 >
                   <HeartIcon size={20} color="#0f172a" />
                   {Boolean(wishlistCount) && (
@@ -110,9 +102,10 @@ export const Header = async () => {
                   )}
                 </LocalizedClientLink>
               )}
-
               <CartDropdown iconColor="#0f172a" />
             </div>
+
+
           </div>
         </div>
       </div>

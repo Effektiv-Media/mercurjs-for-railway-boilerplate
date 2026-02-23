@@ -2,7 +2,6 @@ import Image from "next/image"
 import LocalizedClientLink from "@/components/molecules/LocalizedLink/LocalizedLink"
 import { BlogPost } from "@/types/blog"
 import { ArrowRightIcon } from "@/icons"
-import tailwindConfig from "../../../../tailwind.config"
 import { cn } from "@/lib/utils"
 
 interface BlogCardProps {
@@ -15,11 +14,10 @@ export function BlogCard({ post, index }: BlogCardProps) {
     <LocalizedClientLink
       href={post.href}
       className={cn(
-        "group block border border-secondary p-1 rounded-sm relative",
-        index > 0 && "hidden lg:block"
+        "group block border border-slate-200 rounded-2xl relative overflow-hidden bg-white hover:shadow-md transition-shadow"
       )}
     >
-      <div className="relative overflow-hidden rounded-xs h-full">
+      <div className="relative overflow-hidden h-full">
         <Image
           loading="lazy"
           sizes="(min-width: 1024px) 33vw, 100vw"
@@ -27,18 +25,18 @@ export function BlogCard({ post, index }: BlogCardProps) {
           alt={post.title}
           width={467}
           height={472}
-          className="object-cover max-h-[472px] h-full w-full"
+          className="object-cover max-h-[320px] md:max-h-[360px] h-full w-full transition-transform duration-300 group-hover:scale-[1.03]"
         />
       </div>
-      <div className="p-4 bg-tertiary text-tertiary absolute bottom-0 left-1 lg:opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-b-xs w-[calc(100%-8px)]">
-        <h3 className="heading-sm">{post.title}</h3>
-        <p className="text-md line-clamp-2">{post.excerpt}</p>
-        <div className="flex items-center gap-4 uppercase label-md mt-[26px]">
-          Read more{" "}
-          <ArrowRightIcon
-            size={20}
-            color={tailwindConfig.theme.extend.colors.tertiary}
-          />
+      <div className="p-4">
+        <p className="text-xs font-semibold tracking-[0.08em] text-sky-700 uppercase">
+          {post.category}
+        </p>
+        <h3 className="heading-sm text-slate-900 mt-1">{post.title}</h3>
+        <p className="text-md text-slate-600 line-clamp-2 mt-1">{post.excerpt}</p>
+        <div className="flex items-center gap-2 uppercase label-md mt-4 text-slate-900">
+          Read more
+          <ArrowRightIcon size={18} color="#0f172a" />
         </div>
       </div>
     </LocalizedClientLink>
