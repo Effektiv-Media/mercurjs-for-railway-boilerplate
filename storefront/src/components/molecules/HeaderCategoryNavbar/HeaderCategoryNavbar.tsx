@@ -18,7 +18,7 @@ export const HeaderCategoryNavbar = ({
           href={`/categories/${handle}`}
           onClick={() => (onClose ? onClose(false) : null)}
           className={cn(
-            "label-md w-full rounded-lg px-3 py-2 text-white/95 hover:bg-white/15 transition-colors"
+            "label-md w-full rounded-lg px-3 py-2 text-slate-700 hover:bg-slate-100 transition-colors"
           )}
         >
           {name}

@@ -38,10 +38,10 @@ export const Header = async () => {
   }
 
   return (
-    <header className="sticky top-0 z-30 border-b border-slate-200/70 bg-white/80 text-slate-900 backdrop-blur-md supports-[backdrop-filter]:bg-white/70">
-      <div className="px-3 sm:px-4 lg:px-8 py-3">
-        <div className="mx-auto max-w-[1320px] rounded-2xl border border-slate-200 bg-gradient-to-r from-white via-white to-slate-50 shadow-sm">
-          <div className="flex flex-wrap px-3 py-2.5 lg:px-5 lg:py-3 items-center min-h-[72px] gap-x-3 gap-y-2">
+    <header className="sticky top-0 z-30 bg-white text-slate-900 shadow-[0_1px_3px_rgba(15,23,42,0.08)]">
+      <div className="border-b border-slate-200">
+        <div className="mx-auto max-w-[1320px] px-4 lg:px-8">
+          <div className="flex flex-wrap items-center min-h-[68px] gap-x-3 gap-y-2 py-3">
             {/* Logo + hamburger */}
             <div className="flex items-center gap-3 shrink-0">
               <MobileNavbar
@@ -70,7 +70,7 @@ export const Header = async () => {
                 href={sellerCtaHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden lg:inline-flex h-10 items-center whitespace-nowrap rounded-full border border-fuchsia-200 bg-white/90 px-4 text-sm font-semibold text-fuchsia-800 transition-colors hover:bg-fuchsia-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-300 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                className="hidden lg:inline-flex h-10 items-center whitespace-nowrap rounded-full border border-fuchsia-200 bg-white px-4 text-sm font-semibold text-fuchsia-800 transition-colors hover:bg-fuchsia-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-300 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
               >
                 Bli säljare
               </a>
@@ -79,7 +79,7 @@ export const Header = async () => {
               </div>
               <LocalizedClientLink
                 href="/kontakt"
-                className="hidden xl:inline-flex h-10 items-center rounded-full border border-slate-300 bg-white/70 px-3 text-xs font-semibold uppercase tracking-[0.06em] transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                className="hidden xl:inline-flex h-10 items-center rounded-full border border-slate-300 bg-white px-3 text-xs font-semibold uppercase tracking-[0.06em] transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
               >
                 Support
               </LocalizedClientLink>

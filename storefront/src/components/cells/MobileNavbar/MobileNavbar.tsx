@@ -54,18 +54,18 @@ export const MobileNavbar = ({
                 onClick={closeMenuHandler}
                 aria-label="Close menu overlay"
               />
-              <aside className="absolute left-0 top-0 h-full w-[86%] max-w-[360px] bg-gradient-to-b from-violet-800 to-fuchsia-800 text-white shadow-xl px-4 py-5 overflow-y-auto">
+              <aside className="absolute left-0 top-0 h-full w-[86%] max-w-[360px] bg-white text-slate-900 shadow-xl px-4 py-5 overflow-y-auto border-r border-slate-200">
                 <div className="flex items-center justify-between">
-                  <p className="text-sm font-semibold uppercase tracking-[0.12em] text-white/80">
+                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-400">
                     Meny
                   </p>
                   <button
                     type="button"
                     onClick={closeMenuHandler}
-                    className="inline-flex items-center justify-center rounded-full p-1 hover:bg-white/10"
+                    className="inline-flex items-center justify-center rounded-full p-1 hover:bg-slate-100"
                     aria-label="Close menu"
                   >
-                    <CloseIcon size={22} color="#ffffff" />
+                    <CloseIcon size={22} color="#64748b" />
                   </button>
                 </div>
                 <div className="mt-4">
@@ -75,7 +75,7 @@ export const MobileNavbar = ({
                   href={process.env.NEXT_PUBLIC_VENDOR_URL || "https://vendor.mercurjs.com"}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-white px-4 py-2 text-sm font-semibold text-fuchsia-800"
+                  className="mt-4 inline-flex w-full items-center justify-center rounded-full border border-fuchsia-200 bg-fuchsia-50 px-4 py-2 text-sm font-semibold text-fuchsia-800 hover:bg-fuchsia-100 transition-colors"
                 >
                   Bli saljare
                 </a>
@@ -85,7 +85,7 @@ export const MobileNavbar = ({
                     categories={parentCategories}
                   />
                 </div>
-                <div className="mt-2 border-t border-white/25 pt-2">
+                <div className="mt-2 border-t border-slate-100 pt-2">
                   <CategoryNavbar
                     onClose={closeMenuHandler}
                     categories={childrenCategories}

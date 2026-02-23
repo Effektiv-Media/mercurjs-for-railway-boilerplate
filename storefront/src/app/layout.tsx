@@ -1,21 +1,15 @@
 import type { Metadata } from "next"
-import { Manrope, Space_Grotesk } from "next/font/google"
+import { Inter } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "@medusajs/ui"
 import Head from "next/head"
 import { retrieveCart } from "@/lib/data/cart"
 import { Providers } from "./providers"
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
-})
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
 })
 
 export const metadata: Metadata = {
@@ -124,7 +118,7 @@ export default async function RootLayout({
         <link rel="dns-prefetch" href="https://api.mercurjs.com" />
       </Head>
       <body
-        className={`${manrope.variable} ${spaceGrotesk.variable} ${manrope.className} antialiased bg-primary text-secondary relative`}
+        className={`${inter.variable} ${inter.className} antialiased bg-primary text-secondary relative`}
       >
         <Providers cart={cart}>{children}</Providers>
         <Toaster position="top-right" />

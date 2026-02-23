@@ -83,7 +83,7 @@ export const ProductCard = ({
           title={`See more about ${productName}`}
         >
           <Button className="absolute rounded-full bg-cyan-600 text-white h-auto lg:h-[40px] lg:group-hover:block hidden w-[calc(100%-12px)] uppercase bottom-2 left-1.5 z-10 text-sm">
-            Kop nu
+            Köp nu
           </Button>
         </LocalizedClientLink>
       </div>

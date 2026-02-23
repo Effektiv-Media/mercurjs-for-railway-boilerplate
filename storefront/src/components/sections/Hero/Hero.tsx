@@ -11,32 +11,32 @@ type HeroProps = {
 
 const tiles = [
   {
-    title: "Smart elektronik, lojliga priser",
-    button: "Kop nu",
+    title: "Smart elektronik, löjliga priser",
+    button: "Köp nu",
     path: "/categories",
     image: "/images/blog/post-1.jpg",
     accent: "from-fuchsia-800 to-fuchsia-700",
     pill: "bg-rose-100 text-fuchsia-800",
   },
   {
-    title: "Smaskiga priser pa restauranger",
-    button: "Kop nu",
+    title: "Smaskiga priser på restauranger",
+    button: "Köp nu",
     path: "/categories",
     image: "/images/blog/post-2.jpg",
     accent: "from-slate-900 to-slate-800",
     pill: "bg-yellow-300 text-slate-900",
   },
   {
-    title: "Spaerbjudanden svara att motsta",
-    button: "Kop nu",
+    title: "Erbjudanden svåra att motstå",
+    button: "Köp nu",
     path: "/categories",
     image: "/images/blog/post-3.jpg",
     accent: "from-emerald-800 to-teal-700",
     pill: "bg-emerald-200 text-emerald-900",
   },
   {
-    title: "Prisvarda koksredskap",
-    button: "Kop nu",
+    title: "Prisvärda köksredskap",
+    button: "Köp nu",
     path: "/categories",
     image: "/images/banner-section/Image.jpg",
     accent: "from-teal-700 to-cyan-700",
@@ -62,7 +62,7 @@ export const Hero = ({ image, heading, paragraph, buttons }: HeroProps) => {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/20 via-slate-900/35 to-slate-950/80" />
           <div className="absolute right-4 top-4 rounded-full bg-blue-500 px-6 py-7 text-white shadow-lg">
-            <p className="text-lg font-semibold">Fran</p>
+            <p className="text-lg font-semibold">Från</p>
             <p className="text-5xl font-extrabold leading-none">29 kr</p>
           </div>
           <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-8 text-white">

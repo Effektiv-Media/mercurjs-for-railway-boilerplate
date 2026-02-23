@@ -7,14 +7,12 @@ export const Navbar = ({
   categories: HttpTypes.StoreProductCategory[]
 }) => {
   return (
-    <div className="bg-white/80 px-3 sm:px-4 lg:px-8 pb-4 border-b border-slate-200/70 backdrop-blur-md supports-[backdrop-filter]:bg-white/70">
-      <div className="lg:hidden">
-        <div className="w-full max-w-[1320px] mx-auto rounded-xl border border-slate-200 bg-white px-3 py-3 shadow-sm">
+    <div className="bg-white border-b border-slate-200">
+      <div className="mx-auto max-w-[1320px] px-4 lg:px-8">
+        <div className="lg:hidden py-3">
           <NavbarSearch />
         </div>
-      </div>
-      <div className="hidden lg:flex items-center justify-center">
-        <div className="w-full max-w-[1320px] mx-auto rounded-xl border border-slate-200 bg-white px-3 py-3 shadow-sm">
+        <div className="hidden lg:block">
           <CategoryNavbar categories={categories} />
         </div>
       </div>

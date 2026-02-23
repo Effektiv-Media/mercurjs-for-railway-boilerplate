@@ -29,7 +29,7 @@ export const CategoryNavbar = ({
         onClick={() => (onClose ? onClose(false) : null)}
         className={cn(
           isMenuOverlay
-            ? "label-md w-full rounded-lg px-1 py-2 text-white/90 hover:text-white hover:bg-white/10 transition-colors border-b border-white/15"
+            ? "label-md w-full rounded-lg px-1 py-2 text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-colors border-b border-slate-100"
             : "label-lg inline-flex items-center justify-center text-slate-700 hover:text-fuchsia-700 transition-colors"
         )}
       >
@@ -42,11 +42,11 @@ export const CategoryNavbar = ({
           onClick={() => (onClose ? onClose(false) : null)}
           className={cn(
             isMenuOverlay
-              ? "label-md w-full rounded-lg px-1 py-2 text-white/90 hover:text-white hover:bg-white/10 transition-colors border-b border-white/15"
+              ? "label-md w-full rounded-lg px-1 py-2 text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-colors border-b border-slate-100"
               : "label-lg inline-flex items-center justify-center text-slate-700 hover:text-fuchsia-700 transition-colors",
             handle === category &&
               (isMenuOverlay
-                ? "text-white font-semibold"
+                ? "text-slate-900 font-semibold"
                 : "text-slate-900 underline decoration-2 underline-offset-8")
           )}
         >
