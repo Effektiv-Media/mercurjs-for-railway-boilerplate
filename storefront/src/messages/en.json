@@ -391,6 +391,19 @@
     "pageNotFoundDescription": "The page you tried to access does not exist.",
     "goToFrontpage": "Go to frontpage"
   },
+  "reportListingForm": {
+    "reason": "Reason",
+    "comment": "Comment",
+    "submit": "Report Listing",
+    "thankYou": "Thank you!",
+    "successDescription": "We'll check the listing to see if it violates our guidelines and take the necessary action to ensure a safe shopping experience for everyone. Thank you for helping us maintain a trusted community.",
+    "gotIt": "Got it",
+    "reasonOptionTrademarkCopyrightDmca": "Trademark, Copyright or DMCA Violation",
+    "errors": {
+      "selectReason": "Please select reason",
+      "addComment": "Please add comment"
+    }
+  },
   "orderReturn": {
     "sellerLabel": "Seller",
     "selectReason": "Select reason",

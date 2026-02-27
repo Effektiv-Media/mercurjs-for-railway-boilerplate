@@ -2,30 +2,35 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { useTranslations } from 'next-intl';
 import { Button, Textarea } from '@/components/atoms';
 import { SelectField } from '../SelectField/SelectField';
 import { cn } from '@/lib/utils';
 
-const reasonOptions = [
-  { label: '', value: '', hidden: true },
-  {
-    label: 'Trademark, Copyright or DMCA Violation',
-    value: 'Trademark, Copyright or DMCA Violation',
-  },
-];
-
-const formSchema = z.object({
-  reason: z.string().nonempty('Please select reason'),
-  comment: z.string().nonempty('Please add comment'),
-});
-
-type FormData = z.infer<typeof formSchema>;
+type FormData = {
+  reason: string;
+  comment: string;
+};
 
 export const ReportListingForm = ({
   onClose,
 }: {
   onClose: () => void;
 }) => {
+  const t = useTranslations('reportListingForm');
+  const reasonOptions = [
+    { label: '', value: '', hidden: true },
+    {
+      label: t('reasonOptionTrademarkCopyrightDmca'),
+      value: 'Trademark, Copyright or DMCA Violation',
+    },
+  ];
+
+  const formSchema = z.object({
+    reason: z.string().nonempty(t('errors.selectReason')),
+    comment: z.string().nonempty(t('errors.addComment')),
+  });
+
   const {
     register,
     handleSubmit,
@@ -55,7 +60,7 @@ export const ReportListingForm = ({
                   errors?.reason && 'text-negative'
                 )}
               >
-                Reason
+                {t('reason')}
               </p>
               <SelectField
                 options={reasonOptions}
@@ -82,7 +87,7 @@ export const ReportListingForm = ({
                   errors?.comment && 'text-negative'
                 )}
               >
-                Comment
+                {t('comment')}
               </p>
               <Textarea
                 rows={5}
@@ -104,7 +109,7 @@ export const ReportListingForm = ({
               type='submit'
               className='w-full py-3 uppercase'
             >
-              Report Listing
+              {t('submit')}
             </Button>
           </div>
         </form>
@@ -112,14 +117,10 @@ export const ReportListingForm = ({
         <div className='text-center'>
           <div className='px-4 pb-5'>
             <h4 className='heading-lg uppercase'>
-              Thank you!
+              {t('thankYou')}
             </h4>
             <p className='max-w-[466px] mx-auto mt-4 text-lg text-secondary'>
-              We&apos;ll check the listing to see if it
-              violates our guidelines and take the necessary
-              action to ensure a safe shopping experience
-              for everyone. Thank you for helping us
-              maintain a trusted community.
+              {t('successDescription')}
             </p>
           </div>
 
@@ -128,7 +129,7 @@ export const ReportListingForm = ({
               className='w-full py-3 uppercase'
               onClick={onClose}
             >
-              Got it
+              {t('gotIt')}
             </Button>
           </div>
         </div>

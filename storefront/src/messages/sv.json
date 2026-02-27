@@ -391,6 +391,19 @@
     "pageNotFoundDescription": "Sidan du försökte öppna finns inte.",
     "goToFrontpage": "Gå till startsidan"
   },
+  "reportListingForm": {
+    "reason": "Orsak",
+    "comment": "Kommentar",
+    "submit": "Rapportera annons",
+    "thankYou": "Tack!",
+    "successDescription": "Vi granskar annonsen för att se om den bryter mot våra riktlinjer och vidtar nödvändiga åtgärder för att säkerställa en trygg shoppingupplevelse för alla. Tack för att du hjälper oss att upprätthålla en pålitlig community.",
+    "gotIt": "Jag förstår",
+    "reasonOptionTrademarkCopyrightDmca": "Varumärkes-, upphovsrätts- eller DMCA-överträdelse",
+    "errors": {
+      "selectReason": "Välj en orsak",
+      "addComment": "Lägg till en kommentar"
+    }
+  },
   "orderReturn": {
     "sellerLabel": "Säljare",
     "selectReason": "Välj orsak",
