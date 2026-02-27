@@ -4,14 +4,19 @@ import { retrieveCustomer } from "@/lib/data/customer"
 import { OrdersPagination } from "@/components/sections"
 import { isEmpty } from "lodash"
 import { listOrders } from "@/lib/data/orders"
+import { getServerI18n } from "@/lib/i18n/server"
 
 const LIMIT = 10
 
 export default async function UserPage({
+  params,
   searchParams,
 }: {
+  params: Promise<{ locale: string }>
   searchParams: Promise<{ page: string }>
 }) {
+  const { locale } = await params
+  const { t } = await getServerI18n({ regionLocale: locale })
   const user = await retrieveCustomer()
 
   if (!user) return <LoginForm />
@@ -56,13 +61,14 @@ export default async function UserPage({
       <div className="grid grid-cols-1 md:grid-cols-4 mt-6 gap-5 md:gap-8">
         <UserNavigation />
         <div className="md:col-span-3 space-y-8">
-          <h1 className="heading-md uppercase">Orders</h1>
+          <h1 className="heading-md uppercase">{t("account.orders")}</h1>
           {isEmpty(orders) ? (
             <div className="text-center">
-              <h3 className="heading-lg text-primary uppercase">No orders</h3>
+              <h3 className="heading-lg text-primary uppercase">
+                {t("account.noOrders")}
+              </h3>
               <p className="text-lg text-secondary mt-2">
-                You haven&apos;t placed any order yet. Once you place an order,
-                it will appear here.
+                {t("account.noOrdersDescription")}
               </p>
             </div>
           ) : (

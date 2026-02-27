@@ -5,6 +5,7 @@ import {
   FilterCheckboxOption,
 } from '@/components/molecules';
 import useFilters from '@/hooks/useFilters';
+import { useTranslations } from 'next-intl';
 
 const filters = [
   { label: 'Sneakers', amount: 140 },
@@ -15,6 +16,7 @@ const filters = [
 ];
 
 export const ProductFilter = () => {
+  const t = useTranslations('filters');
   const { updateFilters, isFilterActive } =
     useFilters('product');
 
@@ -23,7 +25,7 @@ export const ProductFilter = () => {
   };
 
   return (
-    <Accordion heading='Product'>
+    <Accordion heading={t('product')}>
       <ul className='px-4'>
         {filters.map(({ label, amount }) => (
           <li key={label} className='mb-4'>

@@ -1,3 +1,5 @@
+"use client"
+
 import {
   forwardRef,
   useImperativeHandle,
@@ -14,6 +16,7 @@ import clsx from "clsx"
 import { Listbox, Transition } from "@headlessui/react"
 import { clx } from "@medusajs/ui"
 import { ChevronUpDown } from "@medusajs/icons"
+import { useTranslations } from "next-intl"
 
 const CountrySelect = forwardRef<
   HTMLSelectElement,
@@ -21,6 +24,7 @@ const CountrySelect = forwardRef<
     region?: HttpTypes.StoreRegion
   }
 >(({ placeholder = "Country", region, defaultValue, ...props }, ref) => {
+  const t = useTranslations("forms.shipping")
   const innerRef = useRef<HTMLSelectElement>(null)
 
   useImperativeHandle<HTMLSelectElement | null, HTMLSelectElement | null>(
@@ -50,7 +54,7 @@ const CountrySelect = forwardRef<
 
   return (
     <label className="label-md">
-      <p className="mb-2">Country</p>
+      <p className="mb-2">{t("country")}</p>
       <Listbox onChange={handleSelect} value={props.value}>
         <div className="relative">
           <Listbox.Button
@@ -64,7 +68,7 @@ const CountrySelect = forwardRef<
                 <span className="block truncate">
                   {countryOptions?.find(
                     (country) => country.value === props.value
-                  )?.label || "Choose a country"}
+                  )?.label || t("chooseCountry")}
                 </span>
                 <ChevronUpDown
                   className={clx("transition-rotate duration-200", {

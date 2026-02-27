@@ -11,6 +11,7 @@ import Script from "next/script"
 import { listRegions } from "@/lib/data/regions"
 import { listProducts } from "@/lib/data/products"
 import { toHreflang } from "@/lib/helpers/hreflang"
+import { getServerI18n } from "@/lib/i18n/server"
 
 export const revalidate = 60
 
@@ -20,6 +21,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>
 }): Promise<Metadata> {
   const { locale } = await params
+  const { t } = await getServerI18n({ regionLocale: locale })
   const headersList = await headers()
   const host = headersList.get("host")
   const protocol = headersList.get("x-forwarded-proto") || "https"
@@ -41,10 +43,10 @@ export async function generateMetadata({
     languages = { [toHreflang(locale)]: `${baseUrl}/${locale}/categories` }
   }
 
-  const title = "All Products"
-  const description = `Browse all products on ${
-    process.env.NEXT_PUBLIC_SITE_NAME || "our store"
-  }`
+  const title = t("pages.allProducts")
+  const description = t("pages.allProductsDescription", {
+    siteName: process.env.NEXT_PUBLIC_SITE_NAME || "our store",
+  })
   const canonical = `${baseUrl}/${locale}/categories`
 
   return {
@@ -74,6 +76,7 @@ async function AllCategories({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
+  const { t } = await getServerI18n({ regionLocale: locale })
 
   const ua = (await headers()).get("user-agent") || ""
   const bot = isBot(ua)
@@ -81,7 +84,7 @@ async function AllCategories({
   const breadcrumbsItems = [
     {
       path: "/",
-      label: "All Products",
+      label: t("pages.allProducts"),
     },
   ]
 
@@ -119,7 +122,7 @@ async function AllCategories({
               {
                 "@type": "ListItem",
                 position: 1,
-                name: "All Products",
+                name: t("pages.allProducts"),
                 item: `${baseUrl}/${locale}/categories`,
               },
             ],
@@ -141,7 +144,7 @@ async function AllCategories({
         <Breadcrumbs items={breadcrumbsItems} />
       </div>
 
-      <h1 className="heading-xl uppercase">All Products</h1>
+      <h1 className="heading-xl uppercase">{t("pages.allProducts")}</h1>
 
       <Suspense fallback={<ProductListingSkeleton />}>
         {bot || !ALGOLIA_ID || !ALGOLIA_SEARCH_KEY ? (

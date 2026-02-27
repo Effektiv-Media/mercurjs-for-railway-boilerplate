@@ -1,12 +1,14 @@
 import { SellerReviewList, SellerScore } from "@/components/molecules"
 import { getSellerByHandle } from "@/lib/data/seller"
 import { SellerProps } from "@/types/seller"
+import { getServerI18n } from "@/lib/i18n/server"
 
 export const SellerReviewTab = async ({
   seller_handle,
 }: {
   seller_handle: string
 }) => {
+  const { t } = await getServerI18n({})
   const seller = (await getSellerByHandle(seller_handle)) as SellerProps
 
   const filteredReviews = seller.reviews?.filter((r) => r !== null)
@@ -25,7 +27,7 @@ export const SellerReviewTab = async ({
         <SellerScore rate={rating} reviewCount={reviewCount} />
       </div>
       <div className="col-span-3 border rounded-sm p-4">
-        <h3 className="heading-sm uppercase border-b pb-4">Seller reviews</h3>
+        <h3 className="heading-sm uppercase border-b pb-4">{t("seller.reviews")}</h3>
         <SellerReviewList reviews={seller.reviews} />
       </div>
     </div>

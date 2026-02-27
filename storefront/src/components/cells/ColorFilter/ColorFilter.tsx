@@ -6,6 +6,7 @@ import {
 } from '@/components/molecules';
 import { cn } from '@/lib/utils';
 import useFilters from '@/hooks/useFilters';
+import { useTranslations } from 'next-intl';
 
 const colorFilters = [
   {
@@ -61,6 +62,7 @@ const colorFilters = [
 ];
 
 export const ColorFilter = () => {
+  const t = useTranslations('filters');
   const { updateFilters, isFilterActive } =
     useFilters('color');
 
@@ -69,7 +71,7 @@ export const ColorFilter = () => {
   };
 
   return (
-    <Accordion heading='Color'>
+    <Accordion heading={t('color')}>
       <ul className='px-4'>
         {colorFilters.map(({ label, amount, color }) => (
           <li

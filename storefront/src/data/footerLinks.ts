@@ -1,17 +1,17 @@
 const links = {
   customerServices: [
-    { label: "Vanliga fragor", path: "/om-oss" },
-    { label: "Spar order", path: "/user/orders" },
-    { label: "Returer", path: "/user/returns" },
-    { label: "Leverans", path: "/kontakt" },
-    { label: "Betalning", path: "/kontakt" },
+    { key: "faq", path: "/om-oss" },
+    { key: "trackOrder", path: "/user/orders" },
+    { key: "returns", path: "/user/returns" },
+    { key: "delivery", path: "/kontakt" },
+    { key: "payment", path: "/kontakt" },
   ],
   about: [
-    { label: "Om oss", path: "/om-oss" },
-    { label: "Kontakt", path: "/kontakt" },
-    { label: "Blogg", path: "/" },
-    { label: "Integritetspolicy", path: "/om-oss" },
-    { label: "Kopvillkor", path: "/om-oss" },
+    { key: "aboutUs", path: "/om-oss" },
+    { key: "contact", path: "/kontakt" },
+    { key: "blog", path: "/" },
+    { key: "privacyPolicy", path: "/om-oss" },
+    { key: "terms", path: "/om-oss" },
   ],
   connect: [
     { label: "Facebook", path: "https://facebook.com" },

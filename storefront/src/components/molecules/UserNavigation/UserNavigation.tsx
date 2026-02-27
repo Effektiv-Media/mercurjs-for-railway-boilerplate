@@ -8,36 +8,37 @@ import {
 } from "@/components/atoms"
 import { useUnreads } from "@talkjs/react"
 import { usePathname } from "next/navigation"
+import { useTranslations } from "next-intl"
 
 const navigationItems = [
   {
-    label: "Orders",
+    key: "orders",
     href: "/user/orders",
   },
   {
-
-    label: "Messages",
+    key: "messages",
     href: "/user/messages",
   },
   {
-    label: "Returns",
+    key: "returns",
     href: "/user/returns",
   },
   {
-    label: "Addresses",
+    key: "addresses",
     href: "/user/addresses",
   },
   {
-    label: "Reviews",
+    key: "reviews",
     href: "/user/reviews",
   },
   {
-    label: "Wishlist",
+    key: "wishlist",
     href: "/user/wishlist",
   },
 ]
 
 export const UserNavigation = () => {
+  const t = useTranslations("account")
   const unreads = useUnreads()
   const path = usePathname()
 
@@ -45,13 +46,13 @@ export const UserNavigation = () => {
     <Card className="h-min">
       {navigationItems.map((item) => (
         <NavigationItem
-          key={item.label}
+          key={item.key}
           href={item.href}
           active={path === item.href}
           className="relative"
         >
-          {item.label}
-          {item.label === "Messages" && Boolean(unreads?.length) && (
+          {t(item.key)}
+          {item.key === "messages" && Boolean(unreads?.length) && (
             <Badge className="absolute top-3 left-24 w-4 h-4 p-0">
               {unreads?.length}
             </Badge>
@@ -63,7 +64,7 @@ export const UserNavigation = () => {
         href={"/user/settings"}
         active={path === "/user/settings"}
       >
-        Settings
+        {t("settings")}
       </NavigationItem>
       <LogoutButton className="w-full text-left" />
     </Card>

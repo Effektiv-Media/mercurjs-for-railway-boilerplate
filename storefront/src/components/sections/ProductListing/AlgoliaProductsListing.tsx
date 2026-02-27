@@ -17,6 +17,7 @@ import { ProductListingSkeleton } from "@/components/organisms/ProductListingSke
 import { useEffect, useState } from "react"
 import { listProducts } from "@/lib/data/products"
 import { getProductPrice } from "@/lib/helpers/get-product-price"
+import { useTranslations } from "next-intl"
 
 export const AlgoliaProductsListing = ({
   category_id,
@@ -71,6 +72,7 @@ const ProductsListing = ({
   currency_code: string
   filters: string
 }) => {
+  const t = useTranslations("listing")
   const [apiProducts, setApiProducts] = useState<
     HttpTypes.StoreProduct[] | null
   >(null)
@@ -164,7 +166,7 @@ const ProductsListing = ({
   return (
     <div className="min-h-[70vh]">
       <div className="flex justify-between w-full items-center">
-        <div className="my-4 label-md">{`${count} listings`}</div>
+        <div className="my-4 label-md">{t("listingsCount", { count })}</div>
       </div>
       <div className="hidden md:block">
         <ProductListingActiveFilters />
@@ -176,9 +178,11 @@ const ProductsListing = ({
         <div className="w-full">
           {!items.length ? (
             <div className="text-center w-full my-10">
-              <h2 className="uppercase text-primary heading-lg">no results</h2>
+              <h2 className="uppercase text-primary heading-lg">
+                {t("noResultsTitle")}
+              </h2>
               <p className="mt-4 text-lg">
-                Sorry, we can&apos;t find any results for your criteria
+                {t("noResultsDescription")}
               </p>
             </div>
           ) : (

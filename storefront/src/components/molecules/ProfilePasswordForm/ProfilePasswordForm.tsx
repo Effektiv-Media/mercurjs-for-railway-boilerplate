@@ -18,6 +18,7 @@ import { updateCustomerPassword } from "@/lib/data/customer"
 import { Heading, toast } from "@medusajs/ui"
 import LocalizedClientLink from "../LocalizedLink/LocalizedLink"
 import { PasswordValidator } from "@/components/cells/PasswordValidator/PasswordValidator"
+import { useTranslations } from "next-intl"
 
 export const ProfilePasswordForm = ({ token }: { token?: string }) => {
   const form = useForm<ProfilePasswordFormData>({
@@ -43,6 +44,7 @@ const Form = ({
   form: UseFormReturn<ProfilePasswordFormData>
   token?: string
 }) => {
+  const t = useTranslations("forms.profile")
   const [success, setSuccess] = useState(false)
   const [confirmPasswordError, setConfirmPasswordError] = useState<
     FieldError | undefined
@@ -64,7 +66,7 @@ const Form = ({
   const updatePassword = async (data: FieldValues) => {
     if (form.getValues("confirmPassword") !== form.getValues("newPassword")) {
       setConfirmPasswordError({
-        message: "New password and old password cannot be identical",
+        message: t("passwordMismatch"),
         type: "custom",
       } as FieldError)
       return
@@ -76,7 +78,7 @@ const Form = ({
       try {
         const res = await updateCustomerPassword(data.newPassword, token!)
         if (res.success) {
-          toast.success("Password updated")
+          toast.success(t("passwordUpdated"))
           setSuccess(true)
         } else {
           toast.error(res.error || "Something went wrong")
@@ -94,18 +96,17 @@ const Form = ({
         level="h1"
         className="uppercase heading-md text-primary text-center"
       >
-        Password updated
+        {t("passwordUpdated")}
       </Heading>
       <p className="text-center my-8">
-        Your password has been updated. You can now login with your new
-        password.
+        {t("passwordUpdatedDesc")}
       </p>
       <LocalizedClientLink href="/user">
         <Button
           className="uppercase py-3 px-6 !font-semibold w-full"
           size="large"
         >
-          Go to user page
+          {t("goToUserPage")}
         </Button>
       </LocalizedClientLink>
     </div>
@@ -115,13 +116,13 @@ const Form = ({
       onSubmit={handleSubmit(updatePassword)}
     >
       <LabeledInput
-        label="Current password"
+        label={t("currentPassword")}
         type="password"
         error={errors.currentPassword as FieldError}
         {...register("currentPassword")}
       />
       <LabeledInput
-        label="New password"
+        label={t("newPassword")}
         type="password"
         error={errors.newPassword as FieldError}
         {...register("newPassword")}
@@ -131,12 +132,12 @@ const Form = ({
         setError={setNewPasswordError}
       />
       <LabeledInput
-        label="Confirm new password"
+        label={t("confirmNewPassword")}
         type="password"
         error={confirmPasswordError as FieldError}
         {...register("confirmPassword")}
       />
-      <Button className="w-full my-4">Change password</Button>
+      <Button className="w-full my-4">{t("changePassword")}</Button>
     </form>
   )
 }

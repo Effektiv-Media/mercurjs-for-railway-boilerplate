@@ -6,6 +6,7 @@ import { removeShippingMethod } from "@/lib/data/cart"
 import { convertToLocale } from "@/lib/helpers/money"
 import { HttpTypes } from "@medusajs/types"
 import { Text } from "@medusajs/ui"
+import { useTranslations } from "next-intl"
 
 export const CartShippingMethodRow = ({
   method,
@@ -14,6 +15,7 @@ export const CartShippingMethodRow = ({
   method: HttpTypes.StoreCartShippingMethod
   currency_code: string
 }) => {
+  const t = useTranslations("checkout")
   const handleRemoveShippingMethod = async () => {
     await removeShippingMethod(method.id)
   }
@@ -21,7 +23,7 @@ export const CartShippingMethodRow = ({
   return (
     <div className="mb-4 border rounded-md p-4 flex items-center justify-between">
       <div>
-        <Text className="txt-medium-plus text-ui-fg-base mb-1">Method</Text>
+        <Text className="txt-medium-plus text-ui-fg-base mb-1">{t("method")}</Text>
         <Text className="txt-medium text-ui-fg-subtle">
           {method?.name}{" "}
           {convertToLocale({

@@ -7,6 +7,7 @@ import { useState } from "react"
 import { HttpTypes } from "@medusajs/types"
 import { SellerProps } from "@/types/seller"
 import { MessageIcon } from "@/icons"
+import { useTranslations } from "next-intl"
 
 const TALKJS_APP_ID = process.env.NEXT_PUBLIC_TALKJS_APP_ID || ""
 
@@ -27,6 +28,7 @@ export const Chat = ({
   subject?: string
   order_id?: string
 }) => {
+  const t = useTranslations("chat")
   const [modal, setModal] = useState(false)
 
   if (!TALKJS_APP_ID) {
@@ -40,10 +42,10 @@ export const Chat = ({
         onClick={() => setModal(true)}
         className={buttonClassNames}
       >
-        {icon ? <MessageIcon size={20} /> : "Write to seller"}
+        {icon ? <MessageIcon size={20} /> : t("writeToSeller")}
       </Button>
       {modal && (
-        <Modal heading="Chat" onClose={() => setModal(false)}>
+        <Modal heading={t("chatTitle")} onClose={() => setModal(false)}>
           <div className="px-4">
             <ChatBox
               order_id={order_id}

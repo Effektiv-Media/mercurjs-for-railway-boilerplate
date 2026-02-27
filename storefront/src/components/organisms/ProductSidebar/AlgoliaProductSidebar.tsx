@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react"
 import { useRefinementList } from "react-instantsearch"
 import { ProductListingActiveFilters } from "../ProductListingActiveFilters/ProductListingActiveFilters"
 import useGetAllSearchParams from "@/hooks/useGetAllSearchParams"
+import { useTranslations } from "next-intl"
 
 const filters = [
   { label: "5", amount: 40 },
@@ -20,6 +21,7 @@ const filters = [
 ]
 
 export const AlgoliaProductSidebar = () => {
+  const t = useTranslations("listing")
   const [isMobile, setIsMobile] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
 
@@ -36,10 +38,10 @@ export const AlgoliaProductSidebar = () => {
   return isMobile ? (
     <>
       <Button onClick={() => setIsOpen(true)} className="w-full uppercase mb-4">
-        Filters
+        {t("filters")}
       </Button>
       {isOpen && (
-        <Modal heading="Filters" onClose={() => setIsOpen(false)}>
+        <Modal heading={t("filters")} onClose={() => setIsOpen(false)}>
           <div className="px-4">
             <ProductListingActiveFilters />
             <PriceFilter
@@ -66,6 +68,7 @@ export const AlgoliaProductSidebar = () => {
 }
 
 function ConditionFilter({ defaultOpen = true }: { defaultOpen?: boolean }) {
+  const t = useTranslations("filters")
   const { items } = useRefinementList({
     attribute: "variants.condition",
     limit: 100,
@@ -77,7 +80,7 @@ function ConditionFilter({ defaultOpen = true }: { defaultOpen?: boolean }) {
     updateFilters(option)
   }
   return (
-    <Accordion heading="Condition" defaultOpen={defaultOpen}>
+    <Accordion heading={t("condition")} defaultOpen={defaultOpen}>
       <ul className="px-4">
         {items.map(({ label, count }) => (
           <li key={label} className="mb-4">
@@ -95,6 +98,7 @@ function ConditionFilter({ defaultOpen = true }: { defaultOpen?: boolean }) {
 }
 
 function ColorFilter({ defaultOpen = true }: { defaultOpen?: boolean }) {
+  const t = useTranslations("filters")
   const { items } = useRefinementList({
     attribute: "variants.color",
     limit: 100,
@@ -108,7 +112,7 @@ function ColorFilter({ defaultOpen = true }: { defaultOpen?: boolean }) {
     updateFilters(option)
   }
   return (
-    <Accordion heading="Color" defaultOpen={defaultOpen}>
+    <Accordion heading={t("color")} defaultOpen={defaultOpen}>
       <ul className="px-4">
         {items.map(({ label, count }) => (
           <li key={label} className="mb-4 flex items-center justify-between">
@@ -133,6 +137,7 @@ function ColorFilter({ defaultOpen = true }: { defaultOpen?: boolean }) {
 }
 
 function SizeFilter({ defaultOpen = true }: { defaultOpen?: boolean }) {
+  const t = useTranslations("filters")
   const { items } = useRefinementList({
     attribute: "variants.size",
     limit: 100,
@@ -145,7 +150,7 @@ function SizeFilter({ defaultOpen = true }: { defaultOpen?: boolean }) {
   }
 
   return (
-    <Accordion heading="Size" defaultOpen={defaultOpen}>
+    <Accordion heading={t("size")} defaultOpen={defaultOpen}>
       <ul className="grid grid-cols-4 mt-2 gap-2">
         {items.map(({ label }) => (
           <li key={label} className="mb-4">
@@ -163,6 +168,7 @@ function SizeFilter({ defaultOpen = true }: { defaultOpen?: boolean }) {
 }
 
 function PriceFilter({ defaultOpen = true }: { defaultOpen?: boolean }) {
+  const t = useTranslations("filters")
   const [min, setMin] = useState("")
   const [max, setMax] = useState("")
 
@@ -184,11 +190,11 @@ function PriceFilter({ defaultOpen = true }: { defaultOpen?: boolean }) {
     updateSearchParams("max_price", max)
   }
   return (
-    <Accordion heading="Price" defaultOpen={defaultOpen}>
+    <Accordion heading={t("price")} defaultOpen={defaultOpen}>
       <div className="flex gap-2 mb-4">
         <form method="POST" onSubmit={updateMinPriceHandler}>
           <Input
-            placeholder="Min"
+            placeholder={t("min")}
             onChange={(e) => setMin(e.target.value)}
             value={min}
             onBlur={(e) => {
@@ -205,7 +211,7 @@ function PriceFilter({ defaultOpen = true }: { defaultOpen?: boolean }) {
         </form>
         <form method="POST" onSubmit={updateMaxPriceHandler}>
           <Input
-            placeholder="Max"
+            placeholder={t("max")}
             onChange={(e) => setMax(e.target.value)}
             onBlur={(e) => {
               setTimeout(() => {
@@ -226,6 +232,7 @@ function PriceFilter({ defaultOpen = true }: { defaultOpen?: boolean }) {
 }
 
 function RatingFilter() {
+  const t = useTranslations("filters")
   const { updateFilters, isFilterActive } = useFilters("rating")
 
   const selectHandler = (option: string) => {
@@ -233,7 +240,7 @@ function RatingFilter() {
   }
 
   return (
-    <Accordion heading="Rating">
+    <Accordion heading={t("rating")}>
       <ul className="px-4">
         {filters.map(({ label }) => (
           <li

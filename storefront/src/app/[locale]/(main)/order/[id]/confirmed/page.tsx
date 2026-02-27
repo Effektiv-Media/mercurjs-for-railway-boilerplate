@@ -2,13 +2,20 @@ import { OrderConfirmedSection } from "@/components/sections/OrderConfirmedSecti
 import { retrieveOrder } from "@/lib/data/orders"
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
+import { getServerI18n } from "@/lib/i18n/server"
 
 type Props = {
-  params: Promise<{ id: string }>
+  params: Promise<{ id: string; locale: string }>
 }
-export const metadata: Metadata = {
-  title: "Order Confirmed",
-  description: "You purchase was successful",
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params
+  const { t } = await getServerI18n({ regionLocale: locale })
+
+  return {
+    title: t("orders.orderConfirmed"),
+    description: t("orders.purchaseSuccessful"),
+  }
 }
 
 export default async function OrderConfirmedPage(props: Props) {

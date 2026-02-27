@@ -13,6 +13,7 @@ import { Button } from "@/components/atoms"
 import { CartShippingMethodRow } from "./CartShippingMethodRow"
 import { Listbox, Transition } from "@headlessui/react"
 import clsx from "clsx"
+import { useTranslations } from "next-intl"
 
 // Extended cart item product type to include seller
 type ExtendedStoreProduct = HttpTypes.StoreProduct & {
@@ -57,15 +58,12 @@ const CartShippingMethodsSection: React.FC<ShippingProps> = ({
   cart,
   availableShippingMethods,
 }) => {
+  const t = useTranslations("checkout")
   const [isLoadingPrices, setIsLoadingPrices] = useState(false)
   const [calculatedPricesMap, setCalculatedPricesMap] = useState<
     Record<string, number>
   >({})
   const [error, setError] = useState<string | null>(null)
-  const [missingModal, setMissingModal] = useState(false)
-  const [missingShippingSellers, setMissingShippingSellers] = useState<
-    string[]
-  >([])
 
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -78,27 +76,6 @@ const CartShippingMethodsSection: React.FC<ShippingProps> = ({
       sm.rules?.find((rule: any) => rule.attribute === "is_return")?.value !==
       "true"
   )
-
-  useEffect(() => {
-    const set = new Set<string>()
-    cart.items?.forEach((item) => {
-      if (item?.product?.seller?.id) {
-        set.add(item.product.seller.id)
-      }
-    })
-
-    const sellerMethods = _shippingMethods?.map(({ seller_id }) => seller_id)
-
-    const missingSellerIds = [...set].filter(
-      (sellerId) => !sellerMethods?.includes(sellerId)
-    )
-
-    setMissingShippingSellers(Array.from(missingSellerIds))
-
-    if (missingSellerIds.length > 0 && !cart.shipping_methods?.length) {
-      setMissingModal(true)
-    }
-  }, [cart])
 
   useEffect(() => {
     if (_shippingMethods?.length) {
@@ -142,7 +119,7 @@ const CartShippingMethodsSection: React.FC<ShippingProps> = ({
     } catch (error: any) {
       setError(
         error?.message?.replace("Error setting up the request: ", "") ||
-          "An error occurred"
+          t("genericError")
       )
     } finally {
       setIsLoadingPrices(false)
@@ -177,43 +154,10 @@ const CartShippingMethodsSection: React.FC<ShippingProps> = ({
     router.replace(pathname + "?step=delivery")
   }
 
-  const missingSellers = cart.items
-    ?.filter((item) =>
-      missingShippingSellers.includes(item.product?.seller?.id!)
-    )
-    .map((item) => item.product?.seller?.name)
-
   const isEditEnabled = !isOpen && !!cart?.shipping_methods?.length
 
   return (
     <div className="border p-4 rounded-sm bg-ui-bg-interactive">
-      {/* {missingModal && (
-        <Modal
-          heading="Missing seller shipping option"
-          onClose={() => router.push(`/${pathname.split("/")[1]}/cart`)}
-        >
-          <div className="p-4">
-            <h2 className="heading-sm">
-              Some of the sellers in your cart do not have shipping options.
-            </h2>
-
-            <p className="text-md mt-3">
-              Please remove the{" "}
-              <span className="font-bold">
-                {missingSellers?.map(
-                  (seller, index) =>
-                    `${seller}${
-                      index === missingSellers.length - 1 ? " " : ", "
-                    }`
-                )}
-              </span>{" "}
-              items or contact{" "}
-              {missingSellers && missingSellers?.length > 1 ? "them" : "him"} to
-              get the shipping options.
-            </p>
-          </div>
-        </Modal>
-      )} */}
       <div className="flex flex-row items-center justify-between mb-6">
         <Heading
           level="h2"
@@ -222,12 +166,12 @@ const CartShippingMethodsSection: React.FC<ShippingProps> = ({
           {!isOpen && (cart.shipping_methods?.length ?? 0) > 0 && (
             <CheckCircleSolid />
           )}
-          Delivery
+          {t("delivery")}
         </Heading>
         {isEditEnabled && (
           <Text>
             <Button onClick={handleEdit} variant="tonal">
-              Edit
+              {t("edit")}
             </Button>
           </Text>
         )}
@@ -258,7 +202,7 @@ const CartShippingMethodsSection: React.FC<ShippingProps> = ({
                             {({ open }) => (
                               <>
                                 <span className="block truncate">
-                                  Choose delivery option
+                                  {t("chooseDeliveryOption")}
                                 </span>
                                 <ChevronUpDown
                                   className={clx(
@@ -340,7 +284,7 @@ const CartShippingMethodsSection: React.FC<ShippingProps> = ({
               disabled={!cart.shipping_methods?.[0]}
               loading={isLoadingPrices}
             >
-              Continue to payment
+              {t("continueToPayment")}
             </Button>
           </div>
         </>
@@ -352,7 +296,7 @@ const CartShippingMethodsSection: React.FC<ShippingProps> = ({
                 {cart.shipping_methods?.map((method) => (
                   <div key={method.id} className="mb-4 border rounded-md p-4">
                     <Text className="txt-medium-plus text-ui-fg-base mb-1">
-                      Method
+                      {t("method")}
                     </Text>
                     <Text className="txt-medium text-ui-fg-subtle">
                       {method.name}{" "}

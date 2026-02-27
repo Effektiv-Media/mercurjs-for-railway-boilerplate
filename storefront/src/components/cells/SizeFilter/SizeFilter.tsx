@@ -4,6 +4,7 @@ import { Accordion, SelectField } from "@/components/molecules"
 import useFilters from "@/hooks/useFilters"
 import useUpdateSearchParams from "@/hooks/useUpdateSearchParams"
 import { useSearchParams } from "next/navigation"
+import { useTranslations } from "next-intl"
 
 const sizeType = [
   { label: "US", value: "us" },
@@ -29,6 +30,7 @@ const sizeOptions = [
 ]
 
 export const SizeFilter = () => {
+  const t = useTranslations("filters")
   const updateSearchParams = useUpdateSearchParams()
   const { updateFilters, isFilterActive } = useFilters("size")
   const searchParams = useSearchParams()
@@ -42,15 +44,20 @@ export const SizeFilter = () => {
   const selectSizeHandler = (size: string) => {
     updateFilters(size)
   }
+
+  const localizedSizeOptions = sizeOptions.map((size) =>
+    size === "One size" ? t("oneSize") : size
+  )
+
   return (
-    <Accordion heading="Size">
+    <Accordion heading={t("size")}>
       {/* <SelectField
         options={sizeType}
         selected={size_region}
         selectOption={selectSizeRegionHandler}
       /> */}
       <ul className="grid grid-cols-3 mt-2 gap-2">
-        {sizeOptions.map((option) => (
+        {localizedSizeOptions.map((option) => (
           <li key={option}>
             <Chip
               selected={isFilterActive(option)}

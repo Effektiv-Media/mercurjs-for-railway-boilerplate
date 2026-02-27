@@ -6,8 +6,11 @@ import { SingleProductSeller } from "@/types/product"
 import { SellerProps } from "@/types/seller"
 import { format } from "date-fns"
 import { useState } from "react"
+import { useTranslations } from "next-intl"
 
 export const SellerFooter = ({ seller }: { seller: SellerProps }) => {
+  const tSeller = useTranslations("seller")
+  const tOrders = useTranslations("orders")
   const [openModal, setOpenModal] = useState(false)
   return (
     <div className="flex justify-between items-center flex-col lg:flex-row">
@@ -19,7 +22,9 @@ export const SellerFooter = ({ seller }: { seller: SellerProps }) => {
           </div>
         )} */}
         <Divider square />
-        <p>Joined {format(seller.created_at, "yyyy-MM-dd")}</p>
+        <p>
+          {tOrders("joined")} {format(seller.created_at, "yyyy-MM-dd")}
+        </p>
         {/* <Divider square /> */}
         {/* <p>sold {seller.sold}</p> */}
       </div>
@@ -29,10 +34,10 @@ export const SellerFooter = ({ seller }: { seller: SellerProps }) => {
         className="uppercase"
         onClick={() => setOpenModal(true)}
       >
-        Report
+        {tSeller("reportAction")}
       </Button>
       {openModal && (
-        <Modal heading="Report seller" onClose={() => setOpenModal(false)}>
+        <Modal heading={tSeller("report")} onClose={() => setOpenModal(false)}>
           <ReportSellerForm onClose={() => setOpenModal(false)} />
         </Modal>
       )}

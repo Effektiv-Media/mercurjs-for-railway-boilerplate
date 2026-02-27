@@ -1,11 +1,14 @@
-import { WishlistTabs } from '@/components/organisms';
-import { HomeCategories } from '../HomeCategories/HomeCategories';
+import { WishlistTabs } from "@/components/organisms"
+import { getTranslations } from "next-intl/server"
+import { HomeCategories } from "../HomeCategories/HomeCategories"
 
-export const WishlistPage = ({ tab }: { tab: string }) => {
+export const WishlistPage = async ({ tab }: { tab: string }) => {
+  const t = await getTranslations("cart")
+
   return (
     <>
       <WishlistTabs tab={tab} />
-      <HomeCategories heading='Explore' />
+      <HomeCategories heading={t("explore")} />
     </>
-  );
-};
+  )
+}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { headers } from "next/headers"
+import { getServerI18n } from "@/lib/i18n/server"
 
 export async function generateMetadata({
   params,
@@ -7,41 +8,54 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>
 }): Promise<Metadata> {
   const { locale } = await params
+  const { t } = await getServerI18n({ regionLocale: locale })
   const headersList = await headers()
   const host = headersList.get("host")
   const protocol = headersList.get("x-forwarded-proto") || "https"
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `${protocol}://${host}`
 
   return {
-    title: "Kontakt",
-    description:
-      "Kontakta Clickfynd for fragor om order, returer, leverans eller betalning.",
+    title: t("pages.contact.title"),
+    description: t("pages.contact.description"),
     alternates: {
       canonical: `${baseUrl}/${locale}/kontakt`,
     },
   }
 }
 
-const contactRows = [
-  { label: "E-post", value: "support@clickfynd.com" },
-  { label: "Telefon", value: "+46 10 123 45 67" },
-  { label: "Oppettider", value: "Man-fre 08:00-17:00" },
-  { label: "Adress", value: "Clickfynd AB, Storgatan 10, 111 22 Stockholm" },
-]
+export default async function ContactPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
+  const { t } = await getServerI18n({ regionLocale: locale })
+  const contactRows = [
+    { label: t("pages.contact.email"), value: "support@clickfynd.com" },
+    { label: t("pages.contact.phone"), value: "+46 10 123 45 67" },
+    {
+      label: t("pages.contact.openingHours"),
+      value: t("pages.contact.openingHoursValue"),
+    },
+    {
+      label: t("pages.contact.address"),
+      value: "Clickfynd AB, Storgatan 10, 111 22 Stockholm",
+    },
+  ]
 
-export default function ContactPage() {
   return (
     <main className="page-shell">
       <section className="page-content">
         <div className="grid lg:grid-cols-[1.2fr,0.8fr] gap-4 rounded-3xl border border-slate-200 bg-white p-6 md:p-10 shadow-[0_14px_24px_rgba(15,23,42,0.06)]">
           <div>
             <p className="inline-flex rounded-full bg-emerald-100 text-emerald-700 px-3 py-1 text-xs font-bold uppercase tracking-[0.12em]">
-              Kontakt
+              {t("pages.contact.badge")}
             </p>
-            <h1 className="mt-4 heading-lg text-slate-900">Vi hjalper dig snabbt</h1>
+            <h1 className="mt-4 heading-lg text-slate-900">
+              {t("pages.contact.heading")}
+            </h1>
             <p className="mt-4 text-md text-slate-600 max-w-2xl">
-              Har du fragor om order, returer eller betalning? Kontakta oss sa
-              svarar vi sa snabbt vi kan under vardagar.
+              {t("pages.contact.intro")}
             </p>
 
             <dl className="mt-8 space-y-3">
@@ -60,12 +74,12 @@ export default function ContactPage() {
           </div>
 
           <aside className="rounded-2xl border border-slate-200 bg-gradient-to-b from-sky-600 to-cyan-700 p-5 text-white">
-            <h2 className="heading-sm">Vanliga arenden</h2>
+            <h2 className="heading-sm">{t("pages.contact.commonCases")}</h2>
             <ul className="mt-3 space-y-3 text-sm leading-6 text-white/90">
-              <li>Orderstatus och sparning</li>
-              <li>Byten och returer</li>
-              <li>Betalningsfragor</li>
-              <li>Hjalp till saljare</li>
+              <li>{t("pages.contact.orderStatusTracking")}</li>
+              <li>{t("pages.contact.exchangesReturns")}</li>
+              <li>{t("pages.contact.paymentQuestions")}</li>
+              <li>{t("pages.contact.sellerHelp")}</li>
             </ul>
           </aside>
         </div>

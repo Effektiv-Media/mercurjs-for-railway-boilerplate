@@ -6,8 +6,10 @@ import { useState } from "react"
 import Image from "next/image"
 import { convertToLocale } from "@/lib/helpers/money"
 import { cn } from "@/lib/utils"
+import { useTranslations } from "next-intl"
 
 export const OrderCancel = ({ order }: { order: any }) => {
+  const t = useTranslations("orders")
   const [open, setOpen] = useState(false)
   const [selectedItems, setSelectedItems] = useState<any[]>([])
 
@@ -35,10 +37,9 @@ export const OrderCancel = ({ order }: { order: any }) => {
     <>
       <div className="md:flex justify-between items-center">
         <div className="mb-4 md:mb-0">
-          <h2 className="text-primary label-lg uppercase">Cancel Order</h2>
+          <h2 className="text-primary label-lg uppercase">{t("cancelOrder")}</h2>
           <p className="text-secondary label-md max-w-sm">
-            Once you place your order, you can cancel it until the seller begins
-            preparation for shipment.
+            {t("cancelDescription")}
           </p>
         </div>
         <Button
@@ -46,12 +47,12 @@ export const OrderCancel = ({ order }: { order: any }) => {
           className="uppercase"
           onClick={() => setOpen(true)}
         >
-          Cancel
+          {t("cancel")}
         </Button>
       </div>
       {open && (
         <Modal
-          heading="Select items you want to cancel"
+          heading={t("selectItemsToCancel")}
           onClose={() => setOpen(false)}
         >
           <div>
@@ -143,7 +144,7 @@ export const OrderCancel = ({ order }: { order: any }) => {
             <Divider className="my-4" />
             <div className="px-4">
               <Button className="uppercase w-full" onClick={handleCancel}>
-                Request cancelation
+                {t("requestCancellation")}
               </Button>
             </div>
           </div>

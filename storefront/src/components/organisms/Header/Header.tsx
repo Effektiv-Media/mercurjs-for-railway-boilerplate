@@ -15,9 +15,11 @@ import { NavbarSearch } from "@/components/molecules"
 import { listRegions } from "@/lib/data/regions"
 import LocalizedClientLink from "@/components/molecules/LocalizedLink/LocalizedLink"
 import { MessageButton } from "@/components/molecules/MessageButton/MessageButton"
+import { getServerI18n } from "@/lib/i18n/server"
 
-export const Header = async () => {
+export const Header = async ({ locale }: { locale: string }) => {
   const user = await retrieveCustomer()
+  const { t } = await getServerI18n({ regionLocale: locale })
   let wishlist: Wishlist[] = []
   if (user) {
     const response = await getUserWishlists()
@@ -72,7 +74,7 @@ export const Header = async () => {
                 rel="noopener noreferrer"
                 className="hidden lg:inline-flex h-10 items-center whitespace-nowrap rounded-full border border-fuchsia-200 bg-white px-4 text-sm font-semibold text-fuchsia-800 transition-colors hover:bg-fuchsia-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-300 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
               >
-                Bli säljare
+                {t("header.becomeSeller")}
               </a>
               <div className="hidden md:block">
                 <CountrySelector regions={regions} />
@@ -81,7 +83,7 @@ export const Header = async () => {
                 href="/kontakt"
                 className="hidden xl:inline-flex h-10 items-center rounded-full border border-slate-300 bg-white px-3 text-xs font-semibold uppercase tracking-[0.06em] transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
               >
-                Support
+                {t("header.support")}
               </LocalizedClientLink>
               {user && (
                 <div className="hidden sm:block">

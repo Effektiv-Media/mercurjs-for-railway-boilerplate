@@ -8,6 +8,7 @@ import { CardElement } from "@stripe/react-stripe-js"
 import { StripeCardElementOptions } from "@stripe/stripe-js"
 import PaymentTest from "./PaymentTest"
 import { StripeContext } from "./StripeWrapper"
+import { useTranslations } from "next-intl"
 
 type PaymentContainerProps = {
   paymentProviderId: string
@@ -75,6 +76,7 @@ export const StripeCardContainer = ({
   setError: (error: string | null) => void
   setCardComplete: (complete: boolean) => void
 }) => {
+  const t = useTranslations("checkout")
   const stripeReady = useContext(StripeContext)
 
   const useOptions: StripeCardElementOptions = useMemo(() => {
@@ -105,7 +107,7 @@ export const StripeCardContainer = ({
         (stripeReady ? (
           <div className="my-4 transition-all duration-150 ease-in-out">
             <Text className="txt-medium-plus text-ui-fg-base mb-1">
-              Enter your card details:
+              {t("enterCardDetails")}:
             </Text>
             <CardElement
               options={useOptions as StripeCardElementOptions}

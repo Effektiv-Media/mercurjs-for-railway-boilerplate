@@ -14,6 +14,7 @@ import { loginFormSchema, LoginFormData } from "./schema"
 import { useState } from "react"
 import { login } from "@/lib/data/customer"
 import { useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 
 export const LoginForm = () => {
   const methods = useForm<LoginFormData>({
@@ -32,6 +33,7 @@ export const LoginForm = () => {
 }
 
 const Form = () => {
+  const t = useTranslations("forms.auth")
   const [error, setError] = useState("")
   const {
     handleSubmit,
@@ -57,31 +59,31 @@ const Form = () => {
   return (
     <main className="container">
       <h1 className="heading-xl text-center uppercase my-6">
-        Log in to your account
+        {t("loginTitle")}
       </h1>
       <form onSubmit={handleSubmit(submit)}>
         <div className="w-96 max-w-full mx-auto space-y-4">
           <LabeledInput
-            label="E-mail"
-            placeholder="Your e-mail address"
+            label={t("email")}
+            placeholder={t("emailPlaceholder")}
             error={errors.email as FieldError}
             {...register("email")}
           />
           <LabeledInput
-            label="Password"
-            placeholder="Your password"
+            label={t("password")}
+            placeholder={t("passwordPlaceholder")}
             type="password"
             error={errors.password as FieldError}
             {...register("password")}
           />
           {error && <p className="label-md text-negative">{error}</p>}
           <Button className="w-full" disabled={isSubmitting}>
-            Log in
+            {t("login")}
           </Button>
           <p className="text-center label-md">
-            Don&apos;t have an account yet?{" "}
+            {t("dontHaveAccount")}{" "}
             <LocalizedClientLink href="/user/register" className="underline">
-              Sign up!
+              {t("signUp")}
             </LocalizedClientLink>
           </p>
         </div>

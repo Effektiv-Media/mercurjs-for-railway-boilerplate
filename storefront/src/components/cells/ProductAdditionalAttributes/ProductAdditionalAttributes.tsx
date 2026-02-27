@@ -1,15 +1,22 @@
+"use client"
+
 import { ProductPageAccordion } from "@/components/molecules"
 import { AdditionalAttributeProps } from "@/types/product"
+import { useTranslations } from "next-intl"
 
 export const ProductAdditionalAttributes = ({
   attributes,
 }: {
   attributes: AdditionalAttributeProps[]
 }) => {
+  const t = useTranslations("product")
   if (!attributes.length) return null
 
   return (
-    <ProductPageAccordion heading="Additional attributes" defaultOpen={false}>
+    <ProductPageAccordion
+      heading={t("additionalAttributes")}
+      defaultOpen={false}
+    >
       {attributes.map((attribute) => (
         <div
           key={attribute.id}

@@ -15,6 +15,7 @@ import { useState } from "react"
 import { Container } from "@medusajs/ui"
 import Link from "next/link"
 import { PasswordValidator } from "@/components/cells/PasswordValidator/PasswordValidator"
+import { useTranslations } from "next-intl"
 
 export const RegisterForm = () => {
   const methods = useForm<RegisterFormData>({
@@ -36,6 +37,8 @@ export const RegisterForm = () => {
 }
 
 const Form = () => {
+  const t = useTranslations("forms.auth")
+  const ta = useTranslations("forms.address")
   const [passwordError, setPasswordError] = useState({
     isValid: false,
     lower: false,
@@ -68,21 +71,21 @@ const Form = () => {
     <main className="container">
       <Container className="border max-w-xl mx-auto mt-8 p-4">
         <h1 className="heading-md text-primary uppercase mb-8">
-          Create account
+          {t("createAccount")}
         </h1>
         <form onSubmit={handleSubmit(submit)}>
           <div className="flex flex-col md:flex-row gap-4 mb-4">
             <LabeledInput
               className="md:w-1/2"
-              label="First name"
-              placeholder="Your first name"
+              label={ta("firstName")}
+              placeholder={ta("typeFirstName")}
               error={errors.firstName as FieldError}
               {...register("firstName")}
             />
             <LabeledInput
               className="md:w-1/2"
-              label="Last name"
-              placeholder="Your last name"
+              label={ta("lastName")}
+              placeholder={ta("typeLastName")}
               error={errors.lastName as FieldError}
               {...register("lastName")}
             />
@@ -90,15 +93,15 @@ const Form = () => {
           <div className="flex flex-col md:flex-row gap-4 mb-4">
             <LabeledInput
               className="md:w-1/2"
-              label="E-mail"
-              placeholder="Your e-mail address"
+              label={t("email")}
+              placeholder={t("emailPlaceholder")}
               error={errors.email as FieldError}
               {...register("email")}
             />
             <LabeledInput
               className="md:w-1/2"
-              label="Phone"
-              placeholder="Your phone number"
+              label={ta("phone")}
+              placeholder={ta("typePhoneNumber")}
               error={errors.phone as FieldError}
               {...register("phone")}
             />
@@ -106,8 +109,8 @@ const Form = () => {
           <div>
             <LabeledInput
               className="mb-4"
-              label="Password"
-              placeholder="Your password"
+              label={t("password")}
+              placeholder={t("passwordPlaceholder")}
               type="password"
               error={errors.password as FieldError}
               {...register("password")}
@@ -124,13 +127,13 @@ const Form = () => {
             disabled={isSubmitting}
             loading={isSubmitting}
           >
-            Create account
+            {t("createAccount")}
           </Button>
         </form>
       </Container>
       <Container className="border max-w-xl mx-auto mt-8 p-4">
         <h1 className="heading-md text-primary uppercase mb-8">
-          Already have an account?
+          {t("alreadyHaveAccount")}
         </h1>
         <p className="text-center label-md">
           <Link href="/user">
@@ -138,7 +141,7 @@ const Form = () => {
               variant="tonal"
               className="w-full flex justify-center mt-8 uppercase"
             >
-              Log in
+              {t("login")}
             </Button>
           </Link>
         </p>

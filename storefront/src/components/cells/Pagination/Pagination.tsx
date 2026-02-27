@@ -1,6 +1,7 @@
 "use client"
 import { PaginationButton } from "@/components/atoms"
 import { CollapseIcon, MeatballsMenuIcon } from "@/icons"
+import { useTranslations } from "next-intl"
 
 export const Pagination = ({
   pages,
@@ -11,12 +12,13 @@ export const Pagination = ({
   setPage: (page: number) => void
   currentPage: number
 }) => {
+  const t = useTranslations("pagination")
   const renderPaginationButtons = () => {
     const buttons = [] as React.ReactNode[]
 
     if (currentPage > 2) {
       buttons.push(
-        <PaginationButton key={`gap-left`} disabled aria-label="More pages">
+        <PaginationButton key={`gap-left`} disabled aria-label={t("morePages")}>
           <MeatballsMenuIcon />
         </PaginationButton>
       )
@@ -26,7 +28,7 @@ export const Pagination = ({
       buttons.push(
         <PaginationButton
           key={`page-${currentPage - 1}`}
-          aria-label={`Go to page ${currentPage - 1}`}
+          aria-label={t("goToPage", { page: currentPage - 1 })}
           onClick={() => setPage(currentPage - 1)}
         >
           {currentPage - 1}
@@ -38,7 +40,7 @@ export const Pagination = ({
       <PaginationButton
         key={`page-${currentPage}`}
         isActive
-        aria-label={`Current page, page ${currentPage}`}
+        aria-label={t("currentPage", { page: currentPage })}
       >
         {currentPage}
       </PaginationButton>
@@ -48,7 +50,7 @@ export const Pagination = ({
       buttons.push(
         <PaginationButton
           key={`page-${currentPage + 1}`}
-          aria-label={`Go to page ${currentPage + 1}`}
+          aria-label={t("goToPage", { page: currentPage + 1 })}
           onClick={() => setPage(currentPage + 1)}
         >
           {currentPage + 1}
@@ -58,7 +60,7 @@ export const Pagination = ({
 
     if (currentPage < pages - 1) {
       buttons.push(
-        <PaginationButton key={`gap-right`} disabled aria-label="More pages">
+        <PaginationButton key={`gap-right`} disabled aria-label={t("morePages")}>
           <MeatballsMenuIcon />
         </PaginationButton>
       )
@@ -73,7 +75,7 @@ export const Pagination = ({
         disabled={Boolean(currentPage === 1)}
         onClick={() => setPage(currentPage - 1)}
         className="border-none"
-        aria-label="Previous page"
+        aria-label={t("previousPage")}
       >
         <CollapseIcon size={20} className="rotate-90" />
       </PaginationButton>
@@ -84,7 +86,7 @@ export const Pagination = ({
         disabled={Boolean(currentPage === pages)}
         onClick={() => setPage(currentPage + 1)}
         className="border-none"
-        aria-label="Next page"
+        aria-label={t("nextPage")}
       >
         <CollapseIcon size={20} className="-rotate-90" />
       </PaginationButton>

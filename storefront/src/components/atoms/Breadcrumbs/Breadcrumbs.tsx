@@ -4,6 +4,7 @@ import LocalizedClientLink from "@/components/molecules/LocalizedLink/LocalizedL
 
 import { ForwardIcon } from "@/icons"
 import { usePathname } from "next/navigation"
+import { useTranslations } from "next-intl"
 
 interface BreadcrumbsProps {
   items: { label: string; path: string }[]
@@ -12,9 +13,10 @@ interface BreadcrumbsProps {
 
 export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
   const pathname = usePathname()
+  const t = useTranslations("common")
 
   return (
-    <nav className={cn("flex", className)} aria-label="Breadcrumb">
+    <nav className={cn("flex", className)} aria-label={t("breadcrumb")}>
       <ol className="inline-flex items-center gap-2">
         {items.map(({ path, label }, index) => {
           const isActive = pathname === path

@@ -5,6 +5,9 @@ import { Toaster } from "@medusajs/ui"
 import Head from "next/head"
 import { retrieveCart } from "@/lib/data/cart"
 import { Providers } from "./providers"
+import { cookies } from "next/headers"
+import { NextIntlClientProvider } from "next-intl"
+import { getMessages, resolveLanguage } from "@/lib/i18n/config"
 
 const inter = Inter({
   variable: "--font-inter",
@@ -40,13 +43,20 @@ export default async function RootLayout({
   params,
 }: Readonly<{
   children: React.ReactNode
-  params: Promise<{ locale: string }>
+  params: Promise<{ locale?: string }>
 }>) {
   const { locale } = await params
   const cart = await retrieveCart()
+  const cookieStore = await cookies()
+  const preferredLanguage = cookieStore.get("NEXT_LOCALE")?.value
+  const language = resolveLanguage({
+    regionLocale: locale,
+    preferredLanguage,
+  })
+  const messages = getMessages(language)
 
   const ALGOLIA_APP = process.env.NEXT_PUBLIC_ALGOLIA_ID
-  const htmlLang = locale || "en"
+  const htmlLang = language || "en"
 
   return (
     <html lang={htmlLang} className="">
@@ -120,7 +130,9 @@ export default async function RootLayout({
       <body
         className={`${inter.variable} ${inter.className} antialiased bg-primary text-secondary relative`}
       >
-        <Providers cart={cart}>{children}</Providers>
+        <NextIntlClientProvider locale={language} messages={messages}>
+          <Providers cart={cart}>{children}</Providers>
+        </NextIntlClientProvider>
         <Toaster position="top-right" />
       </body>
     </html>

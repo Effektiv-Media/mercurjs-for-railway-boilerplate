@@ -1,4 +1,5 @@
 import { Card, Checkbox } from "@/components/atoms"
+import { useTranslations } from "next-intl"
 
 export const ReturnMethodsTab = ({
   shippingMethods,
@@ -11,18 +12,19 @@ export const ReturnMethodsTab = ({
   returnMethod: string
   seller: any
 }) => {
+  const t = useTranslations("orderReturn")
   const noShippingMethods = !shippingMethods?.length || false
 
   return (
     <>
       <div className="mb-8">
         <Card className="bg-secondary p-4">
-          <p className="label-lg uppercase">Return methods</p>
+          <p className="label-lg uppercase">{t("returnMethods")}</p>
         </Card>
         <Card className="flex items-center justify-between p-4">
           {noShippingMethods ? (
             <div className="py-4 text-center font-bold heading-md w-full">
-              No shipping methods available
+              {t("noShippingMethodsAvailable")}
             </div>
           ) : (
             <ul>
@@ -42,7 +44,7 @@ export const ReturnMethodsTab = ({
       </div>
       <div>
         <Card className="bg-secondary p-4">
-          <p className="label-lg uppercase">Shipping address</p>
+          <p className="label-lg uppercase">{t("shippingAddress")}</p>
         </Card>
         <Card className="p-4">
           <p className="label-lg">{seller.name}</p>

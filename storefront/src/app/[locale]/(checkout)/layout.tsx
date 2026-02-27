@@ -2,12 +2,18 @@ import { Button } from "@/components/atoms"
 import LocalizedClientLink from "@/components/molecules/LocalizedLink/LocalizedLink"
 import { CollapseIcon } from "@/icons"
 import Image from "next/image"
+import { getServerI18n } from "@/lib/i18n/server"
 
 export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode
+  params: Promise<{ locale: string }>
 }>) {
+  const { locale } = await params
+  const { t } = await getServerI18n({ regionLocale: locale })
+
   return (
     <>
       <header>
@@ -16,7 +22,7 @@ export default async function RootLayout({
             <LocalizedClientLink href="/cart">
               <Button variant="tonal" className="flex items-center gap-2">
                 <CollapseIcon className="rotate-90" />
-                <span className="hidden lg:block">Back to cart</span>
+                <span className="hidden lg:block">{t("checkout.backToCart")}</span>
               </Button>
             </LocalizedClientLink>
           </div>

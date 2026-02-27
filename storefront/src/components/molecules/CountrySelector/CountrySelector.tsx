@@ -14,8 +14,8 @@ import { useParams, usePathname, useRouter } from "next/navigation"
 import { HttpTypes } from "@medusajs/types"
 
 import { updateRegionWithValidation } from "@/lib/data/cart"
-import { Label } from "@medusajs/ui"
 import { toast } from "@/lib/helpers/toast"
+import { useTranslations } from "next-intl"
 
 type CountryOption = {
   country: string
@@ -28,6 +28,7 @@ type CountrySelectProps = {
 }
 
 const CountrySelect = ({ regions }: CountrySelectProps) => {
+  const t = useTranslations("countrySelector")
   const [current, setCurrent] = useState<
     | { country: string | undefined; region: string; label: string | undefined }
     | undefined
@@ -59,13 +60,25 @@ const CountrySelect = ({ regions }: CountrySelectProps) => {
 
   const handleChange = async (option: CountryOption) => {
     try {
+      const language = option.country?.toLowerCase() === "se" ? "sv" : "en"
+      document.cookie = `NEXT_LOCALE=${language}; path=/; max-age=${60 * 60 * 24 * 365}; samesite=lax`
+
       const result = await updateRegionWithValidation(option.country, currentPath)
       
       if (result.removedItems.length > 0) {
         const itemsList = result.removedItems.join(", ")
         toast.info({
-          title: "Cart updated",
-          description: `${itemsList} ${result.removedItems.length === 1 ? "is" : "are"} not available in ${option.label} and ${result.removedItems.length === 1 ? "was" : "were"} removed from your cart.`,
+          title: t("cartUpdated"),
+          description:
+            result.removedItems.length === 1
+              ? t("singleUnavailable", {
+                  items: itemsList,
+                  country: option.label,
+                })
+              : t("multipleUnavailable", {
+                  items: itemsList,
+                  country: option.label,
+                }),
         })
       }
       
@@ -74,15 +87,14 @@ const CountrySelect = ({ regions }: CountrySelectProps) => {
       router.refresh()
     } catch (error: any) {
       toast.error({
-        title: "Error switching region",
-        description: error?.message || "Failed to update region. Please try again.",
+        title: t("errorSwitchingRegion"),
+        description: error?.message || t("failedToUpdateRegion"),
       })
     }
   }
 
   return (
     <div className="md:flex gap-2 items-center justify-end relative">
-      <Label className="label-md hidden md:block">Shipping to</Label>
       <div>
         <Listbox
           onChange={handleChange}

@@ -1,6 +1,7 @@
 import Image from "next/image"
 
 import Link from "next/link"
+import { getTranslations } from "next-intl/server"
 
 type HeroProps = {
   image: string
@@ -9,42 +10,43 @@ type HeroProps = {
   buttons: { label: string; path: string }[]
 }
 
-const tiles = [
-  {
-    title: "Smart elektronik, löjliga priser",
-    button: "Köp nu",
-    path: "/categories",
-    image: "/images/blog/post-1.jpg",
-    accent: "from-fuchsia-800 to-fuchsia-700",
-    pill: "bg-rose-100 text-fuchsia-800",
-  },
-  {
-    title: "Smaskiga priser på restauranger",
-    button: "Köp nu",
-    path: "/categories",
-    image: "/images/blog/post-2.jpg",
-    accent: "from-slate-900 to-slate-800",
-    pill: "bg-yellow-300 text-slate-900",
-  },
-  {
-    title: "Erbjudanden svåra att motstå",
-    button: "Köp nu",
-    path: "/categories",
-    image: "/images/blog/post-3.jpg",
-    accent: "from-emerald-800 to-teal-700",
-    pill: "bg-emerald-200 text-emerald-900",
-  },
-  {
-    title: "Prisvärda köksredskap",
-    button: "Köp nu",
-    path: "/categories",
-    image: "/images/banner-section/Image.jpg",
-    accent: "from-teal-700 to-cyan-700",
-    pill: "bg-lime-200 text-emerald-900",
-  },
-]
+export const Hero = async ({ image, heading, paragraph, buttons }: HeroProps) => {
+  const t = await getTranslations("pages.home")
+  const tiles = [
+    {
+      title: t("heroTileElectronics"),
+      button: t("heroTileButton"),
+      path: "/categories",
+      image: "/images/blog/post-1.jpg",
+      accent: "from-fuchsia-800 to-fuchsia-700",
+      pill: "bg-rose-100 text-fuchsia-800",
+    },
+    {
+      title: t("heroTileRestaurant"),
+      button: t("heroTileButton"),
+      path: "/categories",
+      image: "/images/blog/post-2.jpg",
+      accent: "from-slate-900 to-slate-800",
+      pill: "bg-yellow-300 text-slate-900",
+    },
+    {
+      title: t("heroTileOffers"),
+      button: t("heroTileButton"),
+      path: "/categories",
+      image: "/images/blog/post-3.jpg",
+      accent: "from-emerald-800 to-teal-700",
+      pill: "bg-emerald-200 text-emerald-900",
+    },
+    {
+      title: t("heroTileKitchen"),
+      button: t("heroTileButton"),
+      path: "/categories",
+      image: "/images/banner-section/Image.jpg",
+      accent: "from-teal-700 to-cyan-700",
+      pill: "bg-lime-200 text-emerald-900",
+    },
+  ]
 
-export const Hero = ({ image, heading, paragraph, buttons }: HeroProps) => {
   return (
     <section className="w-full px-4 lg:px-8 mt-3">
       <div className="grid grid-cols-1 lg:grid-cols-[1.65fr_1fr_1fr] gap-4">
@@ -62,8 +64,10 @@ export const Hero = ({ image, heading, paragraph, buttons }: HeroProps) => {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/20 via-slate-900/35 to-slate-950/80" />
           <div className="absolute right-4 top-4 rounded-full bg-blue-500 px-6 py-7 text-white shadow-lg">
-            <p className="text-lg font-semibold">Från</p>
-            <p className="text-5xl font-extrabold leading-none">29 kr</p>
+            <p className="text-lg font-semibold">{t("heroPriceFrom")}</p>
+            <p className="text-5xl font-extrabold leading-none">
+              {t("heroPriceValue")}
+            </p>
           </div>
           <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-8 text-white">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold uppercase leading-[0.95] drop-shadow-md">

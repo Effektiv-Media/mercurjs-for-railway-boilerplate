@@ -11,6 +11,7 @@ import { ReturnMethodsTab } from "./ReturnMethodsTab"
 import { StepProgressBar } from "@/components/cells/StepProgressBar/StepProgressBar"
 import { createReturnRequest } from "@/lib/data/orders"
 import { useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 
 export const OrderReturnSection = ({
   order,
@@ -21,6 +22,7 @@ export const OrderReturnSection = ({
   returnReasons: any[]
   shippingMethods: any[]
 }) => {
+  const t = useTranslations("orderReturn")
   const [tab, setTab] = useState(0)
   const [selectedItems, setSelectedItems] = useState<any[]>([])
   const [error, setError] = useState<boolean>(false)
@@ -89,7 +91,7 @@ export const OrderReturnSection = ({
               className="label-md text-action-on-secondary uppercase flex items-center gap-2"
             >
               <ArrowLeftIcon className="size-4" />
-              Order details
+              {t("backToOrderDetails")}
             </Button>
           </LocalizedClientLink>
         ) : (
@@ -99,14 +101,14 @@ export const OrderReturnSection = ({
             onClick={() => setTab(0)}
           >
             <ArrowLeftIcon className="size-4" />
-            Select items
+            {t("backToSelectItems")}
           </Button>
         )}
         <div className="grid grid-cols-1 md:grid-cols-8 gap-4 mt-8">
           <div className="col-span-4">
             <div className="mb-4">
               <StepProgressBar
-                steps={["SELECT ITEMS TO RETURN", "SELECT RETURN METHOD"]}
+                steps={[t("stepSelectItems"), t("stepSelectMethod")]}
                 currentStep={tab}
               />
             </div>

@@ -2,6 +2,7 @@ import { ProductDetails, ProductGallery } from "@/components/organisms"
 import { listProducts } from "@/lib/data/products"
 import { HomeProductSection } from "../HomeProductSection/HomeProductSection"
 import NotFound from "@/app/not-found"
+import { getTranslations } from "next-intl/server"
 
 export const ProductDetailsPage = async ({
   handle,
@@ -10,6 +11,7 @@ export const ProductDetailsPage = async ({
   handle: string
   locale: string
 }) => {
+  const t = await getTranslations("product")
   const prod = await listProducts({
     countryCode: locale,
     queryParams: { handle: [handle], limit: 1 },
@@ -34,7 +36,7 @@ export const ProductDetailsPage = async ({
       </div>
       <div className="my-8">
         <HomeProductSection
-          heading="More from this seller"
+          heading={t("moreFromSeller")}
           products={prod.seller?.products}
           // seller_handle={prod.seller?.handle}
           locale={locale}

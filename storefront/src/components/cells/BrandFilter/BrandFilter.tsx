@@ -8,6 +8,7 @@ import {
 import useFilters from '@/hooks/useFilters';
 import { SearchIcon } from '@/icons';
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 const brandFilters = [
   { label: 'Abercrombie & Fitch', amount: 40 },
@@ -18,6 +19,7 @@ const brandFilters = [
 ];
 
 export const BrandFilter = () => {
+  const t = useTranslations('filters');
   const [brandsSearch, setBrandSearch] = useState('');
   const [filteredOptions, setFilteredOptions] =
     useState(brandFilters);
@@ -47,9 +49,9 @@ export const BrandFilter = () => {
   };
 
   return (
-    <Accordion heading='Brand'>
+    <Accordion heading={t('brand')}>
       <Input
-        placeholder='Search brands'
+        placeholder={t('searchBrands')}
         icon={<SearchIcon size={20} />}
         value={brandsSearch}
         onChange={(e) =>

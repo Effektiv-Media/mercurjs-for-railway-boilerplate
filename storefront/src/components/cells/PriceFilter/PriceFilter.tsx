@@ -7,8 +7,10 @@ import { Accordion, FilterCheckboxOption } from "@/components/molecules"
 import useUpdateSearchParams from "@/hooks/useUpdateSearchParams"
 import { DollarIcon } from "@/icons"
 import useFilters from "@/hooks/useFilters"
+import { useTranslations } from "next-intl"
 
 export const PriceFilter = () => {
+  const t = useTranslations("filters")
   const [min, setMin] = useState("")
   const [max, setMax] = useState("")
 
@@ -38,11 +40,11 @@ export const PriceFilter = () => {
   }
 
   return (
-    <Accordion heading="Price">
+    <Accordion heading={t("price")}>
       <div className="flex gap-2 mb-4">
         <form method="POST" onSubmit={updateMinPriceHandler}>
           <Input
-            placeholder="Min"
+            placeholder={t("min")}
             icon={<DollarIcon size={16} />}
             onChange={(e) => setMin(e.target.value)}
             value={min}
@@ -53,7 +55,7 @@ export const PriceFilter = () => {
         </form>
         <form method="POST" onSubmit={updateMaxPriceHandler}>
           <Input
-            placeholder="Max"
+            placeholder={t("max")}
             icon={<DollarIcon size={16} />}
             onChange={(e) => setMax(e.target.value)}
             type="number"

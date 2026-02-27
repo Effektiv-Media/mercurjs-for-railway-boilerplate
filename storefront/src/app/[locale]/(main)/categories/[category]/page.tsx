@@ -12,6 +12,7 @@ import Script from "next/script"
 import { getRegion, listRegions } from "@/lib/data/regions"
 import { listProducts } from "@/lib/data/products"
 import { toHreflang } from "@/lib/helpers/hreflang"
+import { getServerI18n } from "@/lib/i18n/server"
 
 export const revalidate = 60
 
@@ -21,6 +22,7 @@ export async function generateMetadata({
   params: Promise<{ category: string; locale: string }>
 }): Promise<Metadata> {
   const { category, locale } = await params
+  const { t } = await getServerI18n({ regionLocale: locale })
   const headersList = await headers()
   const host = headersList.get("host")
   const protocol = headersList.get("x-forwarded-proto") || "https"
@@ -49,7 +51,7 @@ export async function generateMetadata({
     }
   }
 
-  const title = `${cat.name} Category`
+  const title = `${cat.name} ${t("pages.categorySuffix")}`
   const description = `${cat.name} Category - ${
     process.env.NEXT_PUBLIC_SITE_NAME || "Storefront"
   }`

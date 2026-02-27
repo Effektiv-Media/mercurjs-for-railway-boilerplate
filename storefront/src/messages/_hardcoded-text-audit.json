@@ -1,0 +1,152 @@
+{
+  "src/app/[locale]/(main)/categories/[category]/page.tsx": [
+    "c.iso_2) || []) ) ) as string[] languages = locales.reduce"
+  ],
+  "src/app/[locale]/(main)/categories/page.tsx": [
+    "c.iso_2) || []) ) ) as string[] languages = locales.reduce"
+  ],
+  "src/app/[locale]/(main)/page.tsx": [
+    "c.iso_2) || []) .flat() .filter(Boolean) ) ) as string[] languages = locales.reduce"
+  ],
+  "src/app/[locale]/(main)/user/orders/page.tsx": [
+    "sum + order.total, 0), currency_code: firstOrder.currency_code, } } ) const processedOrders = orderSets.slice(offset, offset + LIMIT) return ("
+  ],
+  "src/components/atoms/Breadcrumbs/Breadcrumbs.tsx": [
+    "0 &&"
+  ],
+  "src/components/atoms/Button/Button.tsx": [
+    ": children}"
+  ],
+  "src/components/atoms/IconButton/IconButton.tsx": [
+    ": icon}"
+  ],
+  "src/components/cells/AddressSelect/AddressSelect.tsx": [
+    "compareAddresses(a, addressInput)) }, [addresses, addressInput]) return ("
+  ],
+  "src/components/cells/Carousel/Carousel.tsx": [
+    "slide)}"
+  ],
+  "src/components/cells/ChatBox/ChatBox.tsx": [
+    "session?.destroy() }, [currentUser, supportUser]) return"
+  ],
+  "src/components/cells/CountrySelect/CountrySelect.tsx": [
+    "(null) useImperativeHandle",
+    ") } return (",
+    "country.value === props.value )?.label || t(\"chooseCountry\")}"
+  ],
+  "src/components/cells/MobileNavbar/MobileNavbar.tsx": [
+    ", document.body ) : null}"
+  ],
+  "src/components/cells/OrderCancel/OrderCancel.tsx": [
+    "i.id === item.id) return ("
+  ],
+  "src/components/cells/OrderTimeline/OrderTimeline.tsx": [
+    "status === currentStatus) return ("
+  ],
+  "src/components/cells/PriceFilter/PriceFilter.tsx": [
+    "*/}"
+  ],
+  "src/components/cells/SellerReviewTab/SellerReviewTab.tsx": [
+    "sum + r?.rating, 0) / filteredReviews.length : 0 return ("
+  ],
+  "src/components/cells/SizeFilter/SizeFilter.tsx": [
+    "*/}"
+  ],
+  "src/components/molecules/NativeSelect/NativeSelect.tsx": [
+    "(null) const [isPlaceholder, setIsPlaceholder] = useState(false) useImperativeHandle"
+  ],
+  "src/components/molecules/ParcelAccordion/ParcelAccordionItems.tsx": [
+    "acc + item.quantity, 0 ) return ("
+  ],
+  "src/components/molecules/ProfileDetails/ProfilePassword.tsx": [
+    "****************",
+    "*/}"
+  ],
+  "src/components/molecules/ProfileDetailsForm/ProfileDetailsForm.tsx": [
+    "void } export const ProfileDetailsForm: React.FC"
+  ],
+  "src/components/molecules/ReviewForm/ReviewForm.tsx": [
+    "void seller: Order } export const ReviewForm: React.FC"
+  ],
+  "src/components/molecules/SellerInfo/SellerInfo.tsx": [
+    "sum + r?.rating || 0, 0) / reviewCount : 0 return ("
+  ],
+  "src/components/organisms/Addressess/Addresses.tsx": [
+    "(null) const [defaultValues, setDefaultValues] = useState"
+  ],
+  "src/components/organisms/Chat/Chat.tsx": [
+    ": t(\"writeToSeller\")}"
+  ],
+  "src/components/organisms/HomeProductsCarousel/HomeProductsCarousel.tsx": [
+    "product.handle), }, forceCache: !home, }) if (!products.length && !sellerProducts.length) return null return ("
+  ],
+  "src/components/organisms/HomeProductsGrid/HomeProductsGrid.tsx": [
+    "0 && items.length",
+    "items[idx % items.length]) : items return ("
+  ],
+  "src/components/organisms/PaymentContainer/StripeWrapper.tsx": [
+    "| null children: React.ReactNode } export const StripeContext = createContext(false) const StripeWrapper: React.FC"
+  ],
+  "src/components/organisms/ProductCard/ProductCard.tsx": [
+    "| Partial"
+  ],
+  "src/components/organisms/ProductListingHeader/ProductListingHeader.tsx": [
+    "*/}"
+  ],
+  "src/components/organisms/ProductSidebar/AlgoliaProductSidebar.tsx": [
+    "window.removeEventListener(\"resize\", handleResize) }, []) return isMobile ? (",
+    "*/}"
+  ],
+  "src/components/organisms/Reviews/ReviewsToWrite.tsx": [
+    "(null) const pathname = usePathname() return ("
+  ],
+  "src/components/organisms/SellerFooter/SellerFooter.tsx": [
+    "*/}"
+  ],
+  "src/components/organisms/ShippingAddress/ShippingAddress.tsx": [
+    "0 && ("
+  ],
+  "src/components/organisms/SingleOrderReturn/SingleOrderReturn.tsx": [
+    "1 ? t(\"items\") : t(\"item\")}"
+  ],
+  "src/components/organisms/WishlistTabs/WishlistTabs.tsx": [
+    "*/}"
+  ],
+  "src/components/providers/Cart/context.tsx": [
+    "void } export const CartContext = createContext"
+  ],
+  "src/components/sections/CartPaymentSection/CartPaymentSection.tsx": [
+    "paymentSession.status === \"pending\" ) const [isLoading, setIsLoading] = useState(false) const [error, setError] = useState",
+    "(null) const [cardBrand, setCardBrand] = useState"
+  ],
+  "src/components/sections/CartReview/CartReview.tsx": [
+    "0 && (cart.payment_collection || paidByGiftcard) return ("
+  ],
+  "src/components/sections/CartShippingMethodsSection/CartShippingMethodsSection.tsx": [
+    "0 && ("
+  ],
+  "src/components/sections/Hero/Hero.stories.tsx": [
+    ", } export default meta type Story = StoryObj"
+  ],
+  "src/components/sections/Hero/Hero.tsx": [
+    "0 ? ("
+  ],
+  "src/components/sections/OrderConfirmedSection/OrderConfirmedSection.tsx": [
+    "*/}"
+  ],
+  "src/components/sections/OrderDetailsSection/OrderDetailsSection.tsx": [
+    "*/}"
+  ],
+  "src/components/sections/OrderReturnSection/OrderReturnSection.tsx": [
+    "([]) const [error, setError] = useState",
+    "(false) const [returnMethod, setReturnMethod] = useState"
+  ],
+  "src/components/sections/OrderReturnSection/ReturnItemsTab.tsx": [
+    "i.line_item_id === item.id )?.reason_id )?.label || t(\"selectReason\")}",
+    "i.line_item_id === item.id) ?.reason_id && ("
+  ],
+  "src/components/sections/ProductListing/AlgoliaProductsListing.tsx": [
+    "= +minPrice && (variant.calculated_price?.calculated_amount ?? 0)",
+    "p.id === hit.objectID) && ("
+  ]
+}

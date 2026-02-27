@@ -7,6 +7,7 @@ import {
 import { StarRating } from '@/components/atoms';
 import { cn } from '@/lib/utils';
 import useFilters from '@/hooks/useFilters';
+import { useTranslations } from 'next-intl';
 
 const filters = [
   { label: '5', amount: 40 },
@@ -17,6 +18,7 @@ const filters = [
 ];
 
 export const SellerRatingFilter = () => {
+  const t = useTranslations('filters');
   const { updateFilters, isFilterActive } =
     useFilters('seller_rating');
 
@@ -25,7 +27,7 @@ export const SellerRatingFilter = () => {
   };
 
   return (
-    <Accordion heading='Seller Rating'>
+    <Accordion heading={t('sellerRating')}>
       <ul className='px-4'>
         {filters.map(({ label, amount }) => (
           <li

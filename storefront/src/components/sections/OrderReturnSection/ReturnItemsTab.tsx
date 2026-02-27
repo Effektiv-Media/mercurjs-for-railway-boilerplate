@@ -11,6 +11,7 @@ import { ChevronUpDown } from "@medusajs/icons"
 
 import Image from "next/image"
 import { cn } from "@/lib/utils"
+import { useTranslations } from "next-intl"
 
 export const ReturnItemsTab = ({
   order,
@@ -25,11 +26,14 @@ export const ReturnItemsTab = ({
   returnReasons: any[]
   error: boolean
 }) => {
+  const t = useTranslations("orderReturn")
+
   return (
     <div>
       <Card className="bg-secondary p-4">
         <p className="label-md">
-          Seller: <span className="font-semibold">{order.seller.name}</span>
+          {t("sellerLabel")}:{" "}
+          <span className="font-semibold">{order.seller.name}</span>
         </p>
       </Card>
       <Card className="flex items-center justify-between p-4">
@@ -104,7 +108,7 @@ export const ReturnItemsTab = ({
                                 selectedItems.find(
                                   (i) => i.line_item_id === item.id
                                 )?.reason_id
-                            )?.label || "Select Reason"}
+                            )?.label || t("selectReason")}
                           </span>
                           <ChevronUpDown
                             className={clx("transition-rotate duration-200", {
@@ -129,7 +133,7 @@ export const ReturnItemsTab = ({
                       !selectedItems.find((i) => i.line_item_id === item.id)
                         ?.reason_id && (
                         <p className="absolute -bottom-6 text-red-700 label-md">
-                          Please select reason
+                          {t("pleaseSelectReason")}
                         </p>
                       )}
                   </div>

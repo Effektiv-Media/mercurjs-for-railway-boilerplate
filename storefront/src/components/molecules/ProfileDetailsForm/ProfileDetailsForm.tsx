@@ -13,6 +13,7 @@ import { Button } from "@/components/atoms"
 import { updateCustomer } from "@/lib/data/customer"
 import { HttpTypes } from "@medusajs/types"
 import { useState } from "react"
+import { useTranslations } from "next-intl"
 
 interface Props {
   defaultValues?: ProfileDetailsFormData
@@ -41,6 +42,9 @@ export const ProfileDetailsForm: React.FC<Props> = ({
 }
 
 const Form: React.FC<Props> = ({ handleClose }) => {
+  const ta = useTranslations("forms.address")
+  const tc = useTranslations("common")
+  const tp = useTranslations("forms.profile")
   const [error, setError] = useState<string>()
   const {
     handleSubmit,
@@ -70,27 +74,27 @@ const Form: React.FC<Props> = ({ handleClose }) => {
       <div className="px-4 space-y-4">
         <div className="max-w-full grid grid-cols-2 items-top gap-4 mb-4">
           <LabeledInput
-            label="First name"
-            placeholder="Type first name"
+            label={ta("firstName")}
+            placeholder={ta("typeFirstName")}
             error={errors.firstName as FieldError}
             {...register("firstName")}
           />
           <LabeledInput
-            label="Last name"
-            placeholder="Type last name"
+            label={ta("lastName")}
+            placeholder={ta("typeLastName")}
             error={errors.lastName as FieldError}
             {...register("lastName")}
           />
           <LabeledInput
-            label="Phone"
-            placeholder="Type phone number"
+            label={ta("phone")}
+            placeholder={ta("typePhoneNumber")}
             error={errors.phone as FieldError}
             {...register("phone")}
           />
-          <LabeledInput label="Email" disabled {...register("email")} />
+          <LabeledInput label={tp("email")} disabled {...register("email")} />
         </div>
         {error && <p className="label-md text-negative">{error}</p>}
-        <Button className="w-full ">Save</Button>
+        <Button className="w-full ">{tc("save")}</Button>
       </div>
     </form>
   )

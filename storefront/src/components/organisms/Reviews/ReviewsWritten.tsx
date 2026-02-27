@@ -6,6 +6,7 @@ import { isEmpty } from "lodash"
 import { usePathname } from "next/navigation"
 import { OrderCard } from "./OrderCard"
 import { RefreshButton } from "@/components/cells/RefreshButton/RefreshButton"
+import { useTranslations } from "next-intl"
 
 export const ReviewsWritten = ({
   reviews,
@@ -16,6 +17,7 @@ export const ReviewsWritten = ({
   orders: Order[]
   isError: boolean
 }) => {
+  const t = useTranslations("reviews")
   const pathname = usePathname()
 
   function renderReviews() {
@@ -23,9 +25,9 @@ export const ReviewsWritten = ({
       return (
         <div className="flex flex-col gap-2">
           <p className="text-negative">
-            Something went wrong while fetching reviews
+            {t("errorLoading")}
           </p>
-          <RefreshButton label="Refresh" />
+          <RefreshButton label={t("refresh")} />
         </div>
       )
     }
@@ -35,11 +37,10 @@ export const ReviewsWritten = ({
         <Card>
           <div className="text-center py-6">
             <h3 className="heading-lg text-primary uppercase">
-              No written reviews
+              {t("noWrittenReviews")}
             </h3>
             <p className="text-lg text-secondary mt-2">
-              You haven&apos;t written any reviews yet. Once you write a review,
-              it will appear here.
+              {t("noWrittenReviewsDescription")}
             </p>
           </div>
         </Card>
@@ -57,16 +58,16 @@ export const ReviewsWritten = ({
 
   return (
     <div className="md:col-span-3 space-y-8">
-      <h1 className="heading-md uppercase">Reviews</h1>
+      <h1 className="heading-md uppercase">{t("reviews")}</h1>
       <div className="flex gap-4">
         {navigation.map((item) => (
           <NavigationItem
-            key={item.label}
+            key={item.key}
             href={item.href}
             active={pathname === item.href}
             className="px-0"
           >
-            {item.label}
+            {t(item.key)}
           </NavigationItem>
         ))}
       </div>

@@ -15,6 +15,7 @@ import Script from "next/script"
 import { listRegions } from "@/lib/data/regions"
 import { toHreflang } from "@/lib/helpers/hreflang"
 import { getCopy } from "@/const/copy"
+import { getServerI18n } from "@/lib/i18n/server"
 
 export async function generateMetadata({
   params,
@@ -116,6 +117,7 @@ export default async function Home({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
+  const { t } = await getServerI18n({ regionLocale: locale })
 
   const headersList = await headers()
   const host = headersList.get("host")
@@ -194,17 +196,17 @@ export default async function Home({
           heading={copy.home.sections.trending}
           locale={locale}
           home
-          badge="Populart"
+          badge={t("pages.home.popularBadge")}
           minTiles={12}
         />
       </div>
 
       <div className="px-4 lg:px-8 w-full">
         <HomeProductSection
-          heading="Nyinkommet"
+          heading={t("pages.home.newArrivalsHeading")}
           locale={locale}
           home
-          badge="Nya produkter"
+          badge={t("pages.home.newProductsBadge")}
           minTiles={12}
         />
       </div>
@@ -215,10 +217,10 @@ export default async function Home({
 
       <div className="px-4 lg:px-8 w-full">
         <HomeProductSection
-          heading="Fler fynd just nu"
+          heading={t("pages.home.moreDealsHeading")}
           locale={locale}
           home
-          badge="Prisvarda val"
+          badge={t("pages.home.valuePicksBadge")}
           minTiles={14}
         />
       </div>

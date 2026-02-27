@@ -13,6 +13,7 @@ import { WishlistButton } from "../WishlistButton/WishlistButton"
 import { Wishlist } from "@/types/wishlist"
 import { toast } from "@/lib/helpers/toast"
 import { useCartContext } from "@/components/providers"
+import { useTranslations } from "next-intl"
 
 const optionsAsKeymap = (
   variantOptions: HttpTypes.StoreProductVariant["options"]
@@ -41,6 +42,7 @@ export const ProductDetailsHeader = ({
   user: HttpTypes.StoreCustomer | null
   wishlist?: Wishlist[]
 }) => {
+  const t = useTranslations("product")
   const { onAddToCart, cart } = useCartContext()
   const [isAdding, setIsAdding] = useState(false)
   const { allSearchParams } = useGetAllSearchParams()
@@ -119,8 +121,8 @@ export const ProductDetailsHeader = ({
       })
     } catch (error) {
       toast.error({
-        title: "Error adding to cart",
-        description: "Some variant does not have the required inventory",
+        title: t("errorAddingToCart"),
+        description: t("inventoryMissing"),
       })
     } finally {
       setIsAdding(false)
@@ -150,7 +152,7 @@ export const ProductDetailsHeader = ({
               </>
             ) : (
               <span className="label-md text-secondary pt-2 pb-4">
-                Not available in your region
+                {t("notAvailableInRegion")}
               </span>
             )}
           </div>
@@ -177,10 +179,10 @@ export const ProductDetailsHeader = ({
         size="large"
       >
         {!hasAnyPrice
-          ? "NOT AVAILABLE IN YOUR REGION"
+          ? t("notAvailableInRegionUpper")
           : variantStock && variantHasPrice
-          ? "ADD TO CART"
-          : "OUT OF STOCK"}
+          ? t("addToCartUpper")
+          : t("outOfStockUpper")}
       </Button>
       {/* Seller message */}
 

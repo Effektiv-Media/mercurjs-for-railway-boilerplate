@@ -10,6 +10,7 @@ import { Chat } from "../Chat/Chat"
 import Image from "next/image"
 import { convertToLocale } from "@/lib/helpers/money"
 import { StepProgressBar } from "@/components/cells/StepProgressBar/StepProgressBar"
+import { useTranslations } from "next-intl"
 
 const steps = ["pending", "processing", "sent"]
 
@@ -24,6 +25,7 @@ export const SingleOrderReturn = ({
   defaultOpen: boolean
   returnReason: any[]
 }) => {
+  const t = useTranslations("order")
   const [isOpen, setIsOpen] = useState(defaultOpen)
   const [height, setHeight] = useState(0)
   const contentRef = useRef<HTMLDivElement>(null)
@@ -50,7 +52,7 @@ export const SingleOrderReturn = ({
         ...orderItem,
         reason_id:
           returnReason.find((r) => r.id === correspondingLineItem?.reason_id)
-            ?.label || "No reason provided",
+            ?.label || t("noReasonProvided"),
       }
     })
 
@@ -68,7 +70,7 @@ export const SingleOrderReturn = ({
         <Heading level="h2">Order: #{item.order.display_id}</Heading>
         <div className="flex flex-col gap-2 items-center">
           <p className="label-sm text-secondary">
-            Return requested date:{" "}
+            {t("returnRequestedDate")}:{" "}
             {format(item.line_items[0].created_at, "MMM dd, yyyy")}
           </p>
         </div>
@@ -83,7 +85,7 @@ export const SingleOrderReturn = ({
           </Heading>
           <p className="label-sm text-secondary flex gap-2">
             {item.line_items.length}{" "}
-            {item.line_items.length > 1 ? "items" : "item"}
+            {item.line_items.length > 1 ? t("items") : t("item")}
             <CollapseIcon
               className={cn(
                 "w-5 h-5 text-secondary transition-transform duration-300",
@@ -154,7 +156,7 @@ export const SingleOrderReturn = ({
                   <div className="flex justify-between w-1/2">
                     <p className="label-md !font-semibold text-primary">
                       <Badge className="bg-primary text-primary border rounded-sm">
-                        {item.reason_id || "No reason provided"}
+                        {item.reason_id || t("noReasonProvided")}
                       </Badge>
                     </p>
                     <p className="label-md !font-semibold text-primary">
@@ -170,7 +172,7 @@ export const SingleOrderReturn = ({
           </div>
           <Divider />
           <div className="p-4 flex justify-between">
-            <p className="label-md text-secondary">Total:</p>
+            <p className="label-md text-secondary">{t("total")}:</p>
             <p className="label-md !font-semibold text-primary">
               {convertToLocale({
                 amount: total,

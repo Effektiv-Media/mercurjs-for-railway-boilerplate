@@ -15,7 +15,10 @@ export const TrustStrip = ({
   if (!items?.length) return null
 
   return (
-    <section className={cn("w-full", className)} aria-label="Trust">
+    <section
+      className={cn("w-full", className)}
+      aria-label={items.map((item) => item.title).join(", ")}
+    >
       <div className="w-full rounded-2xl border border-slate-200 bg-gradient-to-r from-slate-900 via-slate-800 to-sky-900 text-white shadow-sm">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 px-4 py-4">
           {items.map((item) => (

@@ -1,22 +1,26 @@
 import LocalizedClientLink from "@/components/molecules/LocalizedLink/LocalizedLink"
+import { getTranslations } from "next-intl/server"
 
-const links = [
-  { label: "Topplistan", href: "/categories" },
-  { label: "Under 300 kr", href: "/categories?max_price=30000" },
-  { label: "Nyheter", href: "/categories" },
-  { label: "Presenter", href: "/categories?query=present" },
-]
+export const DealQuickLinks = async () => {
+  const t = await getTranslations("pages.home")
+  const links = [
+    { label: t("quickLinkTopList"), href: "/categories" },
+    { label: t("quickLinkUnder300"), href: "/categories?max_price=30000" },
+    { label: t("quickLinkNews"), href: "/categories" },
+    { label: t("quickLinkGifts"), href: "/categories?query=present" },
+  ]
 
-export const DealQuickLinks = () => {
   return (
-    <section className="w-full" aria-label="Snabblänkar">
+    <section className="w-full" aria-label={t("quickLinksAria")}>
       <div className="flex items-end justify-between gap-3 mb-4">
-        <h2 className="text-3xl font-bold text-slate-900">Snabbval for fynd</h2>
+        <h2 className="text-3xl font-bold text-slate-900">
+          {t("quickLinksHeading")}
+        </h2>
         <LocalizedClientLink
           href="/categories"
           className="hidden md:inline-flex rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold hover:bg-slate-100"
         >
-          Se allt
+          {t("quickLinksViewAll")}
         </LocalizedClientLink>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">

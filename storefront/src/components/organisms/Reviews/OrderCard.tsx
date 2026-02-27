@@ -1,7 +1,10 @@
+"use client"
+
 import { Button, Card, StarRating } from "@/components/atoms"
 import { Order } from "@/lib/data/reviews"
 import { format } from "date-fns"
 import Image from "next/image"
+import { useTranslations } from "next-intl"
 
 export const OrderCard = ({
   order,
@@ -10,6 +13,8 @@ export const OrderCard = ({
   order: Order
   showForm?: (review: Order) => void
 }) => {
+  const t = useTranslations("reviews")
+
   return (
     <Card className="flex gap-6 px-4 justify-between w-full">
       <div className="flex gap-4 max-lg:items-center">
@@ -40,7 +45,7 @@ export const OrderCard = ({
             {order?.items?.[0]?.subtitle}
           </p>
           <p className="label-md text-secondary">
-            Date: {format(order.created_at, "MMM dd, yyyy")}
+            {t("date")}: {format(order.created_at, "MMM dd, yyyy")}
           </p>
         </div>
       </div>
@@ -48,7 +53,7 @@ export const OrderCard = ({
         {showForm ? (
           <div className="flex justify-end w-full">
             <Button onClick={() => showForm(order)} className="w-fit uppercase">
-              Write review
+              {t("writeReview")}
             </Button>
           </div>
         ) : (

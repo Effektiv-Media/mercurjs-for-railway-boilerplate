@@ -1,17 +1,21 @@
 import { Card } from "@/components/atoms"
 import { retrieveCustomer } from "@/lib/data/customer"
 import { getRegion } from "@/lib/data/regions"
+import { getServerI18n } from "@/lib/i18n/server"
 
 export const OrderAddresses = async ({ singleOrder }: { singleOrder: any }) => {
   const user = await retrieveCustomer()
   const region = await getRegion(singleOrder.shipping_address.country_code)
+  const { t } = await getServerI18n({
+    regionLocale: singleOrder.shipping_address.country_code,
+  })
 
   if (!user) return null
 
   return (
     <Card className="px-4 grid sm:grid-cols-2 gap-4">
       <div className="flex flex-col ">
-        <h4 className="label-md text-primary">Shipping address</h4>
+        <h4 className="label-md text-primary">{t("orders.shippingAddress")}</h4>
         <p className="label-md text-secondary">
           {`${singleOrder.shipping_address.first_name} ${singleOrder.shipping_address.last_name}`}
         </p>
@@ -33,9 +37,11 @@ export const OrderAddresses = async ({ singleOrder }: { singleOrder: any }) => {
         </p>
       </div>
       <div>
-        <h4 className="label-md text-primary">Billing address</h4>
+        <h4 className="label-md text-primary">{t("orders.billingAddress")}</h4>
         {singleOrder.billing_address.id === singleOrder.shipping_address.id ? (
-          <p className="label-md text-secondary">Same as shipping address</p>
+          <p className="label-md text-secondary">
+            {t("orders.sameAsShippingAddress")}
+          </p>
         ) : (
           <>
             <p className="label-md text-secondary">

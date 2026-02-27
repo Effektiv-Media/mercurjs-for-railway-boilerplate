@@ -2,21 +2,22 @@
 import { Chip } from "@/components/atoms"
 import useFilters from "@/hooks/useFilters"
 import { CloseIcon } from "@/icons"
-
-const filtersLabels = {
-  category: "Category",
-  brand: "Brand",
-  min_price: "Min Price",
-  max_price: "Max Price",
-  color: "Color",
-  size: "Size",
-  query: "Search",
-  condition: "Condition",
-  rating: "Rating",
-}
+import { useTranslations } from "next-intl"
 
 export const ActiveFilterElement = ({ filter }: { filter: string[] }) => {
+  const t = useTranslations("filters")
   const { updateFilters } = useFilters(filter[0])
+  const filtersLabels = {
+    category: t("category"),
+    brand: t("brand"),
+    min_price: t("minPrice"),
+    max_price: t("maxPrice"),
+    color: t("color"),
+    size: t("size"),
+    query: t("search"),
+    condition: t("condition"),
+    rating: t("rating"),
+  }
 
   const activeFilters = filter[1].split(",")
 

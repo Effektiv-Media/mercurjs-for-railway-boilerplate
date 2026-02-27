@@ -2,6 +2,7 @@
 
 import { Accordion, FilterCheckboxOption } from "@/components/molecules"
 import useFilters from "@/hooks/useFilters"
+import { useTranslations } from "next-intl"
 
 const filters = [
   { label: "New", amount: 78 },
@@ -12,6 +13,7 @@ const filters = [
 ]
 
 export const ConditionFilter = () => {
+  const t = useTranslations("filters")
   const { updateFilters, isFilterActive } = useFilters("condition")
 
   const selectHandler = (option: string) => {
@@ -19,7 +21,7 @@ export const ConditionFilter = () => {
   }
 
   return (
-    <Accordion heading="Condition">
+    <Accordion heading={t("condition")}>
       <ul className="px-4">
         {filters.map(({ label, amount }) => (
           <li key={label} className="mb-4">

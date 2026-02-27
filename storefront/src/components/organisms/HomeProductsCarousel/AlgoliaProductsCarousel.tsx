@@ -9,6 +9,7 @@ import { ProductCard } from "../ProductCard/ProductCard"
 import { listProducts } from "@/lib/data/products"
 import { useEffect, useState } from "react"
 import { getProductPrice } from "@/lib/helpers/get-product-price"
+import { useTranslations } from "next-intl"
 
 export const AlgoliaProductsCarousel = ({
   locale,
@@ -34,6 +35,7 @@ export const AlgoliaProductsCarousel = ({
 }
 
 const ProductsListing = ({ locale }: { locale: string }) => {
+  const t = useTranslations("listing")
   const [prod, setProd] = useState<HttpTypes.StoreProduct[] | null>(null)
   const { items } = useHits()
 
@@ -56,9 +58,11 @@ const ProductsListing = ({ locale }: { locale: string }) => {
       <div className="w-full ">
         {!items.length ? (
           <div className="text-center w-full my-10">
-            <h2 className="uppercase text-primary heading-lg">no results</h2>
+            <h2 className="uppercase text-primary heading-lg">
+              {t("noResultsTitle")}
+            </h2>
             <p className="mt-4 text-lg">
-              Sorry, we can&apos;t find any results for your criteria
+              {t("noResultsDescription")}
             </p>
           </div>
         ) : (

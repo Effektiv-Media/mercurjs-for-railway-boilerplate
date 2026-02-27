@@ -10,10 +10,12 @@ import { CloseIcon } from "@/icons"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
 import { ProductListingActiveFilters } from "../ProductListingActiveFilters/ProductListingActiveFilters"
+import { useTranslations } from "next-intl"
 
 import useFilters from "@/hooks/useFilters"
 
 export const ProductSidebar = () => {
+  const t = useTranslations("listing")
   const [filterModal, setFilterModal] = useState(false)
   const { clearAllFilters } = useFilters("")
 
@@ -30,7 +32,7 @@ export const ProductSidebar = () => {
         {filterModal && (
           <div className="md:hidden">
             <div className="p-4 border-y flex items-center justify-between mb-4">
-              <h3 className="uppercase heading-md">Filters</h3>
+              <h3 className="uppercase heading-md">{t("filters")}</h3>
               <div
                 onClick={() => setFilterModal(false)}
                 className="cursor-pointer"
@@ -56,18 +58,18 @@ export const ProductSidebar = () => {
             variant="tonal"
             onClick={() => clearAllFilters()}
           >
-            Clear all
+            {t("clearAll")}
           </Button>
           <Button
             className="w-1/2 uppercase label-sm"
             onClick={() => setFilterModal(false)}
           >
-            View 222 listings
+            {t("viewListings", { count: 222 })}
           </Button>
         </div>
       </div>
       <div className="absolute z-10 bg-primary p-8 w-full top-4 heading-md text-center rounded-lg shadow-md">
-        Set your Algolia ID and configure filters to enable product filtering
+        {t("setupAlgolia")}
       </div>
     </aside>
   )
