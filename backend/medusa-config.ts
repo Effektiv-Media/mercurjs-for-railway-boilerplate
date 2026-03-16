@@ -51,6 +51,9 @@ module.exports = defineConfig({
   ],
   modules: [
     {
+      resolve: "./src/modules/listing-fee",
+    },
+    {
       resolve: '@medusajs/medusa/file',
       options: {
         providers: [

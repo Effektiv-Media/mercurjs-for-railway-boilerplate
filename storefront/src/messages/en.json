@@ -247,7 +247,9 @@
     "viewListings": "View {count} listings",
     "setupAlgolia": "Set your Algolia ID and configure filters to enable product filtering",
     "noResultsTitle": "No results",
-    "noResultsDescription": "Sorry, we can't find any results for your criteria"
+    "noResultsDescription": "Sorry, we can't find any results for your criteria",
+    "expired": "Expired",
+    "hoursLeft": "{hours}h left"
   },
   "pagination": {
     "morePages": "More pages",

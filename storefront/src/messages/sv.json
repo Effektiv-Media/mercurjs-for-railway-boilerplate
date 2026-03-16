@@ -247,7 +247,9 @@
     "viewListings": "Visa {count} annonser",
     "setupAlgolia": "Ange ditt Algolia-ID och konfigurera filter för att aktivera produktfiltrering",
     "noResultsTitle": "Inga resultat",
-    "noResultsDescription": "Tyvärr hittar vi inga resultat för dina kriterier"
+    "noResultsDescription": "Tyvärr hittar vi inga resultat för dina kriterier",
+    "expired": "Utgången",
+    "hoursLeft": "{hours}h kvar"
   },
   "pagination": {
     "morePages": "Fler sidor",

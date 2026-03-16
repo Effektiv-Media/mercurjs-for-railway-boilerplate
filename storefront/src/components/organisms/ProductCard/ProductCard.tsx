@@ -7,6 +7,7 @@ import { BaseHit, Hit } from "instantsearch.js"
 import clsx from "clsx"
 import LocalizedClientLink from "@/components/molecules/LocalizedLink/LocalizedLink"
 import { getProductPrice } from "@/lib/helpers/get-product-price"
+import { useTranslations } from "next-intl"
 
 export const ProductCard = ({
   product,
@@ -17,6 +18,8 @@ export const ProductCard = ({
   api_product?: HttpTypes.StoreProduct | null
   className?: string
 }) => {
+  const t = useTranslations("listing")
+
   if (!api_product) {
     return null
   }
@@ -29,6 +32,27 @@ export const ProductCard = ({
   const isDiscount =
     Boolean(cheapestPrice?.percentage_diff) &&
     cheapestPrice?.calculated_price !== cheapestPrice?.original_price
+
+  const metadata = (api_product.metadata || {}) as Record<string, unknown>
+  const expiresAt =
+    typeof metadata.listing_expires_at === "string"
+      ? new Date(metadata.listing_expires_at)
+      : null
+  const hasValidExpiry = Boolean(expiresAt && !Number.isNaN(expiresAt.getTime()))
+  const isExpired =
+    metadata.listing_is_expired === true ||
+    (hasValidExpiry ? expiresAt!.getTime() <= Date.now() : false)
+  const msLeft = hasValidExpiry
+    ? Math.max(0, expiresAt!.getTime() - Date.now())
+    : null
+  const hoursLeft = msLeft !== null ? Math.ceil(msLeft / (1000 * 60 * 60)) : null
+  const showExpiryBadge = metadata.listing_is_expired === true || hasValidExpiry
+  const isUrgent = !isExpired && hoursLeft !== null && hoursLeft <= 24
+  const expiryLabel = isExpired
+    ? t("expired")
+    : hoursLeft !== null
+      ? t("hoursLeft", { hours: hoursLeft })
+      : null
 
   return (
     <div
@@ -73,6 +97,20 @@ export const ProductCard = ({
             <div className="absolute top-2 left-2 z-10">
               <span className="inline-flex items-center rounded-full bg-rose-500 text-white text-xs font-bold px-2.5 py-1 shadow-sm">
                 SPARA {cheapestPrice?.percentage_diff}%
+              </span>
+            </div>
+          ) : null}
+
+          {showExpiryBadge && expiryLabel ? (
+            <div className="absolute top-2 right-2 z-10">
+              <span
+                className={clsx(
+                  "inline-flex items-center rounded-full text-white text-xs font-bold px-2.5 py-1 shadow-sm",
+                  isExpired || isUrgent ? "bg-rose-500" : "bg-slate-700"
+                )}
+              >
+                {isUrgent ? "🔥 " : ""}
+                {expiryLabel}
               </span>
             </div>
           ) : null}

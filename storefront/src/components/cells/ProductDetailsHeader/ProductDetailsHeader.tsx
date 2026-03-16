@@ -65,18 +65,21 @@ export const ProductDetailsHeader = ({
   // get selected variant id
   const variantId =
     product.variants?.find(({ options }: { options: any }) =>
-      options?.every((option: any) =>
-        selectedVariant[option.option?.title.toLowerCase() || ""]?.includes(
-          option.value
-        )
-      )
-    )?.id || ""
+      options?.length
+        ? options.every((option: any) =>
+            selectedVariant[option.option?.title.toLowerCase() || ""]?.includes(
+              option.value
+            )
+          )
+        : true
+    )?.id || cheapestVariant?.id || ""
 
   // get variant price
   const { variantPrice } = getProductPrice({
     product,
     variantId,
   })
+  const displayPrice = variantPrice || cheapestPrice
 
   const variantStock =
     product.variants?.find(({ id }) => id === variantId)?.inventory_quantity ||
@@ -138,15 +141,15 @@ export const ProductDetailsHeader = ({
           </h2>
           <h1 className="heading-lg text-primary">{product.title}</h1>
           <div className="mt-2 flex gap-2 items-center">
-            {hasAnyPrice && variantPrice ? (
+            {hasAnyPrice && displayPrice ? (
               <>
                 <span className="heading-md text-primary">
-                  {variantPrice.calculated_price}
+                  {displayPrice.calculated_price}
                 </span>
-                {variantPrice.calculated_price_number !==
-                  variantPrice.original_price_number && (
+                {displayPrice.calculated_price_number !==
+                  displayPrice.original_price_number && (
                   <span className="label-md text-secondary line-through">
-                    {variantPrice.original_price}
+                    {displayPrice.original_price}
                   </span>
                 )}
               </>

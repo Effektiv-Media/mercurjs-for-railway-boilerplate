@@ -106,7 +106,9 @@ export const ProductCreateForm = ({
     }
 
     const media = values.media || []
-    const payload = { ...values, media: undefined }
+    const additional_data = (values as any).additional_data
+    const { listing_duration_hours, ...restValues } = values
+    const payload = { ...restValues, media: undefined }
 
     let uploadedMedia: (HttpTypes.AdminFile & {
       isThumbnail: boolean
@@ -163,7 +165,10 @@ export const ProductCreateForm = ({
         collection_id: payload.collection_id || undefined,
         shipping_profile_id: undefined,
         enable_variants: undefined,
-        additional_data: undefined,
+        additional_data,
+        metadata: {
+          listing_duration_hours,
+        },
         categories: payload.categories.map((cat) => ({
           id: cat,
         })),

@@ -1,9 +1,13 @@
-import { Input, Textarea } from "@medusajs/ui"
+import { Input, Select, Textarea } from "@medusajs/ui"
 import { UseFormReturn } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import { Form } from "../../../../../../../components/common/form"
 import { HandleInput } from "../../../../../../../components/inputs/handle-input"
+import {
+  FALLBACK_LISTING_FEE_RULES,
+  useListingFeeRules,
+} from "../../../../../../../hooks/api/listing-fee-rules"
 import { ProductCreateSchemaType } from "../../../../types"
 
 type ProductCreateGeneralSectionProps = {
@@ -14,6 +18,10 @@ export const ProductCreateGeneralSection = ({
   form,
 }: ProductCreateGeneralSectionProps) => {
   const { t } = useTranslation()
+  const { listing_fee_rules } = useListingFeeRules()
+  const listingFeeOptions = listing_fee_rules.length
+    ? listing_fee_rules
+    : FALLBACK_LISTING_FEE_RULES
 
   return (
     <div id="general" className="flex flex-col gap-y-6">
@@ -82,6 +90,40 @@ export const ProductCreateGeneralSection = ({
               <Form.Control>
                 <Textarea {...field} placeholder="A warm and cozy jacket" />
               </Form.Control>
+            </Form.Item>
+          )
+        }}
+      />
+      <Form.Field
+        control={form.control}
+        name="listing_duration_hours"
+        render={({ field }) => {
+          return (
+            <Form.Item>
+              <Form.Label>Listing duration</Form.Label>
+              <Form.Control>
+                <Select
+                  value={String(field.value)}
+                  onValueChange={(value) => field.onChange(Number(value))}
+                >
+                  <Select.Trigger>
+                    <Select.Value />
+                  </Select.Trigger>
+                  <Select.Content>
+                    {listingFeeOptions.map((rule) => {
+                      return (
+                        <Select.Item
+                          key={`duration-${rule.duration_hours}`}
+                          value={String(rule.duration_hours)}
+                        >
+                          {`${rule.duration_hours} timmar (${rule.fee_percentage}% avgift)`}
+                        </Select.Item>
+                      )
+                    })}
+                  </Select.Content>
+                </Select>
+              </Form.Control>
+              <Form.ErrorMessage />
             </Form.Item>
           )
         }}

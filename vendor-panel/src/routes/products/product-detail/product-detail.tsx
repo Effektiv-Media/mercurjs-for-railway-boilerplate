@@ -8,6 +8,7 @@ import { ProductMediaSection } from "./components/product-media-section"
 import { ProductOptionSection } from "./components/product-option-section"
 import { ProductOrganizationSection } from "./components/product-organization-section"
 import { ProductVariantSection } from "./components/product-variant-section"
+import { PRODUCT_DETAIL_FIELDS } from "./constants"
 
 import { useDashboardExtension } from "../../../extensions"
 import { ProductAdditionalAttributesSection } from "./components/product-additional-attribute-section/ProductAdditionalAttributesSection"
@@ -15,8 +16,7 @@ import { ProductAdditionalAttributesSection } from "./components/product-additio
 export const ProductDetail = () => {
   const { id } = useParams()
   const { product, isLoading, isError, error } = useProduct(id!, {
-    fields:
-      "*variants.inventory_items,*categories,attribute_values.*,attribute_values.attribute.*",
+    fields: PRODUCT_DETAIL_FIELDS,
   })
 
   const { getWidgets } = useDashboardExtension()

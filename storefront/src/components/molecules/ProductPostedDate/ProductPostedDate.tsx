@@ -1,18 +1,21 @@
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow } from "date-fns"
 
-export const ProductPostedDate = async ({
+export const ProductPostedDate = ({
   posted,
 }: {
-  posted: string | null;
+  posted?: string | null
 }) => {
-  const postedDate = formatDistanceToNow(
-    new Date(posted || ''),
-    { addSuffix: true }
-  );
+  const postedValue = typeof posted === "string" ? posted : ""
+  const postedAt = postedValue ? new Date(postedValue) : null
+  const hasValidPostedAt = postedAt && !Number.isNaN(postedAt.getTime())
+
+  const postedDate = hasValidPostedAt
+    ? formatDistanceToNow(postedAt, { addSuffix: true })
+    : "-"
 
   return (
-    <p className='label-md text-secondary'>
+    <p className="label-md text-secondary">
       Posted: {postedDate}
     </p>
-  );
-};
+  )
+}
