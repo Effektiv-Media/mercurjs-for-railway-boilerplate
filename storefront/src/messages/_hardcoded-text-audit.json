@@ -1,8 +1,8 @@
 {
-  "src/app/[locale]/(main)/categories/[category]/page.tsx": [
+  "src/app/[locale]/(main)/kategorier/[category]/page.tsx": [
     "c.iso_2) || []) ) ) as string[] languages = locales.reduce"
   ],
-  "src/app/[locale]/(main)/categories/page.tsx": [
+  "src/app/[locale]/(main)/kategorier/page.tsx": [
     "c.iso_2) || []) ) ) as string[] languages = locales.reduce"
   ],
   "src/app/[locale]/(main)/page.tsx": [

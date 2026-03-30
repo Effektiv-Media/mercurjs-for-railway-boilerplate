@@ -14,7 +14,7 @@ export function CartEmpty() {
         <p className="mt-2 text-lg text-secondary text-center">
           {t("empty")}
         </p>
-        <LocalizedClientLink href="/categories" className="mt-6">
+        <LocalizedClientLink href="/kategorier" className="mt-6">
           <Button className="w-full py-3 flex justify-center items-center">
             {t("explore")}
           </Button>

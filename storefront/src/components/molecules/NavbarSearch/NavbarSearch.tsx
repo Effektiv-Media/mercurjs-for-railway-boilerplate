@@ -18,9 +18,9 @@ export const NavbarSearch = ({
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (search) {
-      redirect(`/categories?query=${search}`)
+      redirect(`/kategorier?query=${search}`)
     } else {
-      redirect(`/categories`)
+      redirect(`/kategorier`)
     }
   }
 

@@ -16,6 +16,11 @@ import { listRegions } from "@/lib/data/regions"
 import { toHreflang } from "@/lib/helpers/hreflang"
 import { getCopy } from "@/const/copy"
 import { getServerI18n } from "@/lib/i18n/server"
+import { 
+  listPopularProducts,
+  listNewArrivalProducts,
+  listBestsellerProducts
+} from "@/lib/data/products"
 
 export async function generateMetadata({
   params,
@@ -129,6 +134,19 @@ export default async function Home({
     "Mercur B2C Demo - Marketplace Storefront"
 
   const copy = getCopy(locale)
+  const popularProducts = await listPopularProducts({
+    countryCode: locale,
+    limit: 12,
+  })
+  const newArrivalProducts = await listNewArrivalProducts({
+    countryCode: locale,
+    limit: 12,
+  })
+
+  const bestsellerProducts = await listBestsellerProducts({
+  countryCode: locale,
+  limit: 14,
+})
 
   return (
     <main className="flex flex-col gap-7 row-start-2 items-center sm:items-start text-primary bg-gradient-to-b from-sky-50/60 via-slate-50 to-slate-100 pb-10">
@@ -173,7 +191,7 @@ export default async function Home({
         heading={copy.home.hero.heading}
         paragraph={copy.home.hero.paragraph}
         buttons={[
-          { label: copy.home.hero.buttons.buy, path: "/categories" },
+          { label: copy.home.hero.buttons.buy, path: "/kategorier" },
           {
             label: copy.home.hero.buttons.sell,
             path:
@@ -191,10 +209,12 @@ export default async function Home({
         <DealQuickLinks />
       </div>
 
+        {/* Popular products section */}
       <div className="px-4 lg:px-8 w-full">
         <HomeProductSection
           heading={copy.home.sections.trending}
           locale={locale}
+          products={popularProducts}
           home
           badge={t("pages.home.popularBadge")}
           minTiles={12}
@@ -205,6 +225,7 @@ export default async function Home({
         <HomeProductSection
           heading={t("pages.home.newArrivalsHeading")}
           locale={locale}
+          products={newArrivalProducts}
           home
           badge={t("pages.home.newProductsBadge")}
           minTiles={12}
@@ -219,6 +240,7 @@ export default async function Home({
         <HomeProductSection
           heading={t("pages.home.moreDealsHeading")}
           locale={locale}
+          products={bestsellerProducts}
           home
           badge={t("pages.home.valuePicksBadge")}
           minTiles={14}

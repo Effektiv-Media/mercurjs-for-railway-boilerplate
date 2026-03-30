@@ -15,7 +15,7 @@ export const CartItemsHeader = ({
   const t = useTranslations("orders")
 
   return (
-    <LocalizedClientLink href={`/sellers/${seller.handle}`}>
+    <LocalizedClientLink href={`/saljare/${seller.handle}`}>
       <div className="border rounded-sm p-4 flex gap-4 items-center">
         <SellerAvatar photo={seller.photo} size={32} alt={seller.name} />
 

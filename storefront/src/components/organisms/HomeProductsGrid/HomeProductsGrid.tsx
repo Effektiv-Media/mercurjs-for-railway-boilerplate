@@ -12,7 +12,7 @@ export const HomeProductsGrid = async ({
   minTiles = 0,
 }: {
   locale: string
-  sellerProducts?: Product[]
+  sellerProducts?: Product[] | HttpTypes.StoreProduct[]
   limit?: number
   home?: boolean
   minTiles?: number
@@ -43,7 +43,8 @@ export const HomeProductsGrid = async ({
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-2 sm:gap-3">
       {repeatedItems.map((product, index) => {
-        const apiProduct = home
+        const apiProduct = 
+        sellerProducts.length > 0 || home
           ? (product as HttpTypes.StoreProduct)
           : products.find((p) => {
               const { cheapestPrice } = getProductPrice({ product: p })

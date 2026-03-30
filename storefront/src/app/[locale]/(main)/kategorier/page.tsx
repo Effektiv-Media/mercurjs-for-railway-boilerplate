@@ -1,15 +1,14 @@
 import { ProductListingSkeleton } from "@/components/organisms/ProductListingSkeleton/ProductListingSkeleton"
-import { getCategoryByHandle } from "@/lib/data/categories"
 import { Suspense } from "react"
 
-import type { Metadata } from "next"
 import { Breadcrumbs } from "@/components/atoms"
 import { AlgoliaProductsListing, ProductListing } from "@/components/sections"
-import { notFound } from "next/navigation"
+import { getRegion } from "@/lib/data/regions"
 import isBot from "@/lib/helpers/isBot"
 import { headers } from "next/headers"
+import type { Metadata } from "next"
 import Script from "next/script"
-import { getRegion, listRegions } from "@/lib/data/regions"
+import { listRegions } from "@/lib/data/regions"
 import { listProducts } from "@/lib/data/products"
 import { toHreflang } from "@/lib/helpers/hreflang"
 import { getServerI18n } from "@/lib/i18n/server"
@@ -19,19 +18,14 @@ export const revalidate = 60
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ category: string; locale: string }>
+  params: Promise<{ locale: string }>
 }): Promise<Metadata> {
-  const { category, locale } = await params
+  const { locale } = await params
   const { t } = await getServerI18n({ regionLocale: locale })
   const headersList = await headers()
   const host = headersList.get("host")
   const protocol = headersList.get("x-forwarded-proto") || "https"
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `${protocol}://${host}`
-
-  const cat = await getCategoryByHandle([category])
-  if (!cat) {
-    return {}
-  }
 
   let languages: Record<string, string> = {}
   try {
@@ -42,30 +36,25 @@ export async function generateMetadata({
       )
     ) as string[]
     languages = locales.reduce<Record<string, string>>((acc, code) => {
-      acc[toHreflang(code)] = `${baseUrl}/${code}/categories/${cat.handle}`
+      acc[toHreflang(code)] = `${baseUrl}/${code}/kategorier`
       return acc
     }, {})
   } catch {
-    languages = {
-      [toHreflang(locale)]: `${baseUrl}/${locale}/categories/${cat.handle}`,
-    }
+    languages = { [toHreflang(locale)]: `${baseUrl}/${locale}/kategorier` }
   }
 
-  const title = `${cat.name} ${t("pages.categorySuffix")}`
-  const description = `${cat.name} Category - ${
-    process.env.NEXT_PUBLIC_SITE_NAME || "Storefront"
-  }`
-  const canonical = `${baseUrl}/${locale}/categories/${cat.handle}`
+  const title = t("pages.allProducts")
+  const description = t("pages.allProductsDescription", {
+    siteName: process.env.NEXT_PUBLIC_SITE_NAME || "our store",
+  })
+  const canonical = `${baseUrl}/${locale}/kategorier`
 
   return {
     title,
     description,
     alternates: {
       canonical,
-      languages: {
-        ...languages,
-        "x-default": `${baseUrl}/categories/${cat.handle}`,
-      },
+      languages: { ...languages, "x-default": `${baseUrl}/kategorier` },
     },
     robots: { index: true, follow: true },
     openGraph: {
@@ -81,33 +70,27 @@ export async function generateMetadata({
 const ALGOLIA_ID = process.env.NEXT_PUBLIC_ALGOLIA_ID
 const ALGOLIA_SEARCH_KEY = process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY
 
-async function Category({
+async function AllCategories({
   params,
 }: {
-  params: Promise<{
-    category: string
-    locale: string
-  }>
+  params: Promise<{ locale: string }>
 }) {
-  const { category: handle, locale } = await params
+  const { locale } = await params
+  const { t } = await getServerI18n({ regionLocale: locale })
 
-  const category = await getCategoryByHandle([handle])
-
-  if (!category) {
-    return notFound()
-  }
-  const currency_code = (await getRegion(locale))?.currency_code || "usd"
   const ua = (await headers()).get("user-agent") || ""
   const bot = isBot(ua)
 
   const breadcrumbsItems = [
     {
-      path: category?.handle,
-      label: category?.name,
+      path: "/",
+      label: t("pages.allProducts"),
     },
   ]
 
-  // Small cached list for JSON-LD itemList
+  const currency_code = (await getRegion(locale))?.currency_code || "usd"
+
+  // Fetch a small cached list for ItemList JSON-LD
   const headersList = await headers()
   const host = headersList.get("host")
   const protocol = headersList.get("x-forwarded-proto") || "https"
@@ -117,7 +100,6 @@ async function Category({
   } = await listProducts({
     countryCode: locale,
     queryParams: { limit: 8, order: "created_at", fields: "id,title,handle" },
-    category_id: category.id,
   })
 
   const itemList = jsonLdProducts.slice(0, 8).map((p, idx) => ({
@@ -130,7 +112,7 @@ async function Category({
   return (
     <main className="container">
       <Script
-        id="ld-breadcrumbs-category"
+        id="ld-breadcrumbs-categories"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
@@ -140,15 +122,15 @@ async function Category({
               {
                 "@type": "ListItem",
                 position: 1,
-                name: category.name,
-                item: `${baseUrl}/${locale}/categories/${category.handle}`,
+                name: t("pages.allProducts"),
+                item: `${baseUrl}/${locale}/kategorier`,
               },
             ],
           }),
         }}
       />
       <Script
-        id="ld-itemlist-category"
+        id="ld-itemlist-categories"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
@@ -162,14 +144,13 @@ async function Category({
         <Breadcrumbs items={breadcrumbsItems} />
       </div>
 
-      <h1 className="heading-xl uppercase">{category.name}</h1>
+      <h1 className="heading-xl uppercase">{t("pages.allProducts")}</h1>
 
       <Suspense fallback={<ProductListingSkeleton />}>
         {bot || !ALGOLIA_ID || !ALGOLIA_SEARCH_KEY ? (
-          <ProductListing category_id={category.id} showSidebar />
+          <ProductListing showSidebar locale={locale} />
         ) : (
           <AlgoliaProductsListing
-            category_id={category.id}
             locale={locale}
             currency_code={currency_code}
           />
@@ -179,4 +160,4 @@ async function Category({
   )
 }
 
-export default Category
+export default AllCategories

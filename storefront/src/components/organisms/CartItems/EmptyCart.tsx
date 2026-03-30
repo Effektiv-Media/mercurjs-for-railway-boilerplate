@@ -18,7 +18,7 @@ export const EmptyCart = async () => {
         <p className="text-lg text-center py-2">
           {t("empty")}
         </p>
-        <LocalizedClientLink href="/categories" className="w-full mt-6">
+        <LocalizedClientLink href="/kategorier" className="w-full mt-6">
           <Button className="w-full py-3 md:px-24 uppercase">
             {t("explore")}
           </Button>

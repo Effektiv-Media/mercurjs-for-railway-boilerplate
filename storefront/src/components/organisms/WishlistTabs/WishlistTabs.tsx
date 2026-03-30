@@ -13,7 +13,7 @@ export const WishlistTabs = async ({ tab }: { tab: string }) => {
     { label: t("wishlistTabProducts"), link: "/wishlist/products" },
     { label: t("wishlistTabCollections"), link: "/wishlist/collections" },
   ]
-  // const DEFAULT_REGION = process.env.NEXT_PUBLIC_DEFAULT_REGION || "gb"
+  // const DEFAULT_REGION = process.env.NEXT_PUBLIC_DEFAULT_REGION || "se"
 
   // const { response } = await listProducts({
   //   countryCode: DEFAULT_REGION,

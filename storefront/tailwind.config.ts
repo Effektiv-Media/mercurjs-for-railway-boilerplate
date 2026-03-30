@@ -9,6 +9,51 @@ export default {
   ],
   theme: {
     extend: {
+      animation: {
+          "urgent-glow": "urgentGlow 2.5s ease-in-out infinite",
+          "urgent-pill": "urgentGlow 2.5s ease-in-out infinite",
+          "flame-flicker": "flameFlicker 0.9s infinite ease-in-out",
+        },
+        keyframes: {
+          urgentGlow: {
+            "0%, 100%": {
+              boxShadow: "0 1px 2px rgba(15,23,42,0.04), 0 0 0 rgba(249,115,22,0)",
+              transform: "scale(1)",
+            },
+            "50%": {
+              boxShadow: "0 8px 22px rgba(249,115,22,0.22), 0 0 18px rgba(249,115,22,0.18)",
+              transform: "scale(1.00)",
+            },
+          },
+          urgentPill: {
+            "0%, 100%": {
+              transform: "scale(1)",
+              boxShadow: "0 0 0 rgba(249,115,22,0)",
+            },
+            "50%": {
+              transform: "scale(1.06)",
+              boxShadow: "0 0 14px rgba(249,115,22,0.45)",
+            },
+          },
+          flameFlicker: {
+            "0%, 100%": {
+              transform: "scale(1) rotate(0deg)",
+              opacity: "1",
+            },
+            "25%": {
+              transform: "scale(1.1) rotate(-2deg)",
+              opacity: "0.9",
+            },
+            "50%": {
+              transform: "scale(0.95) rotate(2deg)",
+              opacity: "1",
+            },
+            "75%": {
+              transform: "scale(1.05) rotate(-1deg)",
+              opacity: "0.95",
+            },
+          },
+        },
       backgroundColor: {
         primary: "rgba(var(--bg-primary))",
         secondary: "rgba(var(--bg-secondary))",

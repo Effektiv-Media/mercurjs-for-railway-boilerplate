@@ -15,7 +15,7 @@ export const HeaderCategoryNavbar = ({
       {categories?.map(({ id, handle, name }) => (
         <LocalizedClientLink
           key={id}
-          href={`/categories/${handle}`}
+          href={`/kategorier/${handle}`}
           onClick={() => (onClose ? onClose(false) : null)}
           className={cn(
             "label-md w-full rounded-lg px-3 py-2 text-slate-700 hover:bg-slate-100 transition-colors"

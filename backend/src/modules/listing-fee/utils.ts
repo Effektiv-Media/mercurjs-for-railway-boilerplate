@@ -8,23 +8,6 @@ export type ListingFeeRuleValue = {
   is_active?: boolean
 }
 
-export const DEFAULT_LISTING_FEE_RULES: ListingFeeRuleValue[] = [
-  {
-    duration_hours: 10,
-    fee_bps: 400,
-    is_active: true,
-  },
-  {
-    duration_hours: 24,
-    fee_bps: 600,
-    is_active: true,
-  },
-  {
-    duration_hours: 48,
-    fee_bps: 800,
-    is_active: true,
-  },
-]
 
 export const bpsToPercentage = (bps: number) => {
   return Number((bps / 100).toFixed(2))
@@ -86,25 +69,15 @@ export const resolveListingFeeBps = (
 export const getActiveListingFeeRules = async (container: MedusaContainer) => {
   const query = container.resolve(ContainerRegistrationKeys.QUERY)
 
-  try {
-    const { data } = await query.graph({
-      entity: "listing_fee_rule",
-      fields: ["id", "duration_hours", "fee_bps", "is_active"],
-      filters: {
-        is_active: true,
-      },
-    })
+  const { data } = await query.graph({
+    entity: "listing_fee_rule",
+    fields: ["id", "duration_hours", "fee_bps", "is_active"],
+    filters: {
+      is_active: true,
+    },
+  })
 
-    const normalized = normalizeRules(data as ListingFeeRuleValue[])
-
-    if (normalized.length) {
-      return normalized
-    }
-  } catch {
-    // Fallback to defaults when module table isn't available yet.
-  }
-
-  return normalizeRules(DEFAULT_LISTING_FEE_RULES)
+  return normalizeRules(data as ListingFeeRuleValue[])
 }
 
 export const toFinitePositiveInt = (value: unknown): number | null => {

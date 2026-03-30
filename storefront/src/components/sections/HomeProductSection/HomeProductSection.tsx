@@ -1,10 +1,11 @@
 import { HomeProductsGrid } from "@/components/organisms"
 import LocalizedClientLink from "@/components/molecules/LocalizedLink/LocalizedLink"
 import { Product } from "@/types/product"
+import { HttpTypes } from "@medusajs/types"
 
 export const HomeProductSection = async ({
   heading,
-  locale = process.env.NEXT_PUBLIC_DEFAULT_REGION || "pl",
+  locale = process.env.NEXT_PUBLIC_DEFAULT_REGION || "se",
   products = [],
   home = false,
   badge = "Marketplace picks",
@@ -12,7 +13,7 @@ export const HomeProductSection = async ({
 }: {
   heading: string
   locale?: string
-  products?: Product[]
+  products?: Product[] | HttpTypes.StoreProduct[]
   home?: boolean
   badge?: string
   minTiles?: number
@@ -28,7 +29,7 @@ export const HomeProductSection = async ({
             {badge}
           </span>
           <LocalizedClientLink
-            href="/categories"
+            href="/kategorier"
             className="inline-flex rounded-full border border-slate-300 px-3 py-1 text-xs font-semibold uppercase tracking-[0.08em] text-slate-700 hover:bg-slate-100"
           >
             Se alla

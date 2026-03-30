@@ -16,7 +16,7 @@ export const HeadingCategories = ({
       {categories?.map(({ id, handle, name }) => (
         <LocalizedClientLink
           key={id}
-          href={`/categories/${handle}`}
+          href={`/kategorier/${handle}`}
           className={cn(
             "label-md uppercase px-2 mb-4 md:mb-0",
             handle === category && "border-b border-primary"

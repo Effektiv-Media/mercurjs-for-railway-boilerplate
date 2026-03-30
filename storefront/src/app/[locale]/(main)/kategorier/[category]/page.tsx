@@ -1,31 +1,41 @@
 import { ProductListingSkeleton } from "@/components/organisms/ProductListingSkeleton/ProductListingSkeleton"
+import { getCategoryByHandle } from "@/lib/data/categories"
 import { Suspense } from "react"
 
+import type { Metadata } from "next"
 import { Breadcrumbs } from "@/components/atoms"
 import { AlgoliaProductsListing, ProductListing } from "@/components/sections"
-import { getRegion } from "@/lib/data/regions"
+import { notFound } from "next/navigation"
 import isBot from "@/lib/helpers/isBot"
 import { headers } from "next/headers"
-import type { Metadata } from "next"
 import Script from "next/script"
-import { listRegions } from "@/lib/data/regions"
+import { getRegion, listRegions } from "@/lib/data/regions"
 import { listProducts } from "@/lib/data/products"
 import { toHreflang } from "@/lib/helpers/hreflang"
 import { getServerI18n } from "@/lib/i18n/server"
+import { getCategoryTranslationKey } from "@/lib/helpers/category-translation"
+import { normalizeLocale } from "@/lib/helpers/normalize-locale"
 
 export const revalidate = 60
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: string }>
+  params: Promise<{ category: string; locale: string }>
 }): Promise<Metadata> {
-  const { locale } = await params
-  const { t } = await getServerI18n({ regionLocale: locale })
+  const { category, locale } = await params
+  const normalizedLocale = normalizeLocale(locale)
+
+  const { t } = await getServerI18n({ regionLocale: normalizedLocale })
   const headersList = await headers()
   const host = headersList.get("host")
   const protocol = headersList.get("x-forwarded-proto") || "https"
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `${protocol}://${host}`
+
+  const cat = await getCategoryByHandle([category])
+  if (!cat) {
+    return {}
+  }
 
   let languages: Record<string, string> = {}
   try {
@@ -36,25 +46,35 @@ export async function generateMetadata({
       )
     ) as string[]
     languages = locales.reduce<Record<string, string>>((acc, code) => {
-      acc[toHreflang(code)] = `${baseUrl}/${code}/categories`
+      acc[toHreflang(code)] = `${baseUrl}/${code}/kategorier/${cat.handle}`
       return acc
     }, {})
   } catch {
-    languages = { [toHreflang(locale)]: `${baseUrl}/${locale}/categories` }
+    languages = {
+      [toHreflang(locale)]: `${baseUrl}/${locale}/kategorier/${cat.handle}`,
+    }
   }
 
-  const title = t("pages.allProducts")
-  const description = t("pages.allProductsDescription", {
-    siteName: process.env.NEXT_PUBLIC_SITE_NAME || "our store",
-  })
-  const canonical = `${baseUrl}/${locale}/categories`
+  const translationKey = getCategoryTranslationKey(cat.handle)
+  const localizedCategoryName = translationKey
+    ? t(`categories.${translationKey}`)
+    : cat.name
+
+  const title = `${localizedCategoryName} ${t("pages.categorySuffix")}`
+  const description = `${localizedCategoryName} Category - ${
+    process.env.NEXT_PUBLIC_SITE_NAME || "Storefront"
+  }`
+  const canonical = `${baseUrl}/${locale}/kategorier/${cat.handle}`
 
   return {
     title,
     description,
     alternates: {
       canonical,
-      languages: { ...languages, "x-default": `${baseUrl}/categories` },
+      languages: {
+        ...languages,
+        "x-default": `${baseUrl}/kategorier/${cat.handle}`,
+      },
     },
     robots: { index: true, follow: true },
     openGraph: {
@@ -70,27 +90,41 @@ export async function generateMetadata({
 const ALGOLIA_ID = process.env.NEXT_PUBLIC_ALGOLIA_ID
 const ALGOLIA_SEARCH_KEY = process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY
 
-async function AllCategories({
+async function Category({
   params,
 }: {
-  params: Promise<{ locale: string }>
+  params: Promise<{
+    category: string
+    locale: string
+  }>
 }) {
-  const { locale } = await params
-  const { t } = await getServerI18n({ regionLocale: locale })
+  const { category: handle, locale } = await params
 
+  const category = await getCategoryByHandle([handle])
+
+  if (!category) {
+    return notFound()
+  }
+  const normalizedLocale = normalizeLocale(locale)
+
+  const { t } = await getServerI18n({ regionLocale: normalizedLocale })
+  const translationKey = getCategoryTranslationKey(category.handle)
+  const localizedCategoryName = translationKey
+    ? t(`categories.${translationKey}`)
+    : category.name
+
+  const currency_code = (await getRegion(locale))?.currency_code || "usd"
   const ua = (await headers()).get("user-agent") || ""
   const bot = isBot(ua)
 
   const breadcrumbsItems = [
     {
-      path: "/",
-      label: t("pages.allProducts"),
+      path: category?.handle,
+      label: localizedCategoryName,
     },
   ]
 
-  const currency_code = (await getRegion(locale))?.currency_code || "usd"
-
-  // Fetch a small cached list for ItemList JSON-LD
+  // Small cached list for JSON-LD itemList
   const headersList = await headers()
   const host = headersList.get("host")
   const protocol = headersList.get("x-forwarded-proto") || "https"
@@ -100,19 +134,20 @@ async function AllCategories({
   } = await listProducts({
     countryCode: locale,
     queryParams: { limit: 8, order: "created_at", fields: "id,title,handle" },
+    category_id: category.id,
   })
 
   const itemList = jsonLdProducts.slice(0, 8).map((p, idx) => ({
     "@type": "ListItem",
     position: idx + 1,
-    url: `${baseUrl}/${locale}/products/${p.handle}`,
+    url: `${baseUrl}/${locale}/produkter/${p.handle}`,
     name: p.title,
   }))
 
   return (
     <main className="container">
       <Script
-        id="ld-breadcrumbs-categories"
+        id="ld-breadcrumbs-category"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
@@ -122,15 +157,15 @@ async function AllCategories({
               {
                 "@type": "ListItem",
                 position: 1,
-                name: t("pages.allProducts"),
-                item: `${baseUrl}/${locale}/categories`,
+                name: localizedCategoryName,
+                item: `${baseUrl}/${locale}/kategorier/${category.handle}`,
               },
             ],
           }),
         }}
       />
       <Script
-        id="ld-itemlist-categories"
+        id="ld-itemlist-category"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
@@ -144,13 +179,14 @@ async function AllCategories({
         <Breadcrumbs items={breadcrumbsItems} />
       </div>
 
-      <h1 className="heading-xl uppercase">{t("pages.allProducts")}</h1>
+      <h1 className="heading-xl uppercase">{localizedCategoryName}</h1>
 
       <Suspense fallback={<ProductListingSkeleton />}>
         {bot || !ALGOLIA_ID || !ALGOLIA_SEARCH_KEY ? (
-          <ProductListing showSidebar locale={locale} />
+          <ProductListing category_id={category.id} showSidebar />
         ) : (
           <AlgoliaProductsListing
+            category_id={category.id}
             locale={locale}
             currency_code={currency_code}
           />
@@ -160,4 +196,4 @@ async function AllCategories({
   )
 }
 
-export default AllCategories
+export default Category

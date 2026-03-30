@@ -3,6 +3,12 @@
     "becomeSeller": "Become a seller",
     "support": "Support"
   },
+  "categories": {
+    "allProducts": "All products",
+    "electronics": "Electronics",
+    "apparel": "Apparel",
+    "homeGarden": "Home & Garden"
+  },
   "mobileNav": {
     "menu": "Menu",
     "openMenu": "Open menu",
@@ -166,7 +172,7 @@
       "popularBadge": "Popular",
       "newArrivalsHeading": "New arrivals",
       "newProductsBadge": "New products",
-      "moreDealsHeading": "More deals right now",
+      "moreDealsHeading": "Bestsellers",
       "valuePicksBadge": "Value picks",
       "quickLinksAria": "Quick links",
       "quickLinksHeading": "Quick picks for deals",

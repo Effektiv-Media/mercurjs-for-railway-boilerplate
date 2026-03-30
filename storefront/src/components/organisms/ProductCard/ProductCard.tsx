@@ -57,14 +57,15 @@ export const ProductCard = ({
   return (
     <div
       className={clsx(
-        "relative group border border-slate-200 rounded-2xl flex flex-col h-full bg-white shadow-[0_1px_2px_rgba(15,23,42,0.04)] hover:shadow-[0_16px_30px_rgba(2,132,199,0.16)] transition-shadow duration-200",
+        "relative group border border-slate-200 rounded-2xl flex flex-col h-full bg-white shadow-[0_1px_2px_rgba(15,23,42,0.04)] hover:shadow-[0_16px_30px_rgba(2,132,199,0.16)] transition-all duration-300",
         "p-2.5 sm:p-3",
+        isUrgent && "animate-urgent-glow",
         className
       )}
     >
       <div className="relative w-full bg-slate-100 aspect-square rounded-xl overflow-hidden">
         <LocalizedClientLink
-          href={`/products/${product.handle}`}
+          href={`/produkter/${product.handle}`}
           aria-label={`View ${productName}`}
           title={`View ${productName}`}
         >
@@ -105,18 +106,24 @@ export const ProductCard = ({
             <div className="absolute top-2 right-2 z-10">
               <span
                 className={clsx(
-                  "inline-flex items-center rounded-full text-white text-xs font-bold px-2.5 py-1 shadow-sm",
-                  isExpired || isUrgent ? "bg-rose-500" : "bg-slate-700"
+                  "inline-flex items-center rounded-full text-white text-xs font-bold px-2.5 py-1 shadow-sm transition-all duration-300",
+                  isExpired
+                    ? "bg-rose-500"
+                    : isUrgent
+                      ? "bg-gradient-to-r from-orange-500 to-rose-500 animate-urgent-pill ring-2 ring-orange-300/50"
+                      : "bg-slate-700"
                 )}
               >
-                {isUrgent ? "🔥 " : ""}
+                {isUrgent ? (
+                  <span className="mr-1 inline-block animate-flame-flicker">🔥</span>
+                ) : null}
                 {expiryLabel}
               </span>
             </div>
           ) : null}
         </LocalizedClientLink>
         <LocalizedClientLink
-          href={`/products/${product.handle}`}
+          href={`/produkter/${product.handle}`}
           aria-label={`See more about ${productName}`}
           title={`See more about ${productName}`}
         >
@@ -126,7 +133,7 @@ export const ProductCard = ({
         </LocalizedClientLink>
       </div>
       <LocalizedClientLink
-        href={`/products/${product.handle}`}
+        href={`/produkter/${product.handle}`}
         aria-label={`Go to ${productName} page`}
         title={`Go to ${productName} page`}
       >

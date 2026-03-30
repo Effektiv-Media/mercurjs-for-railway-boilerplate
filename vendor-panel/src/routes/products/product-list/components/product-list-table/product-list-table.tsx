@@ -1,4 +1,4 @@
-import { Trash } from "@medusajs/icons"
+import { ArrowPath, Trash } from "@medusajs/icons"
 import {
   Button,
   Container,
@@ -184,6 +184,10 @@ const ProductActions = ({ product }: { product: ExtendedAdminProduct }) => {
   const prompt = usePrompt()
   const { mutateAsync } = useDeleteProduct(product.id)
 
+  const isRepublishable =
+    product.status === "draft" &&
+    product.metadata?.listing_is_expired === true
+
   const handleDelete = async () => {
     const res = await prompt({
       title: t("general.areYouSure"),
@@ -219,6 +223,15 @@ const ProductActions = ({ product }: { product: ExtendedAdminProduct }) => {
       groups={[
         {
           actions: [
+            ...(isRepublishable
+              ? [
+                  {
+                    icon: <ArrowPath />,
+                    label: "Republish",
+                    to: `/products/${product.id}/edit?mode=republish`,
+                  },
+                ]
+              : []),
             {
               icon: <Trash />,
               label: t("actions.delete"),

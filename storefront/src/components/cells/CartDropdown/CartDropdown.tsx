@@ -128,7 +128,7 @@ export const CartDropdown = ({ iconColor = "#090909" }: { iconColor?: string }) 
                 <p className="text-lg text-center py-4">
                   {t("emptyInspiration")}
                 </p>
-                <LocalizedClientLink href="/categories">
+                <LocalizedClientLink href="/kategorier">
                   <Button className="w-full py-3">{t("exploreHomePage")}</Button>
                 </LocalizedClientLink>
               </div>

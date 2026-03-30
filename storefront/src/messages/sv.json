@@ -3,6 +3,12 @@
     "becomeSeller": "Bli säljare",
     "support": "Support"
   },
+  "categories": {
+    "allProducts": "Alla produkter",
+    "electronics": "Elektronik",
+    "apparel": "Kläder",
+    "homeGarden": "Hem & Trädgård"
+  },
   "mobileNav": {
     "menu": "Meny",
     "openMenu": "Öppna meny",
@@ -166,7 +172,7 @@
       "popularBadge": "Populärt",
       "newArrivalsHeading": "Nyinkommet",
       "newProductsBadge": "Nya produkter",
-      "moreDealsHeading": "Fler fynd just nu",
+      "moreDealsHeading": "Bästsäljare",
       "valuePicksBadge": "Prisvärda val",
       "quickLinksAria": "Snabblänkar",
       "quickLinksHeading": "Snabbval för fynd",

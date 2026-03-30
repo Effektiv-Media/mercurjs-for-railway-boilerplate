@@ -17,12 +17,17 @@ import { useDataTable } from "@hooks/use-data-table";
 import { CommissionDetailTable } from "@routes/commission/components/commission-detail-table";
 import CreateCommissionRuleForm from "@routes/commission/components/create-commission-rule-form";
 import UpsertDefaultCommissionRuleForm from "@routes/commission/components/upsert-default-commission-rule";
+import { useListingFeeRules } from "@hooks/api/listing-fee-rules";
+import { useListingFeeRulesTableColumns } from "@hooks/table/columns/use-listing-fee-rules-table-columns";
+import { useListingFeeRulesTableQuery } from "@hooks/table/query/use-listing-fee-rules-table-query";
+import CreateListingFeeRuleForm from "@routes/commission/components/create-listing-fee-rule-form";
 
 const PAGE_SIZE = 50;
 
 export const Commission = () => {
   const [createRuleOpen, setCreateRuleOpen] = useState(false);
   const [upsertDefaultOpen, setUpsertDefaultOpen] = useState(false);
+  const [createListingFeeRuleOpen, setCreateListingFeeRuleOpen] = useState(false);
   const defaultRule = useDefaultCommissionRule();
   const { searchParams, raw } = useCommissionRulesTableQuery({
     pageSize: PAGE_SIZE,
@@ -49,6 +54,36 @@ export const Commission = () => {
     getRowId: (row) => row.id!,
     pageSize: PAGE_SIZE,
   });
+
+    const {
+      searchParams: listingFeeSearchParams,
+      raw: listingFeeRaw,
+    } = useListingFeeRulesTableQuery({
+      pageSize: PAGE_SIZE,
+    });
+
+    const {
+      listing_fee_rules,
+      count: listingFeeCount,
+      isPending: isListingFeeRulesLoading,
+      refetch: refetchListingFeeRules,
+    } = useListingFeeRules({
+      ...(listingFeeSearchParams as Record<string, string | number>),
+    });
+
+    const listingFeeColumns = useListingFeeRulesTableColumns({
+      onSuccess() {
+        refetchListingFeeRules();
+      },
+    });
+
+    const { table: listingFeeTable } = useDataTable({
+      data: listing_fee_rules ?? [],
+      columns: listingFeeColumns,
+      enablePagination: true,
+      getRowId: (row) => row.id,
+      pageSize: PAGE_SIZE,
+    });
 
   return (
     <>
@@ -139,6 +174,63 @@ export const Commission = () => {
           queryObject={raw}
           noRecords={{
             title: "Commission rules",
+            message: "No records",
+          }}
+        />
+      </Container>
+
+      <Container className="divide-y p-0">
+        <div className="flex items-center justify-between px-6 py-4">
+          <div>
+            <Heading>Listing Duration Commission Rules</Heading>
+            <Text className="text-ui-fg-subtle" size="small">
+              View duration-based listing fee rules used by vendors when
+              creating or republishing products.
+            </Text>
+          </div>
+
+          <Drawer
+            open={createListingFeeRuleOpen}
+            onOpenChange={(openChanged) =>
+              setCreateListingFeeRuleOpen(openChanged)
+            }
+          >
+            <Drawer.Trigger
+              onClick={() => {
+                setCreateListingFeeRuleOpen(true);
+              }}
+              asChild
+            >
+              <Button variant="secondary">Create</Button>
+            </Drawer.Trigger>
+
+            <Drawer.Content>
+              <Drawer.Header>
+                <Drawer.Title>Create Listing Fee Rule</Drawer.Title>
+              </Drawer.Header>
+              <Drawer.Body>
+                <CreateListingFeeRuleForm
+                  onSuccess={() => {
+                    setCreateListingFeeRuleOpen(false);
+                    refetchListingFeeRules();
+                  }}
+                />
+              </Drawer.Body>
+            </Drawer.Content>
+          </Drawer>
+        </div>
+
+        <_DataTable
+          table={listingFeeTable}
+          count={listingFeeCount}
+          columns={listingFeeColumns}
+          pageSize={PAGE_SIZE}
+          isLoading={isListingFeeRulesLoading}
+          filters={[]}
+          pagination
+          queryObject={listingFeeRaw}
+          noRecords={{
+            title: "Listing fee rules",
             message: "No records",
           }}
         />

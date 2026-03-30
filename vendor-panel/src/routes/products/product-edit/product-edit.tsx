@@ -1,6 +1,6 @@
 import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
+import { useParams, useSearchParams } from "react-router-dom"
 
 import { RouteDrawer } from "../../../components/modals"
 import { useProduct } from "../../../hooks/api/products"
@@ -10,6 +10,9 @@ import { EditProductForm } from "./components/edit-product-form"
 export const ProductEdit = () => {
   const { id } = useParams()
   const { t } = useTranslation()
+  const [searchParams] = useSearchParams()
+
+  const isRepublishMode = searchParams.get("mode") === "republish"
 
   const { product, isLoading, isError, error } = useProduct(id!, {
     fields: PRODUCT_DETAIL_FIELDS,
@@ -23,13 +26,23 @@ export const ProductEdit = () => {
     <RouteDrawer>
       <RouteDrawer.Header>
         <RouteDrawer.Title asChild>
-          <Heading>{t("products.edit.header")}</Heading>
+          <Heading>
+            {isRepublishMode ? "Republish Product" : t("products.edit.header")}
+          </Heading>
         </RouteDrawer.Title>
         <RouteDrawer.Description className="sr-only">
-          {t("products.edit.description")}
+          {isRepublishMode
+          ? "Update the product and republish the listing"
+          : t("products.edit.description")}
         </RouteDrawer.Description>
       </RouteDrawer.Header>
-      {!isLoading && product && <EditProductForm product={product} />}
+
+      {!isLoading && product && (
+        <EditProductForm 
+          product={product}
+          isRepublishMode={isRepublishMode}
+        />
+      )}
     </RouteDrawer>
   )
 }

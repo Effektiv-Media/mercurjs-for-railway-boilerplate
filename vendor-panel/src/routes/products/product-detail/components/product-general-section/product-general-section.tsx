@@ -1,4 +1,4 @@
-import { PencilSquare, Trash } from "@medusajs/icons"
+import { ArrowPath, PencilSquare, Trash } from "@medusajs/icons"
 import { ExtendedAdminProduct } from "../../../../../types/products"
 import { Container, Heading, StatusBadge, usePrompt } from "@medusajs/ui"
 import { format, formatDistanceToNowStrict } from "date-fns"
@@ -101,6 +101,9 @@ export const ProductGeneralSection = ({
       ? t(`products.productStatus.${productStatus}`)
       : productStatus || "Unknown"
 
+  const isRepublishable =
+    productStatus === "draft" && listing.isExpired
+
   useEffect(() => {
     const interval = window.setInterval(() => {
       setNowMs(Date.now())
@@ -149,6 +152,15 @@ export const ProductGeneralSection = ({
                     to: "edit",
                     icon: <PencilSquare />,
                   },
+                  ...(isRepublishable
+                    ? [
+                        {
+                          label: "Republish",
+                          to: `edit?mode=republish`,
+                          icon: <ArrowPath />,
+                        },
+                      ]
+                    : []),
                 ],
               },
               {
