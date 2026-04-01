@@ -29,27 +29,28 @@ type CountrySelectProps = {
 
 const CountrySelect = ({ regions }: CountrySelectProps) => {
   const t = useTranslations("countrySelector")
-  const [current, setCurrent] = useState<
-    | { country: string | undefined; region: string; label: string | undefined }
-    | undefined
-  >(undefined)
+  const [current, setCurrent] = useState<CountryOption | undefined>(undefined)
 
   const { locale: countryCode } = useParams()
   const router = useRouter()
   const currentPath = usePathname().split(`/${countryCode}`)[1]
 
-  const options = useMemo(() => {
+    const options = useMemo<CountryOption[]>(() => {
     return regions
-      ?.map((r) => {
-        return r.countries?.map((c) => ({
-          country: c.iso_2,
-          region: r.id,
-          label: c.display_name,
-        }))
-      })
-      .flat()
-      .sort((a, b) => (a?.label ?? "").localeCompare(b?.label ?? ""))
-  }, [regions])
+      .flatMap((r) =>
+        (r.countries ?? [])
+          .filter(
+            (c): c is NonNullable<typeof c> =>
+              Boolean(c?.iso_2 && c?.display_name)
+          )
+          .map((c) => ({
+            country: c.iso_2!,
+            region: r.id,
+            label: c.display_name!,
+          }))
+      )
+      .sort((a, b) => a.label.localeCompare(b.label))
+    }, [regions])
 
   useEffect(() => {
     if (countryCode) {
