@@ -17,16 +17,18 @@ export const HomeProductsGrid = async ({
   home?: boolean
   minTiles?: number
 }) => {
+    const productHandles = sellerProducts
+    .map((product) => product.handle)
+    .filter(Boolean) as string[]
+
   const {
     response: { products },
   } = await listProducts({
     countryCode: locale,
     queryParams: {
-      limit: home ? limit : undefined,
+      limit: sellerProducts.length ? productHandles.length : home ? limit : undefined,
       order: "created_at",
-      handle: home
-        ? undefined
-        : sellerProducts.map((product) => product.handle),
+      handle: sellerProducts.length ? productHandles : undefined,
     },
     forceCache: !home,
   })
@@ -43,17 +45,15 @@ export const HomeProductsGrid = async ({
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-2 sm:gap-3">
       {repeatedItems.map((product, index) => {
-        const apiProduct = 
-        sellerProducts.length > 0 || home
-          ? (product as HttpTypes.StoreProduct)
-          : products.find((p) => {
-              const { cheapestPrice } = getProductPrice({ product: p })
-              return (
-                cheapestPrice &&
-                p.id === product.id &&
-                Boolean(cheapestPrice)
-              )
-            })
+        const apiProduct = products.find((p) => {
+          const { cheapestPrice } = getProductPrice({ product: p })
+
+          return (
+            cheapestPrice &&
+            (p.id === product.id || p.handle === product.handle) &&
+            Boolean(cheapestPrice)
+          )
+        })
 
         return (
           <ProductCard

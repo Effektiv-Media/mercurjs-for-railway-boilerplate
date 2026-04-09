@@ -24,13 +24,23 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
     description?: string
     discountable?: boolean
     listing_duration_hours?: number | string
+    sales_channel_id?: string
   }
 
   const durationHours = toFinitePositiveInt(body.listing_duration_hours)
+  const salesChannelId =
+    typeof body.sales_channel_id === "string" && body.sales_channel_id.length
+      ? body.sales_channel_id
+      : null
 
-  if (!durationHours) {
+    if (!durationHours) {
+      return res.status(400).json({
+        message: "listing_duration_hours is required and must be a positive integer.",
+      })
+    }
+    if (!salesChannelId) {
     return res.status(400).json({
-      message: "listing_duration_hours is required and must be a positive integer.",
+      message: "sales_channel_id is required.",
     })
   }
 
@@ -78,6 +88,11 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
         discountable: body.discountable,
         status: "published",
         metadata,
+        sales_channels: [
+          {
+            id: salesChannelId,
+          },
+        ],
       },
     },
   })

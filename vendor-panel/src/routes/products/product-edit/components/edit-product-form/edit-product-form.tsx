@@ -18,11 +18,14 @@ import {
   useDashboardExtension,
 } from "../../../../../extensions"
 import { useListingFeeRules } from "../../../../../hooks/api/listing-fee-rules"
+import { useSalesChannels } from "../../../../../hooks/api/sales-channels"
 
 
 type EditProductFormProps = {
   product: ExtendedAdminProduct
   isRepublishMode?: boolean
+  isPublishMode?: boolean
+  isListingActivationMode?: boolean
 }
 
 const EditProductSchema = zod.object({
@@ -31,16 +34,22 @@ const EditProductSchema = zod.object({
   description: zod.string().optional(),
   discountable: zod.boolean(),
   listing_duration_hours: zod.coerce.number().optional(),
+  sales_channel_id: zod.string().optional(),
 })
 
 export const EditProductForm = ({
   product, 
   isRepublishMode = false,
+  isPublishMode = false,
+  isListingActivationMode = false
 }: EditProductFormProps) => {
   const { t } = useTranslation()
   const { handleSuccess } = useRouteModal()
   const { listing_fee_rules } = useListingFeeRules()
   const listingFeeOptions = listing_fee_rules
+  const { sales_channels = [] } = useSalesChannels({
+    limit: 100,
+  })
   const { getFormFields, getFormConfigs } = useDashboardExtension()
   const fields = getFormFields("product", "edit")
   const configs = getFormConfigs("product", "edit")
@@ -74,6 +83,7 @@ export const EditProductForm = ({
       description: product.description || "",
       discountable: product.discountable,
       listing_duration_hours: getDefaultListingDuration(),
+      sales_channel_id: product.sales_channels?.[0]?.id || "",
     },
     schema: EditProductSchema,
     configs: configs,
@@ -91,12 +101,17 @@ export const EditProductForm = ({
       handle,
       title,
       listing_duration_hours,
+      sales_channel_id,
     } = data
 
-    if (isRepublishMode) {
+    if (isListingActivationMode) {
+      if (typeof listing_duration_hours !== "number") {
+        toast.error("Please select a listing duration.")
+        return
+      }
 
-      if (!listing_duration_hours) {
-        toast.error("Please select a listing duration")
+      if (!sales_channel_id) {
+        toast.error("Please select a sales channel.")
         return
       }
 
@@ -107,10 +122,15 @@ export const EditProductForm = ({
           handle,
           title,
           listing_duration_hours,
+          sales_channel_id,
         },
         {
           onSuccess: ({ product }) => {
-            toast.success(`Product "${product.title}" was republished successfully.`)
+            toast.success(
+              isPublishMode
+                ? `Product "${product.title}" was published successfully.`
+                : `Product "${product.title}" was republished successfully.`
+            )
             handleSuccess(`/products/${product.id}`)
           },
           onError: (e) => {
@@ -217,7 +237,7 @@ export const EditProductForm = ({
                 }}
               />
 
-               {isRepublishMode && (
+               {isListingActivationMode && (
                 <Form.Field
                   control={form.control}
                   name="listing_duration_hours"
@@ -260,6 +280,46 @@ export const EditProductForm = ({
                   }}
                 />
               )}
+              {isListingActivationMode && (
+                <Form.Field
+                  control={form.control}
+                  name="sales_channel_id"
+                  render={({ field: { value, onChange } }) => {
+                    return (
+                      <Form.Item>
+                        <Form.Label>Sales channel</Form.Label>
+                        <Form.Control>
+                          <Select
+                            value={value || undefined}
+                            onValueChange={onChange}
+                            disabled={!sales_channels.length}
+                          >
+                            <Select.Trigger>
+                              <Select.Value placeholder="Select sales channel" />
+                            </Select.Trigger>
+                            <Select.Content>
+                              {sales_channels.length ? (
+                                sales_channels.map((channel: { id: string; name: string }) => {
+                                  return (
+                                    <Select.Item key={channel.id} value={channel.id}>
+                                      {channel.name}
+                                    </Select.Item>
+                                  )
+                                })
+                              ) : (
+                                <Select.Item value="__no_channels__" disabled>
+                                  No sales channels available
+                                </Select.Item>
+                              )}
+                            </Select.Content>
+                          </Select>
+                        </Form.Control>
+                        <Form.ErrorMessage />
+                      </Form.Item>
+                    )
+                  }}
+                />
+              )}
             </div>
             <SwitchBox
               control={form.control}
@@ -280,9 +340,13 @@ export const EditProductForm = ({
             <Button
               size="small"
               type="submit"
-              isLoading={isRepublishMode ? isRepublishing : isPending}
+              isLoading={isListingActivationMode ? isRepublishing : isPending}
             >
-              {isRepublishMode ? "Republish" : t("actions.save")}
+              {isPublishMode
+                ? "Publish"
+                : isRepublishMode
+                ? "Republish"
+                : t("actions.save")}
             </Button>
           </div>
         </RouteDrawer.Footer>

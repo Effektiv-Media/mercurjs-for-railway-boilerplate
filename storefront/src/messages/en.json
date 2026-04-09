@@ -74,8 +74,8 @@
     "additionalAttributes": "Additional attributes",
     "measurements": "Measurements",
     "shippingAndReturns": "Shipping & Returns",
-    "shippingPolicy": "Free standard shipping on all orders within the continental U.S. Expedited shipping options are available at an additional cost. Orders typically ship within 3-5 business days.",
-    "returnPolicy": "We offer a 30-day return policy. If you are not completely satisfied with your purchase, you can return the chair for a full refund or exchange, provided it is in its original condition and packaging.",
+    "shippingPolicy": "Free standard shipping within Sweden. Delivery typically takes 2–5 business days. Faster shipping options may be available depending on the seller.",
+    "returnPolicy": "You have a 14-day right of withdrawal. Products must be returned in original condition. Terms may vary depending on the seller.",
     "moreFromSeller": "More from this seller"
   },
   "filters": {
@@ -196,7 +196,8 @@
     "edit": "Edit",
     "save": "Save",
     "loading": "Loading...",
-    "breadcrumb": "Breadcrumb"
+    "breadcrumb": "Breadcrumb",
+    "searchClickfynd": "Search Clickfynd"
   },
   "checkout": {
     "backToCart": "Back to cart",

@@ -31,6 +31,28 @@ export const importProductsQuery = async (file: File) => {
     .catch(() => null)
 }
 
+export const finalizeImportedProductsAsDraftQuery = async (
+  productIds: string[]
+) => {
+  return await fetch(`${backendUrl}/vendor/products/import/finalize-draft`, {
+    method: "POST",
+    headers: {
+      authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+      "x-publishable-api-key": publishableApiKey,
+    },
+    body: JSON.stringify({
+      product_ids: productIds,
+    }),
+  }).then((res) => {
+    if (!res.ok) {
+      throw new Error("Failed to finalize imported products as draft.")
+    }
+
+    return res.json()
+  })
+}
+
 export const uploadFilesQuery = async (files: any[]) => {
   const formData = new FormData()
 

@@ -179,14 +179,56 @@ export const ProductListTable = () => {
   )
 }
 
+const toPositiveNumber = (value: unknown) => {
+  const parsed =
+    typeof value === "number"
+      ? value
+      : typeof value === "string"
+      ? Number(value)
+      : Number.NaN
+
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : null
+}
+
+const toDate = (value: unknown) => {
+  if (typeof value !== "string") {
+    return null
+  }
+
+  const date = new Date(value)
+
+  return Number.isNaN(date.getTime()) ? null : date
+}
+
+const getListingState = (
+  metadata?: Record<string, unknown> | null,
+  nowMs = Date.now()
+) => {
+  const durationHours = toPositiveNumber(metadata?.listing_duration_hours)
+  const expiresAt = toDate(metadata?.listing_expires_at)
+  const isMarkedExpired = metadata?.listing_is_expired === true
+  const isExpired =
+    isMarkedExpired || (expiresAt ? expiresAt.getTime() <= nowMs : false)
+
+  return {
+    durationHours,
+    expiresAt,
+    isExpired,
+    isConfigured: durationHours !== null || expiresAt !== null,
+  }
+}
+
 const ProductActions = ({ product }: { product: ExtendedAdminProduct }) => {
   const { t } = useTranslation()
   const prompt = usePrompt()
   const { mutateAsync } = useDeleteProduct(product.id)
 
+  const listing = getListingState(product.metadata)
+  const isPublishable =
+    product.status === "draft" && !listing.isConfigured
+
   const isRepublishable =
-    product.status === "draft" &&
-    product.metadata?.listing_is_expired === true
+    product.status === "draft" && listing.isExpired
 
   const handleDelete = async () => {
     const res = await prompt({
@@ -223,6 +265,15 @@ const ProductActions = ({ product }: { product: ExtendedAdminProduct }) => {
       groups={[
         {
           actions: [
+            ...(isPublishable
+              ? [
+                  {
+                    icon: <ArrowPath />,
+                    label: "Publish",
+                    to: `/products/${product.id}/edit?mode=publish`,
+                  },
+                ]
+              : []),
             ...(isRepublishable
               ? [
                   {

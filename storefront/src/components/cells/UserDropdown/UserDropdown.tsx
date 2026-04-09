@@ -73,8 +73,19 @@ export const UserDropdown = ({
           </div>
         ) : (
           <div className="p-1">
-            <NavigationItem href="/user">{t("login")}</NavigationItem>
-            <NavigationItem href="/user/register">{t("register")}</NavigationItem>
+            <NavigationItem
+              href="/user"
+              className="cursor-pointer rounded-sm transition-colors hover:bg-slate-100"
+            >
+              {t("login")}
+            </NavigationItem>
+
+            <NavigationItem
+              href="/user/register"
+              className="cursor-pointer rounded-sm transition-colors hover:bg-slate-100"
+            >
+              {t("register")}
+            </NavigationItem>
           </div>
         )}
       </Dropdown>

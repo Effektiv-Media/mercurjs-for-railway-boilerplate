@@ -17,12 +17,12 @@ export function Chip({
   onSelect,
   className,
 }: ChipProps) {
-  const baseClasses = 'chip-wrapper';
+  const baseClasses = 'chip-wrapper relative overflow-hidden';
   const selectedClasses = selected ? 'border-primary' : '';
   const hoverClasses =
     !disabled && !selected ? 'hover:bg-gray-200' : '';
   const disabledClasses = disabled
-    ? 'bg-component border-disabled/50 hover:bg-component cursor-not-allowed text-disabled'
+    ? 'bg-component border-disabled/50 hover:bg-component cursor-not-allowed text-disabled opacity-60'
     : 'cursor-pointer';
   const colorClasses = color
     ? 'w-[40px] h-[40px] border'
@@ -31,6 +31,7 @@ export function Chip({
   return (
     <div
       data-disabled={disabled}
+      aria-disabled={disabled}
       className={cn(
         baseClasses,
         colorClasses,
@@ -55,6 +56,12 @@ export function Chip({
         />
       ) : (
         value
+      )}
+      {disabled && (
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute left-[-15%] top-1/2 h-[2px] w-[130%] -translate-y-1/2 rotate-[-25deg] bg-red-500"
+        />
       )}
     </div>
   );

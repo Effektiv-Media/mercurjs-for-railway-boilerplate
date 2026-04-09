@@ -74,8 +74,8 @@
     "additionalAttributes": "Ytterligare attribut",
     "measurements": "Mått",
     "shippingAndReturns": "Frakt och returer",
-    "shippingPolicy": "Fri standardfrakt på alla ordrar inom kontinentala USA. Expressalternativ finns mot extra kostnad. Ordrar skickas vanligtvis inom 3-5 arbetsdagar.",
-    "returnPolicy": "Vi erbjuder 30 dagars returrätt. Om du inte är helt nöjd med ditt köp kan du returnera stolen för full återbetalning eller byte, förutsatt att den är i originalskick och originalförpackning.",
+    "shippingPolicy": "Fri standardfrakt inom Sverige. Leveranstiden är normalt 2–5 arbetsdagar. Snabbare leveransalternativ kan erbjudas beroende på säljare.",
+    "returnPolicy": "Du har 14 dagars ångerrätt enligt lag. Produkten ska returneras i originalskick. Villkor kan variera beroende på säljare.",
     "moreFromSeller": "Mer från denna säljare"
   },
   "filters": {
@@ -196,7 +196,8 @@
     "edit": "Redigera",
     "save": "Spara",
     "loading": "Laddar...",
-    "breadcrumb": "Brödsmulor"
+    "breadcrumb": "Brödsmulor",
+    "searchClickfynd": "Sök på Clickfynd"
   },
   "checkout": {
     "backToCart": "Tillbaka till varukorg",

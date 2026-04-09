@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next"
 import { useMemo, useState } from "react"
 import {
   // useConfirmImportProducts,
+  useFinalizeImportedProductsAsDraft,
   useImportProducts,
 } from "../../../hooks/api"
 import { UploadImport } from "./components/upload-import"
@@ -35,6 +36,7 @@ const ProductImportContent = () => {
   const [filename, setFilename] = useState<string>()
 
   const { mutateAsync: importProducts, isPending, data } = useImportProducts()
+  const { mutateAsync: finalizeImportedProductsAsDraft } = useFinalizeImportedProductsAsDraft()
   // const { mutateAsync: confirm } =
   //   useConfirmImportProducts();
   const { handleSuccess } = useRouteModal()
@@ -44,21 +46,30 @@ const ProductImportContent = () => {
   }, [])
 
   const handleUploaded = async (file: File) => {
-    setFilename(file.name)
-    await importProducts(
-      { file },
-      {
-        onSuccess: () => {
-          toast.info(t("products.import.success.title"))
-          handleSuccess()
-        },
-        onError: (err) => {
-          toast.error(err.message)
-          setFilename(undefined)
-        },
-      }
-    )
-  }
+  setFilename(file.name)
+
+  await importProducts(
+    { file },
+    {
+      onSuccess: async (response) => {
+        const productIds = response.products
+          .map((product: { id: string }) => product.id)
+          .filter((id: string) => id.length > 0)
+
+        if (productIds.length) {
+          await finalizeImportedProductsAsDraft(productIds)
+        }
+
+        toast.info(t("products.import.success.title"))
+        handleSuccess()
+      },
+      onError: (err) => {
+        toast.error(err.message)
+        setFilename(undefined)
+      },
+    }
+  )
+}
 
   // const handleConfirm = async () => {
   //   if (!data?.transaction_id) {

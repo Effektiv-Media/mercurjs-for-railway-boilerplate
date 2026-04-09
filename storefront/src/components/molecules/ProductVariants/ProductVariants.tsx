@@ -5,13 +5,16 @@ import { HttpTypes } from "@medusajs/types"
 import { Chip } from "@/components/atoms"
 import useUpdateSearchParams from "@/hooks/useUpdateSearchParams"
 import { BaseHit, Hit } from "instantsearch.js"
+import { sortProductOptionValues } from "@/lib/helpers/sort-product-option-values"
 
 export const ProductVariants = ({
   product,
   selectedVariant,
+  availableOptionMap,
 }: {
   product: HttpTypes.StoreProduct
   selectedVariant: Record<string, string>
+  availableOptionMap: Record<string, Record<string, boolean>>
 }) => {
   const updateSearchParams = useUpdateSearchParams()
 
@@ -30,21 +33,27 @@ export const ProductVariants = ({
               {selectedVariant[title.toLowerCase()]}
             </span>
             <div className="flex gap-2 mt-2">
-              {(values || []).map(
+              {(sortProductOptionValues(title, values || [])).map(
                 ({
                   id,
                   value,
-                }: Partial<Hit<HttpTypes.StoreProductOptionValue>>) => (
-                  <Chip
-                    key={id}
-                    selected={selectedVariant[title.toLowerCase()] === value}
-                    color={title === "Color"}
-                    value={value}
-                    onSelect={() =>
-                      setOptionValue(title.toLowerCase(), value || "")
-                    }
-                  />
-                )
+                }: Partial<Hit<HttpTypes.StoreProductOptionValue>>) => {
+                  const optionKey = title.toLowerCase()
+                  const isAvailable = !!availableOptionMap?.[optionKey]?.[value || ""]
+
+                  return (
+                    <Chip
+                      key={id}
+                      selected={selectedVariant[optionKey] === value}
+                      disabled={!isAvailable}
+                      color={title === "Color"}
+                      value={value}
+                      onSelect={() =>
+                        setOptionValue(optionKey, value || "")
+                      }
+                    />
+                  )
+                }
               )}
             </div>
           </div>

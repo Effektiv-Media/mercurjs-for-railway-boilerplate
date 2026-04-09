@@ -8,7 +8,7 @@ import {
   UseQueryOptions,
 } from "@tanstack/react-query"
 import { ProductAttributesResponse } from "../../types/products"
-import { fetchQuery, importProductsQuery, sdk } from "../../lib/client"
+import { fetchQuery, finalizeImportedProductsAsDraftQuery, importProductsQuery, sdk } from "../../lib/client"
 import { queryClient } from "../../lib/query-client"
 import { queryKeysFactory } from "../../lib/query-key-factory"
 import { inventoryItemsQueryKeys } from "./inventory.tsx"
@@ -32,6 +32,23 @@ const productAttributesQueryKey = (productId: string) => [
   productId,
   "product-attributes",
 ]
+
+type VendorImportedProduct = {
+  id: string
+  title?: string
+  handle?: string
+  status?: string
+}
+
+type VendorImportSummary = {
+  toCreate: number
+  toUpdate: number
+}
+
+type VendorImportProductsResponse = {
+  products: VendorImportedProduct[]
+  summary?: VendorImportSummary
+}
 
 export const useCreateProductOption = (
   productId: string,
@@ -532,6 +549,7 @@ export const useRepublishProduct = (
       description?: string
       discountable: boolean
       listing_duration_hours: number
+      sales_channel_id: string
     }
   >
 ) => {
@@ -637,15 +655,35 @@ export const useExportProducts = (
   })
 }
 
+export const useFinalizeImportedProductsAsDraft = (
+  options?: UseMutationOptions<
+    { product_ids: string[]; count: number },
+    FetchError,
+    string[]
+  >
+) => {
+  return useMutation({
+    mutationFn: (productIds) =>
+      finalizeImportedProductsAsDraftQuery(productIds),
+    onSuccess: (data, variables, context) => {
+      options?.onSuccess?.(data, variables, context)
+    },
+    ...options,
+  })
+}
+
 export const useImportProducts = (
   options?: UseMutationOptions<
-    HttpTypes.AdminImportProductResponse,
+    VendorImportProductsResponse,
     FetchError,
     HttpTypes.AdminImportProductRequest
   >
 ) => {
   return useMutation({
-    mutationFn: (payload) => importProductsQuery(payload.file),
+    mutationFn: async (payload) => {
+      const response = await importProductsQuery(payload.file)
+      return response as VendorImportProductsResponse
+    },
     onSuccess: (data, variables, context) => {
       options?.onSuccess?.(data, variables, context)
     },

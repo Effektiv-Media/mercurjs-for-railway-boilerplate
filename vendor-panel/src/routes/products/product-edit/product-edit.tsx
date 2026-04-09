@@ -12,7 +12,10 @@ export const ProductEdit = () => {
   const { t } = useTranslation()
   const [searchParams] = useSearchParams()
 
-  const isRepublishMode = searchParams.get("mode") === "republish"
+  const mode = searchParams.get("mode")
+  const isRepublishMode = mode === "republish"
+  const isPublishMode = mode === "publish"
+  const isListingActivationMode = isRepublishMode || isPublishMode
 
   const { product, isLoading, isError, error } = useProduct(id!, {
     fields: PRODUCT_DETAIL_FIELDS,
@@ -27,13 +30,19 @@ export const ProductEdit = () => {
       <RouteDrawer.Header>
         <RouteDrawer.Title asChild>
           <Heading>
-            {isRepublishMode ? "Republish Product" : t("products.edit.header")}
+            {isPublishMode
+              ? "Publish Product"
+              : isRepublishMode
+              ? "Republish Product"
+              : t("products.edit.header")}
           </Heading>
         </RouteDrawer.Title>
         <RouteDrawer.Description className="sr-only">
-          {isRepublishMode
-          ? "Update the product and republish the listing"
-          : t("products.edit.description")}
+          {isPublishMode
+            ? "Configure the listing and publish the product"
+            : isRepublishMode
+            ? "Update the product and republish the listing"
+            : t("products.edit.description")}
         </RouteDrawer.Description>
       </RouteDrawer.Header>
 
@@ -41,6 +50,8 @@ export const ProductEdit = () => {
         <EditProductForm 
           product={product}
           isRepublishMode={isRepublishMode}
+          isPublishMode={isPublishMode}
+          isListingActivationMode={isListingActivationMode}
         />
       )}
     </RouteDrawer>

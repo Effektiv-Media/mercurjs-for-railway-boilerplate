@@ -31,6 +31,57 @@ const optionsAsKeymap = (
   )
 }
 
+const getAvailableVariantOptionMap = (
+  product: HttpTypes.StoreProduct,
+  selectedVariant: Record<string, string>
+) => {
+  const variants = product.variants || []
+
+  return (product.options || []).reduce(
+    (acc, option) => {
+      const optionKey = option.title.toLowerCase()
+
+      acc[optionKey] = (option.values || []).reduce(
+        (valueAcc, optionValue) => {
+          const isAvailable = variants.some((variant) => {
+            const variantOptions = optionsAsKeymap(variant.options ?? null) || {}
+
+            const matchesCurrentSelection = Object.entries(selectedVariant).every(
+              ([selectedKey, selectedValue]) => {
+                if (selectedKey === optionKey) {
+                  return true
+                }
+
+                return variantOptions[selectedKey] === selectedValue
+              }
+            )
+
+            const matchesCandidateValue =
+              variantOptions[optionKey] === optionValue.value
+
+            const hasStock = (variant.inventory_quantity || 0) > 0
+            const hasPrice = !!variant.calculated_price
+
+            return (
+              matchesCurrentSelection &&
+              matchesCandidateValue &&
+              hasStock &&
+              hasPrice
+            )
+          })
+
+          valueAcc[optionValue.value || ""] = isAvailable
+          return valueAcc
+        },
+        {} as Record<string, boolean>
+      )
+
+      return acc
+    },
+    {} as Record<string, Record<string, boolean>>
+  )
+}
+
 export const ProductDetailsHeader = ({
   product,
   locale,
@@ -61,6 +112,11 @@ export const ProductDetailsHeader = ({
         ...allSearchParams,
       }
     : allSearchParams
+
+  const availableVariantOptionMap = getAvailableVariantOptionMap(
+    product,
+    selectedVariant
+  )
 
   // get selected variant id
   const variantId =
@@ -171,7 +227,11 @@ export const ProductDetailsHeader = ({
       </div>
       {/* Product Variants */}
       {hasAnyPrice && (
-        <ProductVariants product={product} selectedVariant={selectedVariant} />
+        <ProductVariants
+          product={product}
+          selectedVariant={selectedVariant}
+          availableOptionMap={availableVariantOptionMap}
+        />
       )}
       {/* Add to Cart */}
       <Button

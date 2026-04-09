@@ -104,6 +104,9 @@ export const ProductGeneralSection = ({
   const isRepublishable =
     productStatus === "draft" && listing.isExpired
 
+  const isPublishable =
+    productStatus === "draft" && !listing.isConfigured
+
   useEffect(() => {
     const interval = window.setInterval(() => {
       setNowMs(Date.now())
@@ -152,6 +155,15 @@ export const ProductGeneralSection = ({
                     to: "edit",
                     icon: <PencilSquare />,
                   },
+                  ...(isPublishable
+                    ? [
+                        {
+                          label: "Publish",
+                          to: `edit?mode=publish`,
+                          icon: <ArrowPath />,
+                        },
+                      ]
+                    : []),
                   ...(isRepublishable
                     ? [
                         {

@@ -144,7 +144,7 @@ export const ProductCard = ({
             </h3>
             <div className="flex items-baseline gap-2 mt-2">
               <p className="text-[21px] leading-5 font-extrabold text-slate-900">
-                {cheapestPrice?.calculated_price}
+                {cheapestPrice?.calculated_price?.replace(/\.00\b/, "")}
               </p>
               {isDiscount ? (
                 <p className="text-xs text-gray-500 line-through">
