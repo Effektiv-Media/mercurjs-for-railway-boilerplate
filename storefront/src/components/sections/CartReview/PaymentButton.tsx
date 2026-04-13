@@ -7,6 +7,7 @@ import { HttpTypes } from "@medusajs/types"
 import { useElements, useStripe } from "@stripe/react-stripe-js"
 import React, { useEffect, useState } from "react"
 import { Button } from "@/components/atoms"
+import { useTranslations } from "next-intl"
 
 
 type PaymentButtonProps = {
@@ -26,7 +27,8 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
     (cart.shipping_methods?.length ?? 0) < 1
 
   const paymentSession = cart.payment_collection?.payment_sessions?.[0]
-
+  const t = useTranslations("checkout")
+  
   switch (true) {
     case isStripe(paymentSession?.provider_id):
       return (
@@ -34,16 +36,21 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
           notReady={notReady}
           cart={cart}
           data-testid={dataTestId}
+          buttonLabel={t("placeOrder")}
         />
       )
     case isManual(paymentSession?.provider_id):
       return (
-        <ManualTestPaymentButton notReady={notReady} data-testid={dataTestId} />
+        <ManualTestPaymentButton 
+          notReady={notReady} 
+          data-testid={dataTestId}
+          buttonLabel={t("placeOrder")}
+        />
       )
     default:
       return (
         <Button disabled className="w-full">
-          Select a payment method
+          {t("selectPaymentMethod")}
         </Button>
       )
   }
@@ -52,10 +59,12 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
 const StripePaymentButton = ({
   cart,
   notReady,
+  buttonLabel,
   "data-testid": dataTestId,
 }: {
   cart: HttpTypes.StoreCart
   notReady: boolean
+  buttonLabel: string
   "data-testid"?: string
 }) => {
   const [submitting, setSubmitting] = useState(false)
@@ -161,7 +170,7 @@ const StripePaymentButton = ({
         loading={submitting}
         className="w-full"
       >
-        Place order
+        {buttonLabel}
       </Button>
       <ErrorMessage
         error={errorMessage}
@@ -171,7 +180,13 @@ const StripePaymentButton = ({
   )
 }
 
-const ManualTestPaymentButton = ({ notReady }: { notReady: boolean }) => {
+const ManualTestPaymentButton = ({
+  notReady,
+  buttonLabel,
+}: {
+  notReady: boolean
+  buttonLabel: string
+}) => {
   const [submitting, setSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
@@ -204,7 +219,7 @@ const ManualTestPaymentButton = ({ notReady }: { notReady: boolean }) => {
         className="w-full"
         loading={submitting}
       >
-        Place order
+        {buttonLabel}
       </Button>
       <ErrorMessage
         error={errorMessage}

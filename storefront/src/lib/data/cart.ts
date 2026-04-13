@@ -16,6 +16,34 @@ import {
 import { getRegion } from "./regions"
 import { parseVariantIdsFromError } from "@/lib/helpers/parse-variant-error"
 
+const toValidDate = (value: unknown) => {
+  if (typeof value !== "string") {
+    return null
+  }
+
+  const date = new Date(value)
+  return Number.isNaN(date.getTime()) ? null : date
+}
+
+const isLineItemExpired = (item: HttpTypes.StoreCartLineItem) => {
+  const metadata = (item.product?.metadata || {}) as Record<string, unknown>
+
+  if (metadata.listing_is_expired === true) {
+    return true
+  }
+
+  const expiresAt = toValidDate(metadata.listing_expires_at)
+  if (!expiresAt) {
+    return false
+  }
+
+  return expiresAt.getTime() <= Date.now()
+}
+
+const getExpiredLineItems = (cart: HttpTypes.StoreCart | null) => {
+  return (cart?.items || []).filter((item) => isLineItemExpired(item))
+}
+
 /**
  * Retrieves a cart by its ID. If no ID is provided, it will use the cart ID from the cookies.
  * @param cartId - optional - The ID of the cart to retrieve.
@@ -44,7 +72,44 @@ export async function retrieveCart(cartId?: string) {
       headers,
       cache: "no-cache",
     })
-    .then(({ cart }) => cart)
+    .then(async ({ cart }) => {
+      const expiredItems = getExpiredLineItems(cart)
+
+      if (!expiredItems.length) {
+        return cart
+      }
+
+      const headers = {
+        ...(await getAuthHeaders()),
+      }
+
+      for (const item of expiredItems) {
+        try {
+          await sdk.store.cart.deleteLineItem(cart.id, item.id, {}, headers)
+        } catch {
+          // ignore individual delete failures and continue
+        }
+      }
+
+      const refreshed = await sdk.client
+        .fetch<HttpTypes.StoreCartResponse>(`/store/carts/${cart.id}`, {
+          method: "GET",
+          query: {
+            fields:
+              "*items,*region, *items.product, *items.variant, *items.variant.options, items.variant.options.option.title," +
+              "*items.thumbnail, *items.metadata, +items.total, *promotions, +shipping_methods.name, *items.product.seller",
+          },
+          headers,
+          cache: "no-cache",
+        })
+        .then(({ cart }) => cart)
+        .catch(() => null)
+
+      const cartCacheTag = await getCacheTag("carts")
+      await revalidateTag(cartCacheTag)
+
+      return refreshed
+    })
     .catch(() => null)
 }
 
@@ -126,6 +191,32 @@ export async function addToCart({
 
   const headers = {
     ...(await getAuthHeaders()),
+  }
+
+  const variantResponse = await sdk.client.fetch<{
+    variant: HttpTypes.StoreProductVariant & {
+      product?: HttpTypes.StoreProduct
+    }
+  }>(`/store/variants/${variantId}`, {
+    method: "GET",
+    query: {
+      fields: "*,+product_id,*product,*product.metadata",
+    },
+    headers,
+    cache: "no-cache",
+  }).catch(() => null)
+
+  const variantProduct = variantResponse?.variant?.product
+  const productMetadata = (variantProduct?.metadata || {}) as Record<string, unknown>
+
+  if (
+    productMetadata.listing_is_expired === true ||
+    (() => {
+      const expiresAt = toValidDate(productMetadata.listing_expires_at)
+      return expiresAt ? expiresAt.getTime() <= Date.now() : false
+    })()
+  ) {
+    throw new Error("This listing has expired and can no longer be purchased.")
   }
 
   const currentItem = cart.items?.find((item) => item.variant_id === variantId)
@@ -412,6 +503,22 @@ export async function placeOrder(cartId?: string) {
 
   if (!id) {
     throw new Error("No existing cart found when placing an order")
+  }
+
+  const cart = await retrieveCart(id)
+
+  if (!cart) {
+    throw new Error("No existing cart found when placing an order")
+  }
+
+  const expiredItems = getExpiredLineItems(cart)
+
+  if (expiredItems.length) {
+    for (const item of expiredItems) {
+      await deleteLineItem(item.id)
+    }
+
+    throw new Error("One or more items in your cart have expired and were removed.")
   }
 
   const headers = {

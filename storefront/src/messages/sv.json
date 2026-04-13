@@ -73,11 +73,27 @@
     "productDetails": "Produktdetaljer",
     "additionalAttributes": "Ytterligare attribut",
     "measurements": "Mått",
+    "sizeLabel": "Storlek",
+    "colorLabel": "Färg",
+    "reviewLabel": "omdöme",
+    "reviewsLabel": "omdömen",
     "shippingAndReturns": "Frakt och returer",
     "shippingPolicy": "Fri standardfrakt inom Sverige. Leveranstiden är normalt 2–5 arbetsdagar. Snabbare leveransalternativ kan erbjudas beroende på säljare.",
     "returnPolicy": "Du har 14 dagars ångerrätt enligt lag. Produkten ska returneras i originalskick. Villkor kan variera beroende på säljare.",
-    "moreFromSeller": "Mer från denna säljare"
+    "moreFromSeller": "Mer från denna säljare",
+    "defaultOptionLabel": "Standardval",
+    "defaultOptionValue": "Standardvärde",
+    "postedLabel": "Publicerad",
+      "urgency": {
+        "finalHoursWithHours": "🔥 Sista timmarna • {hours}h kvar",
+        "endingSoonWithHours": "🔥 Avslutas snart • {hours}h kvar",
+        "buyBeforeItExpiresUpper": "KÖP INNAN DEN GÅR UT",
+        "buyNowEndingSoonUpper": "KÖP NU • AVSLUTAS SNART",
+        "expiresVerySoon": "Den här annonsen går ut mycket snart.",
+        "endsWithin24Hours": "Den här annonsen avslutas inom 24 timmar."
+      }
   },
+
   "filters": {
     "category": "Kategori",
     "brand": "Märke",
@@ -182,7 +198,7 @@
       "quickLinkNews": "Nyheter",
       "quickLinkGifts": "Presenter",
       "heroTileElectronics": "Smart elektronik, löjliga priser",
-      "heroTileRestaurant": "Smaskiga priser på restauranger",
+      "heroTileFlashDeals": "Sjuka flashdeals",
       "heroTileOffers": "Erbjudanden svåra att motstå",
       "heroTileKitchen": "Prisvärda köksredskap",
       "heroTileButton": "Köp nu",
@@ -226,7 +242,9 @@
     "orderPlacedSuccessfully": "Din order lades med framgång.",
     "confirmationSent": "Vi har skickat orderbekräftelsen till",
     "attention": "Obs:",
-    "testingOnly": "Endast för teständamål."
+    "testingOnly": "Endast för teständamål.",
+    "placeOrder": "Slutför köp",
+    "selectPaymentMethod": "Välj ett betalsätt"
   },
   "cart": {
     "title": "Varukorg",
@@ -242,7 +260,11 @@
     "delivery": "Leverans",
     "tax": "Moms",
     "discount": "Rabatt",
-    "total": "Totalt"
+    "total": "Totalt",
+    "quantity": "Antal",
+    "expired": "Utgången",
+    "expiredDescription": "Produkten har gått ut",
+    "goToCheckout": "Gå till kassan"
   },
   "listing": {
     "newest": "Nyast",
@@ -256,7 +278,11 @@
     "noResultsTitle": "Inga resultat",
     "noResultsDescription": "Tyvärr hittar vi inga resultat för dina kriterier",
     "expired": "Utgången",
-    "hoursLeft": "{hours}h kvar"
+    "hoursLeft": "{hours}h kvar",
+    "buyNow": "Köp nu",
+    "buyBeforeItExpires": "Köp innan den går ut",
+    "topSeller": "Toppsäljare",
+    "save": "SPARA"
   },
   "pagination": {
     "morePages": "Fler sidor",
@@ -274,9 +300,10 @@
   "seller": {
     "score": "Säljarpoäng",
     "reviewsCount": "{count} recensioner",
-    "reviews": "Säljarrecensioner",
+    "reviews": "Omdömen",
     "report": "Rapportera säljare",
-    "reportAction": "Rapportera"
+    "reportAction": "Rapportera",
+    "products": "Produkter"
   },
   "chat": {
     "writeToSeller": "Skriv till säljare",

@@ -73,10 +73,25 @@
     "productDetails": "Product details",
     "additionalAttributes": "Additional attributes",
     "measurements": "Measurements",
+    "sizeLabel": "Size",
+    "colorLabel": "Color",
+    "reviewLabel": "review",
+    "reviewsLabel": "reviews",
     "shippingAndReturns": "Shipping & Returns",
     "shippingPolicy": "Free standard shipping within Sweden. Delivery typically takes 2–5 business days. Faster shipping options may be available depending on the seller.",
     "returnPolicy": "You have a 14-day right of withdrawal. Products must be returned in original condition. Terms may vary depending on the seller.",
-    "moreFromSeller": "More from this seller"
+    "moreFromSeller": "More from this seller",
+    "defaultOptionLabel": "Default option",
+    "defaultOptionValue": "Default option value",
+    "postedLabel": "Posted",
+      "urgency": {
+        "finalHoursWithHours": "🔥 Final hours • {hours}h left",
+        "endingSoonWithHours": "🔥 Ending soon • {hours}h left",
+        "buyBeforeItExpiresUpper": "BUY BEFORE IT EXPIRES",
+        "buyNowEndingSoonUpper": "BUY NOW • ENDING SOON",
+        "expiresVerySoon": "This listing expires very soon.",
+        "endsWithin24Hours": "This listing ends within 24 hours."
+      }
   },
   "filters": {
     "category": "Category",
@@ -182,7 +197,7 @@
       "quickLinkNews": "News",
       "quickLinkGifts": "Gifts",
       "heroTileElectronics": "Smart electronics, silly prices",
-      "heroTileRestaurant": "Tasty prices at restaurants",
+      "heroTileFlashDeals": "Awesome flash deals!",
       "heroTileOffers": "Offers hard to resist",
       "heroTileKitchen": "Affordable kitchen tools",
       "heroTileButton": "Shop now",
@@ -226,7 +241,9 @@
     "orderPlacedSuccessfully": "Your order was placed successfully.",
     "confirmationSent": "We have sent the order confirmation details to",
     "attention": "Attention:",
-    "testingOnly": "For testing purposes only."
+    "testingOnly": "For testing purposes only.",
+    "placeOrder": "Place order",
+    "selectPaymentMethod": "Select a payment method"
   },
   "cart": {
     "title": "Cart",
@@ -242,7 +259,11 @@
     "delivery": "Delivery",
     "tax": "Tax",
     "discount": "Discount",
-    "total": "Total"
+    "total": "Total",
+    "quantity": "Quantity",
+    "expired": "Expired",
+    "expiredDescription": "This product has expired",
+    "goToCheckout": "Go to checkout"
   },
   "listing": {
     "newest": "Newest",
@@ -256,7 +277,11 @@
     "noResultsTitle": "No results",
     "noResultsDescription": "Sorry, we can't find any results for your criteria",
     "expired": "Expired",
-    "hoursLeft": "{hours}h left"
+    "hoursLeft": "{hours}h left",
+    "buyNow": "Buy now",
+    "buyBeforeItExpires": "Buy before it expires",
+    "topSeller": "Top seller",
+    "save": "SAVE"
   },
   "pagination": {
     "morePages": "More pages",
@@ -276,7 +301,8 @@
     "reviewsCount": "{count} reviews",
     "reviews": "Seller reviews",
     "report": "Report seller",
-    "reportAction": "Report"
+    "reportAction": "Report",
+    "products": "Products"
   },
   "chat": {
     "writeToSeller": "Write to seller",

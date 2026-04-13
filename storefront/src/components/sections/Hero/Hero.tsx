@@ -2,6 +2,7 @@ import Image from "next/image"
 
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
+import button from "@medusajs/icons/dist/components/button"
 
 type HeroProps = {
   image: string
@@ -12,57 +13,61 @@ type HeroProps = {
 
 export const Hero = async ({ image, heading, paragraph, buttons }: HeroProps) => {
   const t = await getTranslations("pages.home")
-  const tiles = [
+    const tiles = [
     {
       title: t("heroTileElectronics"),
       button: t("heroTileButton"),
       path: "/kategorier",
-      image: "/images/blog/post-1.jpg",
-      accent: "from-fuchsia-800 to-fuchsia-700",
-      pill: "bg-rose-100 text-fuchsia-800",
+      image: "/images/blog/post-9.png",
+      accent: "from-blue-900/35 via-sky-700/15 to-slate-950/20",
+      pill: "bg-blue-100 text-blue-800",
+      border: "border-blue-200",
     },
     {
-      title: t("heroTileRestaurant"),
+      title: t("heroTileFlashDeals"),
       button: t("heroTileButton"),
       path: "/kategorier",
-      image: "/images/blog/post-2.jpg",
-      accent: "from-slate-900 to-slate-800",
+      image: "/images/blog/post-5.jpeg",
+      accent: "from-amber-300/18 via-yellow-300/10 to-slate-950/20",
       pill: "bg-yellow-300 text-slate-900",
+      border: "border-yellow-300",
     },
     {
       title: t("heroTileOffers"),
       button: t("heroTileButton"),
       path: "/kategorier",
-      image: "/images/blog/post-3.jpg",
-      accent: "from-emerald-800 to-teal-700",
-      pill: "bg-emerald-200 text-emerald-900",
+      image: "/images/blog/post-10.jpeg",
+      accent: "from-rose-300/20 via-pink-300/10 to-slate-950/20",
+      pill: "bg-rose-100 text-rose-800",
+      border: "border-rose-200",
     },
     {
       title: t("heroTileKitchen"),
       button: t("heroTileButton"),
       path: "/kategorier",
-      image: "/images/banner-section/Image.jpg",
-      accent: "from-teal-700 to-cyan-700",
-      pill: "bg-lime-200 text-emerald-900",
+      image: "/images/blog/post-7.jpg",
+      accent: "from-stone-300/18 via-zinc-200/10 to-slate-950/20",
+      pill: "bg-stone-200 text-stone-900",
+      border: "border-stone-300",
     },
   ]
 
   return (
     <section className="w-full px-4 lg:px-8 mt-3">
       <div className="grid grid-cols-1 lg:grid-cols-[1.65fr_1fr_1fr] gap-4">
-        <article className="relative overflow-hidden rounded-3xl lg:row-span-2 min-h-[390px] lg:min-h-[760px] border-[12px] border-blue-900">
-          <Image
-            src={decodeURIComponent(image)}
-            width={960}
-            height={1120}
-            alt={`Hero banner - ${heading}`}
-            className="absolute inset-0 h-full w-full object-cover"
-            priority
-            fetchPriority="high"
-            quality={70}
-            sizes="(min-width: 1024px) 52vw, 100vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/20 via-slate-900/35 to-slate-950/80" />
+        <article className="relative overflow-hidden rounded-3xl lg:row-span-2 min-h-[320px] sm:min-h-[390px] lg:min-h-[760px] border-[12px] border-blue-900">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster={decodeURIComponent(image)}
+            className="absolute inset-0 h-full w-full object-cover object-[2%_center] sm:object-[5%_center]"
+          >
+            <source src="/videos/hero/herovideo.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/10 via-slate-950/30 to-slate-950/25" />
           <div className="absolute right-3 top-3 sm:right-4 sm:top-4 rounded-full bg-blue-500 px-4 py-4 sm:px-6 sm:py-7 text-white shadow-lg z-10 max-w-[140px] sm:max-w-none">
             <p className="text-lg font-semibold">{t("heroPriceFrom")}</p>
             <p className="text-4xl sm:text-5xl font-extrabold leading-none">
@@ -101,17 +106,19 @@ export const Hero = async ({ image, heading, paragraph, buttons }: HeroProps) =>
         {tiles.map((tile) => (
           <article
             key={tile.title}
-            className={`relative overflow-hidden rounded-2xl min-h-[270px] lg:min-h-[370px] border-[10px] bg-gradient-to-br ${tile.accent}`}
+            className={`relative overflow-hidden rounded-2xl min-h-[270px] lg:min-h-[370px] border-[10px] ${tile.border} bg-gradient-to-br ${tile.accent}`}
           >
             <Image
               src={tile.image}
-              width={600}
-              height={640}
+              width={900}
+              height={960}
               alt={tile.title}
-              className="absolute inset-0 h-full w-full object-cover opacity-75"
-              sizes="(min-width: 1024px) 20vw, 50vw"
+              className="absolute inset-0 h-full w-full object-cover"
+              sizes="(min-width: 1280px) 28vw, (min-width: 1024px) 30vw, 50vw"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/25 to-black/55" />
+            <div
+              className={`absolute inset-0 bg-gradient-to-b ${tile.accent}`}
+            />
             <div className="absolute inset-x-0 bottom-0 p-6 text-white">
               <h3 className="heading-md !text-white max-w-[18ch] leading-tight">
                 {tile.title}

@@ -218,6 +218,7 @@ export default async function Home({
           home
           badge={t("pages.home.popularBadge")}
           minTiles={12}
+          ambient="popular"
         />
       </div>
 
@@ -229,6 +230,7 @@ export default async function Home({
           home
           badge={t("pages.home.newProductsBadge")}
           minTiles={12}
+          ambient="new"
         />
       </div>
 
@@ -244,6 +246,7 @@ export default async function Home({
           home
           badge={t("pages.home.valuePicksBadge")}
           minTiles={14}
+          ambient="bestsellers"
         />
       </div>
       <BannerSection />

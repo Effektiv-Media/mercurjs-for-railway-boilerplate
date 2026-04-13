@@ -30,12 +30,16 @@ type CountrySelectProps = {
 const CountrySelect = ({ regions }: CountrySelectProps) => {
   const t = useTranslations("countrySelector")
   const [current, setCurrent] = useState<CountryOption | undefined>(undefined)
+  const [mounted, setMounted] = useState(false)
 
   const { locale: countryCode } = useParams()
   const router = useRouter()
-  const currentPath = usePathname().split(`/${countryCode}`)[1]
+  const pathname = usePathname()
+  const localeParam =
+    typeof countryCode === "string" ? countryCode.toLowerCase() : ""
+  const currentPath = localeParam ? pathname.split(`/${localeParam}`)[1] || "" : ""
 
-    const options = useMemo<CountryOption[]>(() => {
+  const options = useMemo<CountryOption[]>(() => {
     return regions
       .flatMap((r) =>
         (r.countries ?? [])
@@ -53,11 +57,15 @@ const CountrySelect = ({ regions }: CountrySelectProps) => {
     }, [regions])
 
   useEffect(() => {
-    if (countryCode) {
-      const option = options?.find((o) => o?.country === countryCode)
-      setCurrent(option)
-    }
-  }, [options, countryCode])
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (!localeParam) return
+
+    const option = options.find((o) => o.country.toLowerCase() === localeParam)
+    setCurrent(option)
+  }, [options, localeParam])
 
   const handleChange = async (option: CountryOption) => {
     try {
@@ -94,34 +102,36 @@ const CountrySelect = ({ regions }: CountrySelectProps) => {
     }
   }
 
+  if (!mounted || !current) {
+    return (
+      <div className="md:flex gap-2 items-center justify-end relative">
+        <div className="relative w-16 h-10 rounded-lg border bg-component-secondary" />
+      </div>
+    )
+  }
+
   return (
     <div className="md:flex gap-2 items-center justify-end relative">
       <div>
         <Listbox
+          value={current}
           onChange={handleChange}
-          defaultValue={
-            countryCode
-              ? options?.find((o) => o?.country === countryCode)
-              : undefined
-          }
         >
           <ListboxButton className="relative w-16 flex justify-between items-center h-10 bg-component-secondary text-left  cursor-default focus:outline-none border rounded-lg focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-gray-300 focus-visible:ring-offset-2 focus-visible:border-gray-300 text-base-regular">
             <div className="txt-compact-small flex items-start mx-auto">
-              {current && (
-                <span className="txt-compact-small flex items-center gap-x-2">
-                  {/* @ts-ignore */}
-                  <ReactCountryFlag
-                    alt={`${current.country?.toUpperCase()} flag`}
-                    svg
-                    style={{
-                      width: "16px",
-                      height: "16px",
-                    }}
-                    countryCode={current.country ?? ""}
-                  />
-                  {current.country?.toUpperCase()}
-                </span>
-              )}
+              <span className="txt-compact-small flex items-center gap-x-2">
+                {/* @ts-ignore */}
+                <ReactCountryFlag
+                  alt={`${current.country.toUpperCase()} flag`}
+                  svg
+                  style={{
+                    width: "16px",
+                    height: "16px",
+                  }}
+                  countryCode={current.country}
+                />
+                {current.country.toUpperCase()}
+              </span>
             </div>
           </ListboxButton>
           <div className="flex relative w-16">
