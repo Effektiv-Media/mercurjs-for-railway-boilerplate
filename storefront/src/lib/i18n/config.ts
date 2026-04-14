@@ -4,7 +4,7 @@ import sv from "@/messages/sv.json"
 export const SUPPORTED_LANGUAGES = ["en", "sv"] as const
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number]
 
-export const DEFAULT_LANGUAGE: SupportedLanguage = "en"
+export const DEFAULT_LANGUAGE: SupportedLanguage = "sv"
 
 const messagesByLanguage = {
   en,
