@@ -65,7 +65,7 @@ export const Hero = async ({ image, heading, paragraph, buttons }: HeroProps) =>
             poster={decodeURIComponent(image)}
             className="absolute inset-0 h-full w-full object-cover object-[2%_center] sm:object-[5%_center]"
           >
-            <source src="/videos/hero/herovideo.mp4" type="video/mp4" />
+            <source src="/videos/hero/herovideo-optimized.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-gradient-to-b from-slate-950/10 via-slate-950/30 to-slate-950/25" />
           <div className="absolute right-3 top-3 sm:right-4 sm:top-4 rounded-full bg-blue-500 px-4 py-4 sm:px-6 sm:py-7 text-white shadow-lg z-10 max-w-[140px] sm:max-w-none">
