@@ -203,6 +203,41 @@
       "heroTileButton": "Shop now",
       "heroPriceFrom": "From",
       "heroPriceValue": "29 SEK"
+    },
+    "faq": {
+      "title": "FAQ",
+      "description": "Answers to the most common questions about ordering, delivery, returns and payment on Clickfynd.",
+      "badge": "Help center",
+      "heading": "Frequently asked questions",
+      "intro": "Find answers to the most common questions below. Can't find what you're looking for? Contact us directly."
+    },
+    "trackOrder": {
+      "title": "Track order",
+      "description": "Check the status of your order and track your delivery in real time.",
+      "badge": "Order & tracking",
+      "heading": "Track your order",
+      "intro": "Log in to your account to see order status in real time and follow your delivery all the way home."
+    },
+    "returns": {
+      "title": "Returns",
+      "description": "Information about returns and right of withdrawal. We offer 14 days right of withdrawal.",
+      "badge": "Returns & withdrawal",
+      "heading": "Returns & right of withdrawal",
+      "intro": "We comply with the Consumer Purchase Act and offer 14 days right of withdrawal on all purchases."
+    },
+    "delivery": {
+      "title": "Delivery",
+      "description": "Information about delivery times, shipping options and tracking.",
+      "badge": "Delivery & shipping",
+      "heading": "Delivery & shipping",
+      "intro": "Fast and reliable delivery throughout Sweden. Free standard shipping on all orders."
+    },
+    "payment": {
+      "title": "Payment",
+      "description": "Information about payment methods and secure shopping on Clickfynd.",
+      "badge": "Payment",
+      "heading": "Payment options",
+      "intro": "Choose the payment method that suits you best. All payments are SSL-encrypted and secure."
     }
   },
   "common": {

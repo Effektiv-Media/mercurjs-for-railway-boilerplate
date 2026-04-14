@@ -1,23 +1,39 @@
-const links = {
+export type SocialIcon = "facebook" | "instagram" | "linkedin" | "tiktok"
+
+const footerLinks = {
   customerServices: [
-    { key: "faq", path: "/om-oss" },
-    { key: "trackOrder", path: "/user/orders" },
-    { key: "returns", path: "/user/returns" },
-    { key: "delivery", path: "/kontakt" },
-    { key: "payment", path: "/kontakt" },
+    { key: "faq", path: "/vanliga-fragor" },
+    { key: "trackOrder", path: "/spara-order" },
+    { key: "returns", path: "/returer" },
+    { key: "delivery", path: "/leverans" },
+    { key: "payment", path: "/betalning" },
   ],
   about: [
     { key: "aboutUs", path: "/om-oss" },
     { key: "contact", path: "/kontakt" },
-    { key: "blog", path: "/" },
-    { key: "privacyPolicy", path: "/om-oss" },
-    { key: "terms", path: "/om-oss" },
   ],
-  connect: [
-    { label: "Facebook", path: "https://facebook.com" },
-    { label: "Instagram", path: "https://instagram.com" },
-    { label: "LinkedIn", path: "https://linkedin.com" },
+  social: [
+    {
+      label: "Facebook",
+      icon: "facebook" as SocialIcon,
+      path: "https://facebook.com/clickfynd",
+    },
+    {
+      label: "Instagram",
+      icon: "instagram" as SocialIcon,
+      path: "https://instagram.com/clickfynd",
+    },
+    {
+      label: "LinkedIn",
+      icon: "linkedin" as SocialIcon,
+      path: "https://linkedin.com/company/clickfynd",
+    },
+    {
+      label: "TikTok",
+      icon: "tiktok" as SocialIcon,
+      path: "https://tiktok.com/@clickfynd",
+    },
   ],
 }
 
-export default links
+export default footerLinks
