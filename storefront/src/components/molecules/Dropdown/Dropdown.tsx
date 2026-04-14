@@ -8,7 +8,7 @@ export const Dropdown = ({
   if (!show) return null;
 
   return (
-    <div className='absolute -right-2 bg-primary text-primary z-20 border border-primary rounded-sm w-max'>
+    <div className="absolute -right-2 z-20 w-max rounded-sm border border-primary bg-primary text-primary shadow-lg">
       {children}
     </div>
   );

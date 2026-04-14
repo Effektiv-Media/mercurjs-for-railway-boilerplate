@@ -8,7 +8,7 @@ export function CategoryCard({
 }) {
   return (
     <LocalizedClientLink
-      href={`/categories/${category.handle}`}
+      href={`/kategorier/${category.handle}`}
       className="group relative flex flex-col items-center justify-between border border-slate-200 rounded-2xl bg-gradient-to-b from-white to-slate-50 transition-all hover:border-sky-300 hover:shadow-[0_12px_24px_rgba(2,132,199,0.16)] min-h-[220px] p-3"
     >
       <div className="flex relative aspect-square overflow-hidden w-[140px] md:w-[168px] mt-1">

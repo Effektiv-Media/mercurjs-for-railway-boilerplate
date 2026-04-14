@@ -8,7 +8,7 @@ import {
   UseQueryOptions,
 } from "@tanstack/react-query"
 import { ProductAttributesResponse } from "../../types/products"
-import { fetchQuery, importProductsQuery, sdk } from "../../lib/client"
+import { fetchQuery, finalizeImportedProductsAsDraftQuery, importProductsQuery, sdk } from "../../lib/client"
 import { queryClient } from "../../lib/query-client"
 import { queryKeysFactory } from "../../lib/query-key-factory"
 import { inventoryItemsQueryKeys } from "./inventory.tsx"
@@ -32,6 +32,23 @@ const productAttributesQueryKey = (productId: string) => [
   productId,
   "product-attributes",
 ]
+
+type VendorImportedProduct = {
+  id: string
+  title?: string
+  handle?: string
+  status?: string
+}
+
+type VendorImportSummary = {
+  toCreate: number
+  toUpdate: number
+}
+
+type VendorImportProductsResponse = {
+  products: VendorImportedProduct[]
+  summary?: VendorImportSummary
+}
 
 export const useCreateProductOption = (
   productId: string,
@@ -380,6 +397,54 @@ export const useProduct = (
   }
 }
 
+// Help function to ensure metadata field is always included in the query when fetching product details, as some operations depend on metadata fields like listing_is_expired
+const appendMetadataField = (fields?: string) => {
+  if (!fields || !fields.trim()) {
+    return "metadata"
+  }
+
+  const fieldList = fields
+    .split(",")
+    .map((field) => field.trim())
+    .filter(Boolean)
+
+  if (fieldList.includes("metadata")) {
+    return fields
+  }
+
+  return `${fields},metadata`
+}
+
+const toSerializableQuery = (
+  input?: Record<string, unknown>
+): Record<string, string | number> => {
+  if (!input) {
+    return {}
+  }
+
+  return Object.entries(input).reduce<Record<string, string | number>>(
+    (acc, [key, value]) => {
+      if (typeof value === "string" || typeof value === "number") {
+        acc[key] = value
+        return acc
+      }
+
+      if (typeof value === "boolean") {
+        acc[key] = value ? "true" : "false"
+        return acc
+      }
+
+      if (Array.isArray(value)) {
+        acc[key] = value.join(",")
+        return acc
+      }
+
+      return acc
+    },
+    {}
+  )
+}
+
 export const useProducts = (
   query?: HttpTypes.AdminProductListParams & { tag_id?: string | string[] },
   options?: Omit<
@@ -392,13 +457,25 @@ export const useProducts = (
     "queryFn" | "queryKey"
   >
 ) => {
+  const queryWithMetadata = {
+    ...query,
+    fields: appendMetadataField(
+      typeof query?.fields === "string" ? query.fields : undefined
+    ),
+  }
+
+  const serializedQuery = toSerializableQuery(
+    queryWithMetadata as Record<string, unknown>
+  )
+
+
   const { data, ...rest } = useQuery({
     queryFn: () => 
      fetchQuery("/vendor/products", {
         method: "GET",
-        query: query as Record<string, string | number>,
+        query: serializedQuery,
       }),
-    queryKey: productsQueryKeys.list(query),
+    queryKey: productsQueryKeys.list(queryWithMetadata),
     ...options,
   })
 
@@ -453,6 +530,41 @@ export const useUpdateProduct = (
       })
       await queryClient.invalidateQueries({
         queryKey: productAttributesQueryKey(id),
+      })
+
+      options?.onSuccess?.(data, variables, context)
+    },
+    ...options,
+  })
+}
+
+export const useRepublishProduct = (
+  id: string,
+  options?: UseMutationOptions<
+    { product: HttpTypes.AdminProduct },
+    FetchError,
+    {
+      title: string
+      handle: string
+      description?: string
+      discountable: boolean
+      listing_duration_hours: number
+      sales_channel_id: string
+    }
+  >
+) => {
+  return useMutation({
+    mutationFn: async (payload) =>
+      fetchQuery(`/vendor/products/${id}/republish`, {
+        method: "POST",
+        body: payload,
+      }),
+    onSuccess: async (data, variables, context) => {
+      await queryClient.invalidateQueries({
+        queryKey: productsQueryKeys.lists(),
+      })
+      await queryClient.invalidateQueries({
+        queryKey: productsQueryKeys.detail(id),
       })
 
       options?.onSuccess?.(data, variables, context)
@@ -543,15 +655,35 @@ export const useExportProducts = (
   })
 }
 
+export const useFinalizeImportedProductsAsDraft = (
+  options?: UseMutationOptions<
+    { product_ids: string[]; count: number },
+    FetchError,
+    string[]
+  >
+) => {
+  return useMutation({
+    mutationFn: (productIds) =>
+      finalizeImportedProductsAsDraftQuery(productIds),
+    onSuccess: (data, variables, context) => {
+      options?.onSuccess?.(data, variables, context)
+    },
+    ...options,
+  })
+}
+
 export const useImportProducts = (
   options?: UseMutationOptions<
-    HttpTypes.AdminImportProductResponse,
+    VendorImportProductsResponse,
     FetchError,
     HttpTypes.AdminImportProductRequest
   >
 ) => {
   return useMutation({
-    mutationFn: (payload) => importProductsQuery(payload.file),
+    mutationFn: async (payload) => {
+      const response = await importProductsQuery(payload.file)
+      return response as VendorImportProductsResponse
+    },
     onSuccess: (data, variables, context) => {
       options?.onSuccess?.(data, variables, context)
     },

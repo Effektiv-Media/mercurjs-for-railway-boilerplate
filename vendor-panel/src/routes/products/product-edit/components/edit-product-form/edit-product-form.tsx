@@ -1,4 +1,4 @@
-import { Button, Input, Text, Textarea, toast } from "@medusajs/ui"
+import { Button, Input, Select, Text, Textarea, toast } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 import * as zod from "zod"
 
@@ -7,16 +7,25 @@ import { Form } from "../../../../../components/common/form"
 import { SwitchBox } from "../../../../../components/common/switch-box"
 import { RouteDrawer, useRouteModal } from "../../../../../components/modals"
 import { useExtendableForm } from "../../../../../extensions/forms/hooks"
-import { useUpdateProduct } from "../../../../../hooks/api/products"
+import { 
+  useUpdateProduct, 
+  useRepublishProduct, 
+} from "../../../../../hooks/api/products"
 
 import { KeyboundForm } from "../../../../../components/utilities/keybound-form"
 import {
   FormExtensionZone,
   useDashboardExtension,
 } from "../../../../../extensions"
+import { useListingFeeRules } from "../../../../../hooks/api/listing-fee-rules"
+import { useSalesChannels } from "../../../../../hooks/api/sales-channels"
+
 
 type EditProductFormProps = {
   product: ExtendedAdminProduct
+  isRepublishMode?: boolean
+  isPublishMode?: boolean
+  isListingActivationMode?: boolean
 }
 
 const EditProductSchema = zod.object({
@@ -24,15 +33,48 @@ const EditProductSchema = zod.object({
   handle: zod.string().min(1),
   description: zod.string().optional(),
   discountable: zod.boolean(),
+  listing_duration_hours: zod.coerce.number().optional(),
+  sales_channel_id: zod.string().optional(),
 })
 
-export const EditProductForm = ({ product }: EditProductFormProps) => {
+export const EditProductForm = ({
+  product, 
+  isRepublishMode = false,
+  isPublishMode = false,
+  isListingActivationMode = false
+}: EditProductFormProps) => {
   const { t } = useTranslation()
   const { handleSuccess } = useRouteModal()
-
+  const { listing_fee_rules } = useListingFeeRules()
+  const listingFeeOptions = listing_fee_rules
+  const { sales_channels = [] } = useSalesChannels({
+    limit: 100,
+  })
   const { getFormFields, getFormConfigs } = useDashboardExtension()
   const fields = getFormFields("product", "edit")
   const configs = getFormConfigs("product", "edit")
+
+  const metadata = (product.metadata || {}) as Record<string, unknown>
+
+  const getDefaultListingDuration = () => {
+  const value = metadata.listing_duration_hours
+
+
+
+    if (typeof value === "number" && Number.isFinite(value)) {
+      return value
+    }
+
+    if (typeof value === "string") {
+      const parsed = Number(value)
+
+      if (Number.isFinite(parsed)) {
+        return parsed
+      }
+    }
+
+    return undefined
+  }
 
   const form = useExtendableForm({
     defaultValues: {
@@ -40,6 +82,8 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
       handle: product.handle || "",
       description: product.description || "",
       discountable: product.discountable,
+      listing_duration_hours: getDefaultListingDuration(),
+      sales_channel_id: product.sales_channels?.[0]?.id || "",
     },
     schema: EditProductSchema,
     configs: configs,
@@ -47,9 +91,56 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
   })
 
   const { mutateAsync, isPending } = useUpdateProduct(product.id)
+  const { mutateAsync: republishAsync, isPending: isRepublishing } =
+    useRepublishProduct(product.id)
 
-  const handleSubmit = form.handleSubmit(async (data) => {
-    const { description, discountable, handle, title } = data
+    const handleSubmit = form.handleSubmit(async (data) => {
+    const {
+      description,
+      discountable,
+      handle,
+      title,
+      listing_duration_hours,
+      sales_channel_id,
+    } = data
+
+    if (isListingActivationMode) {
+      if (typeof listing_duration_hours !== "number") {
+        toast.error("Please select a listing duration.")
+        return
+      }
+
+      if (!sales_channel_id) {
+        toast.error("Please select a sales channel.")
+        return
+      }
+
+      await republishAsync(
+        {
+          description,
+          discountable,
+          handle,
+          title,
+          listing_duration_hours,
+          sales_channel_id,
+        },
+        {
+          onSuccess: ({ product }) => {
+            toast.success(
+              isPublishMode
+                ? `Product "${product.title}" was published successfully.`
+                : `Product "${product.title}" was republished successfully.`
+            )
+            handleSuccess(`/products/${product.id}`)
+          },
+          onError: (e) => {
+            toast.error(e.message)
+          },
+        }
+      )
+
+      return
+    }
 
     await mutateAsync(
       {
@@ -65,7 +156,7 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
               title: product.title,
             })
           )
-          handleSuccess(`/products/${product.id}`)
+           handleSuccess(`/products/${product.id}`)
         },
         onError: (e) => {
           toast.error(e.message)
@@ -83,41 +174,7 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
         <RouteDrawer.Body className="flex flex-1 flex-col gap-y-8 overflow-y-auto">
           <div className="flex flex-col gap-y-8">
             <div className="flex flex-col gap-y-4">
-              {/* <Form.Field
-                control={form.control}
-                name="status"
-                render={({ field: { onChange, ref, ...field } }) => {
-                  return (
-                    <Form.Item>
-                      <Form.Label>{t("fields.status")}</Form.Label>
-                      <Form.Control>
-                        <Select {...field} onValueChange={onChange}>
-                          <Select.Trigger ref={ref}>
-                            <Select.Value />
-                          </Select.Trigger>
-                          <Select.Content>
-                            {(
-                              [
-                                "draft",
-                                "published",
-                                "proposed",
-                                "rejected",
-                              ] as const
-                            ).map((status) => {
-                              return (
-                                <Select.Item key={status} value={status}>
-                                  {t(`products.productStatus.${status}`)}
-                                </Select.Item>
-                              )
-                            })}
-                          </Select.Content>
-                        </Select>
-                      </Form.Control>
-                      <Form.ErrorMessage />
-                    </Form.Item>
-                  )
-                }}
-              /> */}
+
               <Form.Field
                 control={form.control}
                 name="title"
@@ -133,23 +190,7 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
                   )
                 }}
               />
-              {/* <Form.Field
-                control={form.control}
-                name='subtitle'
-                render={({ field }) => {
-                  return (
-                    <Form.Item>
-                      <Form.Label optional>
-                        {t('fields.subtitle')}
-                      </Form.Label>
-                      <Form.Control>
-                        <Input {...field} />
-                      </Form.Control>
-                      <Form.ErrorMessage />
-                    </Form.Item>
-                  );
-                }}
-              /> */}
+
               <Form.Field
                 control={form.control}
                 name="handle"
@@ -177,23 +218,7 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
                   )
                 }}
               />
-              {/* <Form.Field
-                control={form.control}
-                name='material'
-                render={({ field }) => {
-                  return (
-                    <Form.Item>
-                      <Form.Label optional>
-                        {t('fields.material')}
-                      </Form.Label>
-                      <Form.Control>
-                        <Input {...field} />
-                      </Form.Control>
-                      <Form.ErrorMessage />
-                    </Form.Item>
-                  );
-                }}
-              /> */}
+
               <Form.Field
                 control={form.control}
                 name="description"
@@ -211,6 +236,90 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
                   )
                 }}
               />
+
+               {isListingActivationMode && (
+                <Form.Field
+                  control={form.control}
+                  name="listing_duration_hours"
+                  render={({ field: { value, onChange } }) => {
+                    return (
+                      <Form.Item>
+                        <Form.Label>Listing duration</Form.Label>
+                        <Form.Control>
+                                                    <Select
+                            value={value ? String(value) : undefined}
+                            onValueChange={(value) => onChange(Number(value))}
+                            disabled={!listingFeeOptions.length}
+                          >
+                            <Select.Trigger>
+                            <Select.Value placeholder="Select listing duration" />
+                            </Select.Trigger>
+                            <Select.Content>
+                              {listingFeeOptions.length ? (
+                                listingFeeOptions.map((rule: (typeof listingFeeOptions)[number]) => {
+                                  return (
+                                    <Select.Item
+                                      key={`duration-${rule.duration_hours}`}
+                                      value={String(rule.duration_hours)}
+                                    >
+                                      {`${rule.duration_hours} timmar (${rule.fee_percentage}% avgift)`}
+                                    </Select.Item>
+                                  )
+                                })
+                              ) : (
+                                <Select.Item value="__no_rules__" disabled>
+                                  No listing fee rules configured
+                                </Select.Item>
+                              )}
+                            </Select.Content>
+                          </Select>
+                        </Form.Control>
+                        <Form.ErrorMessage />
+                      </Form.Item>
+                    )
+                  }}
+                />
+              )}
+              {isListingActivationMode && (
+                <Form.Field
+                  control={form.control}
+                  name="sales_channel_id"
+                  render={({ field: { value, onChange } }) => {
+                    return (
+                      <Form.Item>
+                        <Form.Label>Sales channel</Form.Label>
+                        <Form.Control>
+                          <Select
+                            value={value || undefined}
+                            onValueChange={onChange}
+                            disabled={!sales_channels.length}
+                          >
+                            <Select.Trigger>
+                              <Select.Value placeholder="Select sales channel" />
+                            </Select.Trigger>
+                            <Select.Content>
+                              {sales_channels.length ? (
+                                sales_channels.map((channel: { id: string; name: string }) => {
+                                  return (
+                                    <Select.Item key={channel.id} value={channel.id}>
+                                      {channel.name}
+                                    </Select.Item>
+                                  )
+                                })
+                              ) : (
+                                <Select.Item value="__no_channels__" disabled>
+                                  No sales channels available
+                                </Select.Item>
+                              )}
+                            </Select.Content>
+                          </Select>
+                        </Form.Control>
+                        <Form.ErrorMessage />
+                      </Form.Item>
+                    )
+                  }}
+                />
+              )}
             </div>
             <SwitchBox
               control={form.control}
@@ -228,8 +337,16 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
                 {t("actions.cancel")}
               </Button>
             </RouteDrawer.Close>
-            <Button size="small" type="submit" isLoading={isPending}>
-              {t("actions.save")}
+            <Button
+              size="small"
+              type="submit"
+              isLoading={isListingActivationMode ? isRepublishing : isPending}
+            >
+              {isPublishMode
+                ? "Publish"
+                : isRepublishMode
+                ? "Republish"
+                : t("actions.save")}
             </Button>
           </div>
         </RouteDrawer.Footer>

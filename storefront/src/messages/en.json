@@ -3,6 +3,12 @@
     "becomeSeller": "Become a seller",
     "support": "Support"
   },
+  "categories": {
+    "allProducts": "All products",
+    "electronics": "Electronics",
+    "apparel": "Apparel",
+    "homeGarden": "Home & Garden"
+  },
   "mobileNav": {
     "menu": "Menu",
     "openMenu": "Open menu",
@@ -67,10 +73,25 @@
     "productDetails": "Product details",
     "additionalAttributes": "Additional attributes",
     "measurements": "Measurements",
+    "sizeLabel": "Size",
+    "colorLabel": "Color",
+    "reviewLabel": "review",
+    "reviewsLabel": "reviews",
     "shippingAndReturns": "Shipping & Returns",
-    "shippingPolicy": "Free standard shipping on all orders within the continental U.S. Expedited shipping options are available at an additional cost. Orders typically ship within 3-5 business days.",
-    "returnPolicy": "We offer a 30-day return policy. If you are not completely satisfied with your purchase, you can return the chair for a full refund or exchange, provided it is in its original condition and packaging.",
-    "moreFromSeller": "More from this seller"
+    "shippingPolicy": "Free standard shipping within Sweden. Delivery typically takes 2–5 business days. Faster shipping options may be available depending on the seller.",
+    "returnPolicy": "You have a 14-day right of withdrawal. Products must be returned in original condition. Terms may vary depending on the seller.",
+    "moreFromSeller": "More from this seller",
+    "defaultOptionLabel": "Default option",
+    "defaultOptionValue": "Default option value",
+    "postedLabel": "Posted",
+      "urgency": {
+        "finalHoursWithHours": "🔥 Final hours • {hours}h left",
+        "endingSoonWithHours": "🔥 Ending soon • {hours}h left",
+        "buyBeforeItExpiresUpper": "BUY BEFORE IT EXPIRES",
+        "buyNowEndingSoonUpper": "BUY NOW • ENDING SOON",
+        "expiresVerySoon": "This listing expires very soon.",
+        "endsWithin24Hours": "This listing ends within 24 hours."
+      }
   },
   "filters": {
     "category": "Category",
@@ -166,7 +187,7 @@
       "popularBadge": "Popular",
       "newArrivalsHeading": "New arrivals",
       "newProductsBadge": "New products",
-      "moreDealsHeading": "More deals right now",
+      "moreDealsHeading": "Bestsellers",
       "valuePicksBadge": "Value picks",
       "quickLinksAria": "Quick links",
       "quickLinksHeading": "Quick picks for deals",
@@ -176,7 +197,7 @@
       "quickLinkNews": "News",
       "quickLinkGifts": "Gifts",
       "heroTileElectronics": "Smart electronics, silly prices",
-      "heroTileRestaurant": "Tasty prices at restaurants",
+      "heroTileFlashDeals": "Awesome flash deals!",
       "heroTileOffers": "Offers hard to resist",
       "heroTileKitchen": "Affordable kitchen tools",
       "heroTileButton": "Shop now",
@@ -190,7 +211,8 @@
     "edit": "Edit",
     "save": "Save",
     "loading": "Loading...",
-    "breadcrumb": "Breadcrumb"
+    "breadcrumb": "Breadcrumb",
+    "searchClickfynd": "Search Clickfynd"
   },
   "checkout": {
     "backToCart": "Back to cart",
@@ -219,7 +241,9 @@
     "orderPlacedSuccessfully": "Your order was placed successfully.",
     "confirmationSent": "We have sent the order confirmation details to",
     "attention": "Attention:",
-    "testingOnly": "For testing purposes only."
+    "testingOnly": "For testing purposes only.",
+    "placeOrder": "Place order",
+    "selectPaymentMethod": "Select a payment method"
   },
   "cart": {
     "title": "Cart",
@@ -235,7 +259,11 @@
     "delivery": "Delivery",
     "tax": "Tax",
     "discount": "Discount",
-    "total": "Total"
+    "total": "Total",
+    "quantity": "Quantity",
+    "expired": "Expired",
+    "expiredDescription": "This product has expired",
+    "goToCheckout": "Go to checkout"
   },
   "listing": {
     "newest": "Newest",
@@ -249,7 +277,11 @@
     "noResultsTitle": "No results",
     "noResultsDescription": "Sorry, we can't find any results for your criteria",
     "expired": "Expired",
-    "hoursLeft": "{hours}h left"
+    "hoursLeft": "{hours}h left",
+    "buyNow": "Buy now",
+    "buyBeforeItExpires": "Buy before it expires",
+    "topSeller": "Top seller",
+    "save": "SAVE"
   },
   "pagination": {
     "morePages": "More pages",
@@ -269,7 +301,8 @@
     "reviewsCount": "{count} reviews",
     "reviews": "Seller reviews",
     "report": "Report seller",
-    "reportAction": "Report"
+    "reportAction": "Report",
+    "products": "Products"
   },
   "chat": {
     "writeToSeller": "Write to seller",

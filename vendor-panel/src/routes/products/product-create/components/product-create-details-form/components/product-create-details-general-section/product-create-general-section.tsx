@@ -4,10 +4,7 @@ import { useTranslation } from "react-i18next"
 
 import { Form } from "../../../../../../../components/common/form"
 import { HandleInput } from "../../../../../../../components/inputs/handle-input"
-import {
-  FALLBACK_LISTING_FEE_RULES,
-  useListingFeeRules,
-} from "../../../../../../../hooks/api/listing-fee-rules"
+import { useListingFeeRules } from "../../../../../../../hooks/api/listing-fee-rules"
 import { ProductCreateSchemaType } from "../../../../types"
 
 type ProductCreateGeneralSectionProps = {
@@ -19,9 +16,7 @@ export const ProductCreateGeneralSection = ({
 }: ProductCreateGeneralSectionProps) => {
   const { t } = useTranslation()
   const { listing_fee_rules } = useListingFeeRules()
-  const listingFeeOptions = listing_fee_rules.length
-    ? listing_fee_rules
-    : FALLBACK_LISTING_FEE_RULES
+  const listingFeeOptions = listing_fee_rules
 
   return (
     <div id="general" className="flex flex-col gap-y-6">
@@ -103,8 +98,9 @@ export const ProductCreateGeneralSection = ({
               <Form.Label>Listing duration</Form.Label>
               <Form.Control>
                 <Select
-                  value={String(field.value)}
+                  value={field.value ? String(field.value) : undefined}
                   onValueChange={(value) => field.onChange(Number(value))}
+                  disabled={!listingFeeOptions.length}
                 >
                   <Select.Trigger>
                     <Select.Value />

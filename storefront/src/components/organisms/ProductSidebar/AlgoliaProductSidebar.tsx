@@ -11,6 +11,7 @@ import { useRefinementList } from "react-instantsearch"
 import { ProductListingActiveFilters } from "../ProductListingActiveFilters/ProductListingActiveFilters"
 import useGetAllSearchParams from "@/hooks/useGetAllSearchParams"
 import { useTranslations } from "next-intl"
+import { sortProductOptionValues } from "@/lib/helpers/sort-product-option-values"
 
 const filters = [
   { label: "5", amount: 40 },
@@ -149,15 +150,22 @@ function SizeFilter({ defaultOpen = true }: { defaultOpen?: boolean }) {
     updateFilters(size)
   }
 
+  const sortedItems = sortProductOptionValues(
+    "Size",
+    items.map((item) => ({
+      value: item.label,
+    }))
+  )
+
   return (
     <Accordion heading={t("size")} defaultOpen={defaultOpen}>
       <ul className="grid grid-cols-4 mt-2 gap-2">
-        {items.map(({ label }) => (
-          <li key={label} className="mb-4">
+        {sortedItems.map(({ value }) => (
+          <li key={value} className="mb-4">
             <Chip
-              selected={isFilterActive(label)}
-              onSelect={() => selectSizeHandler(label)}
-              value={label}
+              selected={isFilterActive(value || "")}
+              onSelect={() => selectSizeHandler(value || "")}
+              value={value}
               className="w-full !justify-center !py-2 !font-normal"
             />
           </li>

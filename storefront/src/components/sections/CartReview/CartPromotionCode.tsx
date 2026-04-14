@@ -10,9 +10,7 @@ import { useTranslations } from "next-intl"
 export default function CartPromotionCode({
   cart,
 }: {
-  cart:
-    | (HttpTypes.StoreCart & { promotions?: HttpTypes.StorePromotion[] })
-    | null
+  cart: HttpTypes.StoreCart | null
 }) {
   const t = useTranslations("checkout")
   const [promotionCode, setPromotionCode] = useState("")

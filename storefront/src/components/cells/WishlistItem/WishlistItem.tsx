@@ -38,7 +38,7 @@ export const WishlistItem = ({
             user={user}
           />
         </div>
-        <LocalizedClientLink href={`/products/${product.handle}`}>
+        <LocalizedClientLink href={`/produkter/${product.handle}`}>
           <div className="overflow-hidden rounded-sm w-full h-full flex justify-center align-center ">
             {product.thumbnail ? (
               <Image
@@ -60,13 +60,13 @@ export const WishlistItem = ({
             )}
           </div>
         </LocalizedClientLink>
-        <LocalizedClientLink href={`/products/${product.handle}`}>
+        <LocalizedClientLink href={`/produkter/${product.handle}`}>
           <Button className="absolute rounded-sm bg-action text-action-on-primary h-auto lg:h-[48px] lg:group-hover:block hidden w-full uppercase bottom-1 z-10">
             See More
           </Button>
         </LocalizedClientLink>
       </div>
-      <LocalizedClientLink href={`/products/${product.handle}`}>
+      <LocalizedClientLink href={`/produkter/${product.handle}`}>
         <div className="flex justify-between p-4">
           <div className="w-full">
             <h3 className="heading-sm truncate">{product.title}</h3>

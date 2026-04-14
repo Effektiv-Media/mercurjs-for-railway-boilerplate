@@ -2,7 +2,6 @@ import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http"
 import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/utils"
 import { LISTING_FEE_MODULE } from "../../../modules/listing-fee"
 import {
-  DEFAULT_LISTING_FEE_RULES,
   bpsToPercentage,
   percentageToBps,
 } from "../../../modules/listing-fee/utils"
@@ -21,26 +20,20 @@ type ListingFeeModuleService = {
 
 export const GET = async (req: MedusaRequest, res: MedusaResponse) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-  let sourceRules: any[] = DEFAULT_LISTING_FEE_RULES
 
-  try {
-    const { data } = await query.graph({
-      entity: "listing_fee_rule",
-      fields: ["id", "duration_hours", "fee_bps", "is_active"],
-    })
+  const { data } = await query.graph({
+    entity: "listing_fee_rule",
+    fields: ["id", "duration_hours", "fee_bps", "is_active"],
+  })
 
-    if ((data as any[]).length) {
-      sourceRules = data as any[]
-    }
-  } catch {
-    // Falls back to defaults if migration hasn't run yet.
-  }
-
-  const listing_fee_rules = sourceRules
+  const listing_fee_rules = (data as any[])
     .sort((a, b) => a.duration_hours - b.duration_hours)
     .map((rule) => ({
-      ...rule,
+      id: rule.id,
+      duration_hours: rule.duration_hours,
+      fee_bps: rule.fee_bps,
       fee_percentage: bpsToPercentage(rule.fee_bps),
+      is_active: rule.is_active,
     }))
 
   res.json({ listing_fee_rules })
@@ -69,10 +62,17 @@ export const POST = async (req: MedusaRequest<UpsertBody>, res: MedusaResponse) 
     )
   }
 
-  const existing = await service.listListingFeeRules({
+    const existing = await service.listListingFeeRules({
     duration_hours: durationHours,
     deleted_at: null,
   })
+
+  if (existing.length) {
+    throw new MedusaError(
+      MedusaError.Types.INVALID_DATA,
+      "Det finns redan en regel för denna duration"
+    )
+  }
 
   const payload = {
     duration_hours: durationHours,
@@ -80,12 +80,7 @@ export const POST = async (req: MedusaRequest<UpsertBody>, res: MedusaResponse) 
     is_active: body.is_active ?? true,
   }
 
-  const listing_fee_rule = existing.length
-    ? await service.updateListingFeeRules({
-        id: existing[0].id,
-        ...payload,
-      })
-    : await service.createListingFeeRules(payload)
+  const listing_fee_rule = await service.createListingFeeRules(payload)
 
   res.status(201).json({
     listing_fee_rule: {

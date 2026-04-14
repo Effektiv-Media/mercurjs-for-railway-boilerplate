@@ -27,7 +27,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     locales = ["se"]
   }
 
-  const routes = ["", "/om-oss", "/kontakt", "/categories"]
+  const routes = ["", "/om-oss", "/kontakt", "/kategorier"]
 
   return locales.flatMap((locale) =>
     routes.map((route) => ({

@@ -50,16 +50,6 @@ export const CartDropdown = ({ iconColor = "#090909" }: { iconColor?: string }) 
   })
 
   useEffect(() => {
-    if (open) {
-      const timeout = setTimeout(() => {
-        setOpen(false)
-      }, 2000)
-
-      return () => clearTimeout(timeout)
-    }
-  }, [open])
-
-  useEffect(() => {
     if (
       previousItemCount !== undefined &&
       cartItemsCount > previousItemCount &&
@@ -74,6 +64,8 @@ export const CartDropdown = ({ iconColor = "#090909" }: { iconColor?: string }) 
       className="relative"
       onMouseOver={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
+      onFocus={() => setOpen(true)}
+      onBlur={() => setOpen(false)}
     >
       <LocalizedClientLink
         href="/cart"
@@ -128,7 +120,7 @@ export const CartDropdown = ({ iconColor = "#090909" }: { iconColor?: string }) 
                 <p className="text-lg text-center py-4">
                   {t("emptyInspiration")}
                 </p>
-                <LocalizedClientLink href="/categories">
+                <LocalizedClientLink href="/kategorier">
                   <Button className="w-full py-3">{t("exploreHomePage")}</Button>
                 </LocalizedClientLink>
               </div>

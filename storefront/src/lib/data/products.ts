@@ -15,6 +15,7 @@ export const listProducts = async ({
   regionId,
   category_id,
   collection_id,
+  seller_id,
   forceCache = false,
 }: {
   pageParam?: number
@@ -24,6 +25,7 @@ export const listProducts = async ({
     }
   category_id?: string
   collection_id?: string
+  seller_id?: string
   countryCode?: string
   regionId?: string
   forceCache?: boolean
@@ -74,6 +76,7 @@ export const listProducts = async ({
         country_code: countryCode,
         category_id,
         collection_id,
+        seller_id,
         limit,
         offset,
         region_id: region?.id,
@@ -197,4 +200,107 @@ export const listProductsWithSort = async ({
     nextPage,
     queryParams,
   }
+}
+
+export const listPopularProducts = async ({
+  countryCode,
+  limit = 12,
+}: {
+  countryCode: string
+  limit?: number
+}) => {
+  const backendUrl = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL
+  const publishableKey = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY
+
+  if (!backendUrl || !publishableKey) {
+    return []
+  }
+
+  const response = await fetch(
+    `${backendUrl}/store/products/popular?limit=${limit}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "x-publishable-api-key": publishableKey,
+      },
+      cache: "no-store",
+    }
+  )
+
+  if (!response.ok) {
+    return []
+  }
+
+  const data = await response.json()
+
+  return data.products || []
+}
+
+export const listNewArrivalProducts = async ({
+  countryCode,
+  limit = 12,
+}: {
+  countryCode: string
+  limit?: number
+}) => {
+  const backendUrl = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL
+  const publishableKey = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY
+
+  if (!backendUrl || !publishableKey) {
+    return []
+  }
+
+  const response = await fetch(
+    `${backendUrl}/store/products/new-arrivals?limit=${limit}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "x-publishable-api-key": publishableKey,
+      },
+      cache: "no-store",
+    }
+  )
+
+  if (!response.ok) {
+    return []
+  }
+
+  const data = await response.json()
+  return data.products || []
+}
+
+export const listBestsellerProducts = async ({
+  countryCode,
+  limit = 12,
+}: {
+  countryCode: string
+  limit?: number
+}) => {
+  const backendUrl = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL
+  const publishableKey = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY
+
+  if (!backendUrl || !publishableKey) {
+    return []
+  }
+
+  const response = await fetch(
+    `${backendUrl}/store/products/bestsellers?limit=${limit}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "x-publishable-api-key": publishableKey,
+      },
+      cache: "no-store",
+    }
+  )
+
+  if (!response.ok) {
+    return []
+  }
+
+  const data = await response.json()
+  return data.products || []
 }

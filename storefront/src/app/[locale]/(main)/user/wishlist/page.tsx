@@ -44,7 +44,7 @@ export default async function Wishlist({
               <p className="text-lg text-secondary mb-6">
                 {t("account.wishlistEmpty")}
               </p>
-              <LocalizedClientLink href="/categories" className="w-full">
+              <LocalizedClientLink href="/kategorier" className="w-full">
                 <Button className="w-full">{t("cart.explore")}</Button>
               </LocalizedClientLink>
             </div>

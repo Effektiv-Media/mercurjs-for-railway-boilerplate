@@ -1,4 +1,3 @@
-import Image from "next/image"
 import { HttpTypes } from "@medusajs/types"
 
 import { CartDropdown, MobileNavbar, Navbar } from "@/components/cells"
@@ -16,6 +15,7 @@ import { listRegions } from "@/lib/data/regions"
 import LocalizedClientLink from "@/components/molecules/LocalizedLink/LocalizedLink"
 import { MessageButton } from "@/components/molecules/MessageButton/MessageButton"
 import { getServerI18n } from "@/lib/i18n/server"
+import { AnimatedLogo } from "@/components/molecules/AnimatedLogo/AnimatedLogo"
 
 export const Header = async ({ locale }: { locale: string }) => {
   const user = await retrieveCustomer()
@@ -50,15 +50,9 @@ export const Header = async ({ locale }: { locale: string }) => {
                 parentCategories={parentCategories}
                 childrenCategories={categories}
               />
-              <LocalizedClientLink href="/" className="text-2xl font-bold">
-                <Image
-                  src="/Logo.svg"
-                  width={104}
-                  height={36}
-                  alt="Clickfynd logo"
-                  priority
-                />
-              </LocalizedClientLink>
+
+                <AnimatedLogo className="shrink-0 self-center" />
+
             </div>
 
             {/* Desktop search – grows to fill available space */}
@@ -72,7 +66,7 @@ export const Header = async ({ locale }: { locale: string }) => {
                 href={sellerCtaHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden lg:inline-flex h-10 items-center whitespace-nowrap rounded-full border border-fuchsia-200 bg-white px-4 text-sm font-semibold text-fuchsia-800 transition-colors hover:bg-fuchsia-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-300 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                className="hidden lg:inline-flex h-10 items-center whitespace-nowrap rounded-full border border-blue-200 bg-white px-4 text-sm font-semibold text-blue-800 transition-colors hover:bg-blue-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
               >
                 {t("header.becomeSeller")}
               </a>

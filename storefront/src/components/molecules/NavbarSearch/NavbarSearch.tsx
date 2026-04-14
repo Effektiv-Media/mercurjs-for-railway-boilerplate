@@ -5,22 +5,27 @@ import { SearchIcon } from "@/icons"
 import { useSearchParams } from "next/navigation"
 import { useState } from "react"
 import { redirect } from "next/navigation"
+import { useTranslations } from "next-intl"
 
 export const NavbarSearch = ({
-  placeholder = "Sök på Clickfynd",
+  placeholder,
 }: {
   placeholder?: string
 }) => {
   const searchParams = useSearchParams()
 
+  const t = useTranslations("common")
+  const [isFocused, setIsFocused] = useState(false)
   const [search, setSearch] = useState(searchParams.get("query") || "")
+
+  const resolvedPlaceholder = placeholder ?? t("searchClickfynd")
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (search) {
-      redirect(`/categories?query=${search}`)
+      redirect(`/kategorier?query=${search}`)
     } else {
-      redirect(`/categories`)
+      redirect(`/kategorier`)
     }
   }
 
@@ -32,10 +37,12 @@ export const NavbarSearch = ({
     >
       <Input
         icon={<SearchIcon />}
-        placeholder={placeholder}
+        placeholder={isFocused ? "" : resolvedPlaceholder}
         value={search}
         changeValue={setSearch}
-        className="w-full rounded-full border-fuchsia-200 bg-fuchsia-50/60 text-center text-lg font-medium text-slate-900 placeholder:text-slate-500 focus:border-violet-300"
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        className="w-full rounded-full border-blue-200 bg-blue-50/60 text-center text-lg font-medium text-slate-900 placeholder:text-slate-500 focus:border-blue-300"
       />
       <input type="submit" className="hidden" />
     </form>

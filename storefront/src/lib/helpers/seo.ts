@@ -53,7 +53,7 @@ export const generateCategoryMetadata = async (
   return {
     robots: "index, follow",
     metadataBase: new URL(
-      `${protocol}://${host}/categories/${category.handle}`
+      `${protocol}://${host}/kategorier/${category.handle}`
     ),
     title: `${category.name} Category`,
     description: `${category.name} Category - ${process.env.NEXT_PUBLIC_SITE_NAME}`,
@@ -61,7 +61,7 @@ export const generateCategoryMetadata = async (
     openGraph: {
       title: category.name,
       description: `${category.name} Category - ${process.env.NEXT_PUBLIC_SITE_NAME}`,
-      url: `${protocol}://${host}/categories/${category.handle}`,
+      url: `${protocol}://${host}/kategorier/${category.handle}`,
       siteName: process.env.NEXT_PUBLIC_SITE_NAME,
       images: [
         {

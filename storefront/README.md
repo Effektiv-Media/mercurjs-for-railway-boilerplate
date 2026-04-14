@@ -206,3 +206,151 @@ In Algolia dashboard chose your index and select Import configuration from Manag
   "synonyms": []
 }
 ```
+
+---
+
+## Custom Features (ClickFynd)
+
+This project includes several custom marketplace features built on top of Mercur.
+
+### Republish Flow
+
+Vendors can republish expired listings directly from the vendor panel.
+
+- Available when a product is in `draft` state and marked as expired
+- Vendor selects a new listing duration:
+  - 10h (4% fee)
+  - 24h (6% fee)
+  - 48h (8% fee)
+- Product is set back to `published`
+- Previous listing metadata is overwritten
+- A new listing lifecycle begins on republish
+
+Updated metadata:
+- `listing_duration_hours`
+- `listing_fee_bps`
+- `listing_published_at`
+- `listing_expires_at`
+- `listing_is_expired`
+
+---
+
+### Listing Expiration Logic
+
+- Listings expire based on `listing_expires_at`
+- A cron job runs every hour
+- Expired products are:
+  - set to `draft`
+  - marked with `listing_is_expired = true`
+
+---
+
+### Listing Fee Rules
+
+Listing fees are dynamically applied based on duration:
+
+| Duration | Fee |
+|----------|-----|
+| 10h      | 4%  |
+| 24h      | 6%  |
+| 48h      | 8%  |
+
+Rules are stored in the `listing_fee_rule` module.
+
+---
+
+### Product View Tracking
+
+- Product views are tracked when visiting the product detail page
+- Stored in `product_view`
+- Deduplicated per:
+  - visitor
+  - product
+  - 24h window
+- Duplicate views are ignored within 24h per visitor
+- Prevents artificial inflation of popularity
+
+Used for **Popular** products.
+
+---
+
+### Active Listings Filtering
+
+Only active listings are shown in storefront sections.
+
+A listing is considered active if:
+- `listing_is_expired = false`
+- `listing_expires_at` is in the future
+
+---
+
+### Homepage Sections Logic
+
+The homepage is powered by custom ranking logic:
+
+- **Popular**
+  - Based on product views from the last 7 days
+  - Only active (non-expired) listings are included
+  - Results use a rolling 7-day window
+
+- **New Arrivals**
+  - Based on `listing_published_at`
+
+- **Best Sellers (Fler fynd)**
+  - Based on product sales from the last 7 days
+  - Based on completed purchases
+  - Reflects real market demand
+
+---
+
+### Custom API Endpoints
+
+#### Vendor API
+
+- `POST /vendor/products/:id/republish`
+- `GET /vendor/listing-fee-rules`
+
+#### Store API
+
+- `POST /store/products/:id/view`
+- `GET /store/products/popular`
+- `GET /store/products/new-arrivals`
+- `GET /store/products/bestsellers`
+
+---
+
+### Custom Modules
+
+- `listing_fee`
+  - Handles duration → fee logic
+
+- `product_view`
+  - Tracks product views
+
+- `product_sale`
+  - Tracks product sales for bestseller ranking
+
+---
+
+### Background Jobs & Subscribers
+
+- **Expire Listings Job**
+  - Runs hourly
+  - Marks expired listings as draft
+
+- **Product Publish Subscriber**
+  - Sets listing metadata on approval
+
+- **Order Subscriber**
+  - Applies dynamic listing fees on purchase
+
+---
+
+### Marketplace Logic Summary
+
+- Listings are time-limited assets
+- Visibility is driven by:
+  - popularity (views)
+  - recency (published date)
+  - performance (sales)
+- Expired listings must be republished to re-enter the marketplace

@@ -19,7 +19,7 @@ export const BannerSection = () => {
               of the unconventional.
             </p>
           </div>
-          <LocalizedClientLink href="/collections/boho">
+          <LocalizedClientLink href="/kollektioner/boho">
             <Button size="large" className="w-fit bg-sky-700 text-white">
               EXPLORE
             </Button>

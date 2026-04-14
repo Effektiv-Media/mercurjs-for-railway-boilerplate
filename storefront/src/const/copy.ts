@@ -1,6 +1,12 @@
 export type StorefrontLocale = string
 
-type TrustItem = { title: string; subtitle?: string }
+type TrustItem = { 
+  title: string; 
+  subtitle?: string 
+  payments?: ("klarna" | "visa" | "mastercard" | "paypal")[]
+  shipping?: ("PostNord" | "DHL" | "Schenker" | "UPS")[]
+  showReturnsIcon?: boolean
+}
 
 type Copy = {
   home: {
@@ -34,9 +40,21 @@ const EN: Copy = {
     },
     trustStrip: {
       items: [
-        { title: "Secure payments", subtitle: "Pay safely with trusted providers" },
-        { title: "Fast delivery", subtitle: "Delivery to pickup point" },
-        { title: "Easy returns", subtitle: "Simple support & returns" },
+        {
+          title: "Secure payments",
+          subtitle: "Pay safely with trusted payment providers",
+          payments: ["klarna", "visa", "mastercard", "paypal"],
+        },
+        {
+          title: "Fast delivery",
+          subtitle: "Shipping with trusted delivery partners",
+          shipping: ["PostNord", "DHL", "Schenker", "UPS"],
+        },
+        {
+          title: "Easy returns",
+          subtitle: "Simple returns if something doesn’t feel right",
+          showReturnsIcon: true,
+        },
       ],
     },
   },
@@ -48,23 +66,35 @@ const SV: Copy = {
       title: "Start",
       description:
         "Välkommen till Clickfynd — en deal-driven marknadsplats med snabb leverans och trygga betalningar.",
-    },
-    hero: {
-      heading: "Fynda bra deals – snabbt",
-      paragraph:
-        "Shoppa bland tusentals produkter från flera säljare — nya fynd varje dag.",
-      buttons: { buy: "Shoppa", sell: "Sälj" },
-    },
-    sections: {
-      trending: "Populärt just nu",
-      categories: "HANDLA EFTER KATEGORI",
-    },
-    trustStrip: {
-      items: [
-        { title: "Trygga betalningar", subtitle: "Säkra betalsätt" },
-        { title: "Snabb leverans", subtitle: "Leverans till ombud" },
-        { title: "Smidiga returer", subtitle: "Enkelt & snabbt" },
-      ],
+        },
+        hero: {
+          heading: "Fynda bra deals – snabbt",
+          paragraph:
+            "Shoppa bland tusentals produkter från flera säljare — nya fynd varje dag.",
+          buttons: { buy: "Shoppa", sell: "Sälj" },
+        },
+        sections: {
+          trending: "Populärt just nu",
+          categories: "HANDLA EFTER KATEGORI",
+        },
+        trustStrip: {
+          items: [
+      {
+        title: "Trygga betalningar",
+        subtitle: "Betala säkert med välkända betalsätt",
+        payments: ["klarna", "visa", "mastercard", "paypal"],
+      },
+      {
+        title: "Snabb leverans",
+        subtitle: "Leverans med etablerade fraktpartners",
+        shipping: ["PostNord", "DHL", "Schenker", "UPS"],
+      },
+      {
+        title: "Smidiga returer",
+        subtitle: "Enkelt att returnera om något inte känns rätt",
+        showReturnsIcon: true,
+      },
+    ],
     },
   },
 }

@@ -4,7 +4,7 @@ import React, { useContext, useMemo, type JSX } from "react"
 
 import { isManual } from "../../../lib/constants"
 import SkeletonCardDetails from "./SkeletonCardDetails"
-import { CardElement } from "@stripe/react-stripe-js"
+import { PaymentElement } from "@stripe/react-stripe-js"
 import { StripeCardElementOptions } from "@stripe/stripe-js"
 import PaymentTest from "./PaymentTest"
 import { StripeContext } from "./StripeWrapper"
@@ -79,20 +79,9 @@ export const StripeCardContainer = ({
   const t = useTranslations("checkout")
   const stripeReady = useContext(StripeContext)
 
-  const useOptions: StripeCardElementOptions = useMemo(() => {
+  const useOptions = useMemo(() => {
     return {
-      style: {
-        base: {
-          fontFamily: "Inter, sans-serif",
-          color: "#424270",
-          "::placeholder": {
-            color: "rgb(107 114 128)",
-          },
-        },
-      },
-      classes: {
-        base: "pt-3 pb-1 block w-full h-11 px-4 mt-0 bg-ui-bg-field border rounded-md appearance-none focus:outline-none focus:ring-0 focus:shadow-borders-interactive-with-active border-ui-border-base hover:bg-ui-bg-field-hover transition-all duration-300 ease-in-out",
-      },
+      layout: "tabs" as const,
     }
   }, [])
 
@@ -109,13 +98,12 @@ export const StripeCardContainer = ({
             <Text className="txt-medium-plus text-ui-fg-base mb-1">
               {t("enterCardDetails")}:
             </Text>
-            <CardElement
-              options={useOptions as StripeCardElementOptions}
+            <PaymentElement
+              options={useOptions}
               onChange={(e) => {
-                setCardBrand(
-                  e.brand && e.brand.charAt(0).toUpperCase() + e.brand.slice(1)
-                )
-                setError(e.error?.message || null)
+                const maybeError = (e as { error?: { message?: string } }).error
+
+                setError(maybeError?.message ?? null)
                 setCardComplete(e.complete)
               }}
             />

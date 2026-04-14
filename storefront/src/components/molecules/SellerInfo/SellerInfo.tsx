@@ -2,6 +2,7 @@ import { StarRating } from "@/components/atoms"
 import { SellerAvatar } from "@/components/cells/SellerAvatar/SellerAvatar"
 import { SellerProps } from "@/types/seller"
 import { SellerReview } from "../SellerReview/SellerReview"
+import { useTranslations } from "next-intl"
 
 export const SellerInfo = ({
   seller,
@@ -10,6 +11,7 @@ export const SellerInfo = ({
   seller: SellerProps
   header?: boolean
 }) => {
+  const t = useTranslations("product")
   const { photo, name, reviews } = seller
 
   const reviewCount = reviews
@@ -32,7 +34,9 @@ export const SellerInfo = ({
         <h3 className="heading-sm text-primary">{name}</h3>
         <div className="flex items-center gap-2 border-b pb-4">
           <StarRating starSize={16} rate={rating || 0} />
-          <span className="text-md text-secondary">{reviewCount} reviews</span>
+          <span className="text-md text-secondary">
+            {reviewCount} {reviewCount === 1 ? t("reviewLabel") : t("reviewsLabel")}
+          </span>
         </div>
         <div className="mt-4">
           {!header &&
