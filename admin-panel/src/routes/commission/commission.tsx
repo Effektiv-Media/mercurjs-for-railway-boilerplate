@@ -87,7 +87,7 @@ export const Commission = () => {
 
   return (
     <>
-      <Container className="divide-y p-0">
+      {/* <Container className="divide-y p-0">
         <div className="flex items-center justify-between px-6 py-4">
           <div>
             <Heading>Global Commission Settings</Heading>
@@ -177,7 +177,7 @@ export const Commission = () => {
             message: "No records",
           }}
         />
-      </Container>
+      </Container> */}
 
       <Container className="divide-y p-0">
         <div className="flex items-center justify-between px-6 py-4">
