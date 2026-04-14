@@ -63,7 +63,7 @@ export const Hero = async ({ image, heading, paragraph, buttons }: HeroProps) =>
             playsInline
             preload="metadata"
             poster={decodeURIComponent(image)}
-            className="absolute inset-0 h-full w-full object-cover object-[2%_center] sm:object-[5%_center]"
+            className="absolute inset-0 h-full w-full object-cover object-[2%_center] sm:object-[50%_center]"
           >
             <source src="/videos/hero/herovideo-optimized.mp4" type="video/mp4" />
           </video>
