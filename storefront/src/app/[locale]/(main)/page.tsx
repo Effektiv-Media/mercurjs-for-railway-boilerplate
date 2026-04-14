@@ -249,9 +249,9 @@ export default async function Home({
           ambient="bestsellers"
         />
       </div>
-      <BannerSection />
+      {/* <BannerSection />
       <ShopByStyleSection />
-      <BlogSection />
+      <BlogSection /> */}
     </main>
   )
 }
