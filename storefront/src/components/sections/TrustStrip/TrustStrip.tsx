@@ -78,7 +78,7 @@ useEffect(() => {
                     {item.payments.includes("mastercard") ? (
                       <span className="flex items-center justify-center rounded-md border border-white/60 bg-white/95 px-1 py-2 shadow-sm">
                         <Image
-                          src="/images/logos/mastercard.png"
+                          src="/images/logos/mastercardlogo.png"
                           alt="Mastercard"
                           width={40}
                           height={24}
