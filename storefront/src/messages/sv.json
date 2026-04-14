@@ -204,6 +204,41 @@
       "heroTileButton": "Köp nu",
       "heroPriceFrom": "Från",
       "heroPriceValue": "29 kr"
+    },
+    "faq": {
+      "title": "Vanliga frågor",
+      "description": "Svar på de vanligaste frågorna om beställning, leverans, returer och betalning på Clickfynd.",
+      "badge": "Hjälpcenter",
+      "heading": "Vanliga frågor",
+      "intro": "Här hittar du svar på de mest ställda frågorna. Hittar du inte det du söker? Kontakta oss direkt."
+    },
+    "trackOrder": {
+      "title": "Spåra order",
+      "description": "Se status på din beställning och spåra din leverans i realtid.",
+      "badge": "Order & spårning",
+      "heading": "Spåra din order",
+      "intro": "Logga in på ditt konto för att se orderstatus i realtid och följa din leverans hela vägen hem."
+    },
+    "returns": {
+      "title": "Returer",
+      "description": "Information om retur och ångerrätt. Vi erbjuder 14 dagars ångerrätt.",
+      "badge": "Returer & ångerrätt",
+      "heading": "Returer & ångerrätt",
+      "intro": "Vi följer konsumentköplagen och erbjuder 14 dagars ångerrätt på alla köp."
+    },
+    "delivery": {
+      "title": "Leverans",
+      "description": "Information om leveranstider, fraktalternativ och spårning.",
+      "badge": "Leverans & frakt",
+      "heading": "Leverans & frakt",
+      "intro": "Snabb och pålitlig leverans till hela Sverige. Fri standardfrakt på alla beställningar."
+    },
+    "payment": {
+      "title": "Betalning",
+      "description": "Information om betalningsmetoder och säker handel på Clickfynd.",
+      "badge": "Betalning",
+      "heading": "Betalningsalternativ",
+      "intro": "Välj den betalningsmetod som passar dig bäst. Alla betalningar är SSL-krypterade och säkra."
     }
   },
   "common": {
