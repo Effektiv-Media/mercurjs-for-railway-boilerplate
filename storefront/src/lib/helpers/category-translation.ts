@@ -8,7 +8,7 @@ export const getCategoryTranslationKey = (handle: string) => {
     case "klader":
       return "apparel"
 
-    case "home-garden":
+    case "home-&-garden":
     case "hem-och-tradgard":
       return "homeGarden"
 
