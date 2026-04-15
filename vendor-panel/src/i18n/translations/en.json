@@ -2650,17 +2650,17 @@
   },
   "login": {
     "forgotPassword": "Forgot password? - <0>Reset</0>",
-    "title": "Welcome to Mercur Seller Panel",
+    "title": "Clickfynd Seller Panel",
     "hint": "Sign in to access the account area",
     "notSellerYet": "Not a seller yet? - <0>Create an account</0>"
   },
   "register": {
-    "title": "Join Mercur Seller Panel",
+    "title": "Join Clickfynd Seller Panel",
     "hint": "Sign up to start selling",
     "alreadySeller": "Already have an account? - <0>Sign In</0>"
   },
   "invite": {
-    "title": "Welcome to Mercur Seller Panel",
+    "title": "Clickfynd Seller Panel",
     "hint": "Create your account below",
     "backToLogin": "Back to login",
     "createAccount": "Create account",
@@ -2668,8 +2668,8 @@
     "emailTooltip": "Your email cannot be changed. If you would like to use another email, a new invite must be sent.",
     "invalidInvite": "The invite is invalid or has expired.",
     "successTitle": "Your account has been registered",
-    "successHint": "Get started with Medusa Admin right away.",
-    "successAction": "Start Medusa Admin",
+    "successHint": "Get started with Clickfynd Seller Panel right away.",
+    "successAction": "Start Clickfynd Seller Panel",
     "invalidTokenTitle": "Your invite token is invalid",
     "invalidTokenHint": "Try requesting a new invite link.",
     "passwordMismatch": "Passwords do not match",
