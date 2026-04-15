@@ -2649,15 +2649,15 @@
     }
   },
   "login": {
-    "forgotPassword": "Forgot password? - <0>Reset</0>",
-    "title": "Clickfynd Seller Panel",
-    "hint": "Sign in to access the account area",
-    "notSellerYet": "Not a seller yet? - <0>Create an account</0>"
+    "forgotPassword": "Glömt lösenord? - <0>Återställ</0>",
+    "title": "Clickfynds Säljpanel",
+    "hint": "Logga in på ditt konto nedan",
+    "notSellerYet": "Inte en säljare ännu? - <0>Skapa konto</0>"
   },
   "register": {
-    "title": "Join Clickfynd Seller Panel",
-    "hint": "Sign up to start selling",
-    "alreadySeller": "Already have an account? - <0>Sign In</0>"
+    "title": "Bli säljare hos Clickfynd",
+    "hint": "Skapa ditt konto nedan",
+    "alreadySeller": "Har du redan ett konto? - <0>Logga in</0>"
   },
   "invite": {
     "title": "Clickfynd Seller Panel",
@@ -2837,7 +2837,7 @@
     "requiredQuantity": "Required quantity",
     "description": "Description",
     "email": "Email",
-    "password": "Password",
+    "password": "Lösenord",
     "repeatPassword": "Repeat Password",
     "confirmPassword": "Confirm Password",
     "newPassword": "New Password",

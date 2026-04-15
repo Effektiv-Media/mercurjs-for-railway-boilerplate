@@ -16,7 +16,7 @@ const RegisterSchema = z.object({
   email: z.string().email({ message: "Invalid email" }),
   password: z.string().min(2, { message: "Password should be a string" }),
   confirmPassword: z.string().min(2, {
-    message: "Confirm Password should be a string",
+    message: "Bekräfta lösenordet måste vara en sträng",
   }),
 })
 
@@ -41,11 +41,11 @@ export const Register = () => {
       if (password !== confirmPassword) {
         form.setError("password", {
           type: "manual",
-          message: "Password and Confirm Password not matched",
+          message: "Lösenord och bekräfta lösenord matchar inte",
         })
         form.setError("confirmPassword", {
           type: "manual",
-          message: "Password and Confirm Password not matched",
+          message: "Lösenord och bekräfta lösenord matchar inte",
         })
 
         return null
@@ -95,17 +95,16 @@ export const Register = () => {
     return (
       <div className="bg-ui-bg-subtle flex min-h-dvh w-dvw items-center justify-center">
         <div className="mb-4 flex flex-col items-center">
-          <Heading>Thank You for registering!</Heading>
+          <Heading>Tack för din registrering!</Heading>
           <Text
             size="small"
             className="text-ui-fg-subtle text-center mt-2 max-w-[320px]"
           >
-            You may need to wait for admin authorization before logging in. A
-            confirmation email will be sent to you shortly.
+            Så fort en administratör har godkänt din ansökan kommer du att få ett mail med instruktioner om hur du loggar in och börjar sälja på Clickfynd.
           </Text>
 
           <Link to="/login">
-            <Button className="mt-8">Back to login page</Button>
+            <Button className="mt-8">Tillbaka</Button>
           </Link>
         </div>
       </div>
@@ -138,7 +137,7 @@ export const Register = () => {
                           <Input
                             {...field}
                             className="bg-ui-bg-field-component mb-2"
-                            placeholder="Company name"
+                            placeholder="Företagsnamn"
                           />
                         </Form.Control>
                       </Form.Item>
@@ -193,7 +192,7 @@ export const Register = () => {
                             type="password"
                             {...field}
                             className="bg-ui-bg-field-component"
-                            placeholder="Confirm Password"
+                            placeholder="Upprepa lösenord"
                           />
                         </Form.Control>
                       </Form.Item>
@@ -218,7 +217,7 @@ export const Register = () => {
                 </Alert>
               )}
               <Button className="w-full" type="submit" isLoading={isPending}>
-                Sign up
+                Skapa konto
               </Button>
             </form>
           </Form>
