@@ -25,7 +25,7 @@ export const ProductCarousel = ({
   return (
     <div className="embla relative">
       <div
-        className="embla__viewport overflow-hidden rounded-xs"
+        className="embla__viewport overflow-hidden rounded-xs bg-slate-50"
         ref={emblaRef}
       >
         <div className="embla__container h-[350px] lg:h-fit max-h-[698px] flex lg:block">
@@ -43,7 +43,7 @@ export const ProductCarousel = ({
                 height={700}
                 quality={idx === 0 ? 85 : 70}
                 sizes="(min-width: 1024px) 50vw, 100vw"
-                className="max-h-[700px] w-full h-auto aspect-square object-cover object-center object-center"
+                className="max-h-[700px] h-auto w-full object-contain object-center bg-white"
               />
             </div>
           ))}

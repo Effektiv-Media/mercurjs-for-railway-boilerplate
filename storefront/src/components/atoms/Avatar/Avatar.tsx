@@ -34,7 +34,7 @@ export function Avatar({
         className={cn(
           baseClasses,
           sizeClasses[size],
-          "object-cover",
+          "object-contain object-center bg-white p-0.5",
           className
         )}
       />
