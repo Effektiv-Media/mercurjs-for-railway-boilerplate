@@ -37,8 +37,8 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: [{ url: "/favicon.png?v=2" }],
-    apple: [{ url: "/apple-icon.png?v=2" }],
+    icon: [{ url: "/favicon.png?v=3" }],
+    apple: [{ url: "/apple-icon.png?v=3" }],
   },
 }
 
