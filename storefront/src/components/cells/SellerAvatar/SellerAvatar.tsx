@@ -16,12 +16,13 @@ export const SellerAvatar = ({
       width={size}
       height={size}
       style={{ width: size, height: size }}
+      className="rounded-sm border object-contain object-center bg-white p-0.5"
     />
   ) : (
     <Image
       src="/images/placeholder.svg"
       alt={alt}
-      className="opacity-30 w-8 h-8"
+      className="h-8 w-8 rounded-sm border bg-white p-0.5 opacity-30 object-contain object-center"
       width={32}
       height={32}
     />

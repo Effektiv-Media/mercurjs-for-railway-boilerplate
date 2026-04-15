@@ -120,13 +120,13 @@ export const ProductCard = ({
           </svg>
         </div>
       ) : null}
-      <div className="relative w-full bg-slate-100 aspect-square rounded-xl overflow-hidden z-[1]">
+      <div className="relative z-[1] aspect-square w-full overflow-hidden rounded-xl bg-white">
         <LocalizedClientLink
           href={`/produkter/${product.handle}`}
           aria-label={`View ${productName}`}
           title={`View ${productName}`}
         >          
-          <div className="overflow-hidden rounded-sm w-full h-full flex justify-center align-center">
+          <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-sm bg-slate-50">
           
             {product.thumbnail ? (
               <Image
@@ -137,7 +137,7 @@ export const ProductCard = ({
                 width={400}
                 height={400}
                 sizes="(min-width: 1536px) 14vw, (min-width: 1280px) 16vw, (min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
-                className="object-cover aspect-square w-full object-center h-full transition-transform duration-300 group-hover:scale-[1.03]"
+                className="aspect-square h-full w-full object-contain object-center transition-transform duration-300 group-hover:scale-[1.02]"
               />
             ) : (
               <Image
