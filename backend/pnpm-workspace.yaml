@@ -3,3 +3,4 @@ packages:
 
 patchedDependencies:
   '@mercurjs/payment-stripe-connect': patches/@mercurjs__payment-stripe-connect.patch
+  
