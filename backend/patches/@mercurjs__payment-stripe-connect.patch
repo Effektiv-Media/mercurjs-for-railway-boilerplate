@@ -1,0 +1,15 @@
+diff --git a/.medusa/server/src/providers/stripe-connect/services/stripe-connect-card-provider.js b/.medusa/server/src/providers/stripe-connect/services/stripe-connect-card-provider.js
+index 73608d58d5399087b146d4b540778b727f8d425d..f4d4fa8e286d4f8df108d15e15372f6edcf17708 100644
+--- a/.medusa/server/src/providers/stripe-connect/services/stripe-connect-card-provider.js
++++ b/.medusa/server/src/providers/stripe-connect/services/stripe-connect-card-provider.js
+@@ -11,7 +11,9 @@ class StripeConnectCardProviderService extends stripe_connect_provider_1.default
+     }
+     get paymentIntentOptions() {
+         return {
+-            payment_method_types: ["card"],
++            automatic_payment_methods: {
++                enabled: true,
++            },
+         };
+     }
+ }
