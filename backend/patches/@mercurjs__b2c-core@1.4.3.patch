@@ -1,0 +1,109 @@
+diff --git a/.medusa/server/src/modules/payout/service.js b/.medusa/server/src/modules/payout/service.js
+index 2260af10c4c95d0ca68a1650aea1f97a8c512f60..c3a42dff721a1525731e7931af6b37b2eb8686b6 100644
+--- a/.medusa/server/src/modules/payout/service.js
++++ b/.medusa/server/src/modules/payout/service.js
+@@ -124,6 +124,9 @@ class PayoutModuleService extends (0, utils_1.MedusaService)({
+     async getWebhookActionAndData(input) {
+         return await this.provider_.getWebhookActionAndData(input);
+     }
++    async getProcessingFee(input) {
++        return await this.provider_.getProcessingFee(input);
++    }
+ }
+ __decorate([
+     (0, utils_1.InjectTransactionManager)(),
+diff --git a/.medusa/server/src/modules/payout/services/provider.js b/.medusa/server/src/modules/payout/services/provider.js
+index 6e3856eddfe502f4872f8181048deee9316c67f2..a39577766299d007807e9f98261f37a91c1a0e44 100644
+--- a/.medusa/server/src/modules/payout/services/provider.js
++++ b/.medusa/server/src/modules/payout/services/provider.js
+@@ -46,6 +46,22 @@ class PayoutProvider {
+             throw new utils_1.MedusaError(utils_1.MedusaError.Types.UNEXPECTED_STATE, message);
+         }
+     }
++    async getProcessingFee({ charge_id, currency }) {
++        try {
++            if (!charge_id) {
++                return { fee: 0 };
++            }
++            const charge = await this.client_.charges.retrieve(charge_id, {
++                expand: ["balance_transaction"],
++            });
++            const fee = charge.balance_transaction?.fee ?? 0;
++            return { fee: (0, framework_1.getAmountFromSmallestUnit)(fee, currency) };
++        }
++        catch (error) {
++            this.logger_.error("Error fetching Stripe processing fee", error);
++            return { fee: 0 };
++        }
++    }
+     async createPayoutAccount({ context, account_id, }) {
+         try {
+             const { country } = context;
+diff --git a/.medusa/server/src/workflows/order/steps/calculate-payout-for-order.js b/.medusa/server/src/workflows/order/steps/calculate-payout-for-order.js
+index 4013e5d73480fb800c9f638fd5a2bcb04ad680ef..81ee7bd477a31d2230bdd142b26268cfcc8250a0 100644
+--- a/.medusa/server/src/workflows/order/steps/calculate-payout-for-order.js
++++ b/.medusa/server/src/workflows/order/steps/calculate-payout-for-order.js
+@@ -26,9 +26,11 @@ exports.calculatePayoutForOrderStep = (0, workflows_sdk_1.createStep)('calculate
+     const orderPayment = order.split_order_payment;
+     const captured_amount = utils_1.MathBN.convert(orderPayment.captured_amount);
+     const refunded_amount = utils_1.MathBN.convert(orderPayment.refunded_amount);
++    const stripe_fee_amount = utils_1.MathBN.convert(input.stripe_fee ?? 0);
+     const payout_total = captured_amount
+         .minus(refunded_amount)
+-        .minus(total_commission);
++        .minus(total_commission)
++        .minus(stripe_fee_amount);
+     return new workflows_sdk_1.StepResponse(payout_total);
+ });
+ //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY2FsY3VsYXRlLXBheW91dC1mb3Itb3JkZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi8uLi9zcmMvd29ya2Zsb3dzL29yZGVyL3N0ZXBzL2NhbGN1bGF0ZS1wYXlvdXQtZm9yLW9yZGVyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUFBLHFEQUE2RTtBQUM3RSxxRUFBNEU7QUFJL0QsUUFBQSwyQkFBMkIsR0FBRyxJQUFBLDBCQUFVLEVBQ25ELDRCQUE0QixFQUM1QixLQUFLLEVBQ0gsS0FFQyxFQUNELEVBQUUsU0FBUyxFQUFFLEVBQ2IsRUFBRTtJQUNGLE1BQU0sS0FBSyxHQUFHLFNBQVMsQ0FBQyxPQUFPLENBQUMsaUNBQXlCLENBQUMsS0FBSyxDQUFDLENBQUE7SUFFaEUsTUFBTSxFQUNKLElBQUksRUFBRSxDQUFDLEtBQUssQ0FBQyxFQUNkLEdBQUcsTUFBTSxLQUFLLENBQUMsS0FBSyxDQUFDO1FBQ3BCLE1BQU0sRUFBRSxPQUFPO1FBQ2YsTUFBTSxFQUFFLENBQUMsVUFBVSxFQUFFLHVCQUF1QixDQUFDO1FBQzdDLE9BQU8sRUFBRTtZQUNQLEVBQUUsRUFBRSxLQUFLLENBQUMsUUFBUTtTQUNuQjtLQUNGLENBQUMsQ0FBQTtJQUVGLE1BQU0sZ0JBQWdCLEdBQUcsS0FBSyxDQUFDLEtBQUssQ0FBQyxHQUFHLENBQUMsQ0FBQyxDQUFDLEVBQUUsRUFBRSxDQUFDLENBQUMsQ0FBQyxFQUFFLENBQUMsQ0FBQTtJQUVyRCxNQUFNLEVBQUUsSUFBSSxFQUFFLGdCQUFnQixFQUFFLEdBQUcsTUFBTSxLQUFLLENBQUMsS0FBSyxDQUFDO1FBQ25ELE1BQU0sRUFBRSxpQkFBaUI7UUFDekIsTUFBTSxFQUFFLENBQUMsR0FBRyxDQUFDO1FBQ2IsT0FBTyxFQUFFO1lBQ1AsWUFBWSxFQUFFLGdCQUFnQjtTQUMvQjtLQUNGLENBQUMsQ0FBQTtJQUVGLE1BQU0sZ0JBQWdCLEdBQUcsZ0JBQWdCLENBQUMsTUFBTSxDQUFDLENBQUMsR0FBRyxFQUFFLE9BQU8sRUFBRSxFQUFFO1FBQ2hFLE9BQU8sY0FBTSxDQUFDLEdBQUcsQ0FBQyxHQUFHLEVBQUUsT0FBTyxDQUFDLEtBQUssQ0FBQyxDQUFBO0lBQ3ZDLENBQUMsRUFBRSxjQUFNLENBQUMsT0FBTyxDQUFDLENBQUMsQ0FBQyxDQUFDLENBQUE7SUFFckIsTUFBTSxZQUFZLEdBQXlCLEtBQUssQ0FBQyxtQkFBbUIsQ0FBQTtJQUVwRSxNQUFNLGVBQWUsR0FBRyxjQUFNLENBQUMsT0FBTyxDQUFDLFlBQVksQ0FBQyxlQUFlLENBQUMsQ0FBQTtJQUNwRSxNQUFNLGVBQWUsR0FBRyxjQUFNLENBQUMsT0FBTyxDQUFDLFlBQVksQ0FBQyxlQUFlLENBQUMsQ0FBQTtJQUVwRSxNQUFNLFlBQVksR0FBRyxlQUFlO1NBQ2pDLEtBQUssQ0FBQyxlQUFlLENBQUM7U0FDdEIsS0FBSyxDQUFDLGdCQUFnQixDQUFDLENBQUE7SUFFMUIsT0FBTyxJQUFJLDRCQUFZLENBQUMsWUFBWSxDQUFDLENBQUE7QUFDdkMsQ0FBQyxDQUNGLENBQUEifQ==
+\ No newline at end of file
+diff --git a/.medusa/server/src/workflows/order/steps/fetch-stripe-processing-fee.js b/.medusa/server/src/workflows/order/steps/fetch-stripe-processing-fee.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..57f66bc25149ee72b76c3f2ac6d606065ecee17d
+--- /dev/null
++++ b/.medusa/server/src/workflows/order/steps/fetch-stripe-processing-fee.js
+@@ -0,0 +1,13 @@
++"use strict";
++Object.defineProperty(exports, "__esModule", { value: true });
++exports.fetchStripeProcessingFeeStep = void 0;
++const workflows_sdk_1 = require("@medusajs/framework/workflows-sdk");
++const payout_1 = require("../../../modules/payout");
++exports.fetchStripeProcessingFeeStep = (0, workflows_sdk_1.createStep)("fetch-stripe-processing-fee", async (input, { container }) => {
++    const service = container.resolve(payout_1.PAYOUT_MODULE);
++    const { fee } = await service.getProcessingFee({
++        charge_id: input.charge_id,
++        currency: input.currency,
++    });
++    return new workflows_sdk_1.StepResponse(fee);
++});
+diff --git a/.medusa/server/src/workflows/order/steps/index.js b/.medusa/server/src/workflows/order/steps/index.js
+index 538417a64fd6e43866e5a80f9f0dcef79963bfdf..0a563e96a8096831a846cf10346f0724ff76886d 100644
+--- a/.medusa/server/src/workflows/order/steps/index.js
++++ b/.medusa/server/src/workflows/order/steps/index.js
+@@ -18,4 +18,5 @@ __exportStar(require("./create-payout"), exports);
+ __exportStar(require("./validate-no-existing-payout-for-order"), exports);
+ __exportStar(require("./validate-seller-payout-account"), exports);
+ __exportStar(require("./calculate-payout-for-order"), exports);
++__exportStar(require("./fetch-stripe-processing-fee"), exports);
+ //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi8uLi9zcmMvd29ya2Zsb3dzL29yZGVyL3N0ZXBzL2luZGV4LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSxrREFBK0I7QUFDL0IsMEVBQXVEO0FBQ3ZELG1FQUFnRDtBQUNoRCwrREFBNEMifQ==
+\ No newline at end of file
+diff --git a/.medusa/server/src/workflows/order/workflows/process-payout-for-order.js b/.medusa/server/src/workflows/order/workflows/process-payout-for-order.js
+index e403f06c07bb9da8fcfb2a95fb0acb1ad8641aca..20ef004ea9377d3c5d418beb3563c306d431103e 100644
+--- a/.medusa/server/src/workflows/order/workflows/process-payout-for-order.js
++++ b/.medusa/server/src/workflows/order/workflows/process-payout-for-order.js
+@@ -43,7 +43,14 @@ exports.processPayoutForOrderWorkflow = (0, workflows_sdk_2.createWorkflow)({ na
+     }).config({ name: "query-seller" });
+     const seller = (0, workflows_sdk_1.transform)(sellers, (sellers) => sellers[0]);
+     (0, steps_1.validateSellerPayoutAccountStep)(seller);
+-    const payout_total = (0, steps_1.calculatePayoutForOrderStep)(input);
++    const stripe_fee = (0, steps_1.fetchStripeProcessingFeeStep)({
++        charge_id: order.source_transaction,
++        currency: order.currency_code,
++    });
++    const payout_total = (0, steps_1.calculatePayoutForOrderStep)({
++        order_id: input.order_id,
++        stripe_fee,
++    });
+     const { payout, err: createPayoutErr } = (0, steps_1.createPayoutStep)({
+         transaction_id: order.id,
+         amount: payout_total,

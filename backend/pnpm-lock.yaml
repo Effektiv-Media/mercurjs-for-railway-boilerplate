@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
+  '@mercurjs/b2c-core@1.4.3':
+    hash: 72f190a7a79ccd030733e5f1767686b69cf1f8903bbb9d8d29beec0c7c3aac3c
+    path: patches/@mercurjs__b2c-core@1.4.3.patch
   '@mercurjs/payment-stripe-connect':
     hash: b82e62a5ef435815c889fbc750eddd39c8ae6bb18d781abd8389a86e64c61f98
     path: patches/@mercurjs__payment-stripe-connect.patch
@@ -30,7 +33,7 @@ importers:
         version: 1.4.3(6c72a08643bb88cdddcdc09c0f129526)
       '@mercurjs/b2c-core':
         specifier: ^1.4.3
-        version: 1.4.3(6c72a08643bb88cdddcdc09c0f129526)
+        version: 1.4.3(patch_hash=72f190a7a79ccd030733e5f1767686b69cf1f8903bbb9d8d29beec0c7c3aac3c)(6c72a08643bb88cdddcdc09c0f129526)
       '@mercurjs/commission':
         specifier: ^1.4.3
         version: 1.4.3(6c72a08643bb88cdddcdc09c0f129526)
@@ -9282,7 +9285,7 @@ snapshots:
       awilix: 8.0.1
       pg: 8.16.3
 
-  '@mercurjs/b2c-core@1.4.3(6c72a08643bb88cdddcdc09c0f129526)':
+  '@mercurjs/b2c-core@1.4.3(patch_hash=72f190a7a79ccd030733e5f1767686b69cf1f8903bbb9d8d29beec0c7c3aac3c)(6c72a08643bb88cdddcdc09c0f129526)':
     dependencies:
       '@medusajs/admin-sdk': 2.10.2
       '@medusajs/cli': 2.10.2(@mikro-orm/core@6.4.3)(@mikro-orm/knex@6.4.3(@mikro-orm/core@6.4.3)(pg@8.16.3))(@mikro-orm/migrations@6.4.3(@mikro-orm/core@6.4.3)(@types/node@20.19.25)(pg@8.16.3))(@mikro-orm/postgresql@6.4.3(@mikro-orm/core@6.4.3))(@types/node@20.19.25)(awilix@8.0.1)(ioredis@5.8.2)(pg@8.16.3)(vite@5.4.21(@types/node@20.19.25))

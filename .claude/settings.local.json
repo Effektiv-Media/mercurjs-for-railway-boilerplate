@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xargs grep *)",
+      "Bash(node -e \"const p=require\\('./backend/node_modules/.bin/init-backend'\\); console.log\\(p\\)\")",
+      "Bash(find \"d:/EffektivMedia/ClickFynd/mercurjs-for-railway-boilerplate/backend/node_modules/.pnpm/@mercurjs+b2c-core@1.4.3\"*/node_modules/@mercurjs/b2c-core/.medusa/server/src/workflows/cart -type f)",
+      "Bash(find \"d:/EffektivMedia/ClickFynd/mercurjs-for-railway-boilerplate/backend/node_modules/.pnpm/@mercurjs+b2c-core@1.4.3\"*/node_modules/@mercurjs/b2c-core/.medusa/server/src/workflows/order -type f -name \"*.js\")",
+      "Bash(find \"d:/EffektivMedia/ClickFynd/mercurjs-for-railway-boilerplate/backend/node_modules/.pnpm/@mercurjs+b2c-core@1.4.3\"*/node_modules/@mercurjs/b2c-core -name \"*daily*\" -o -name \"*payout*\")",
+      "Bash(find \"d:/EffektivMedia/ClickFynd/mercurjs-for-railway-boilerplate/backend/node_modules/.pnpm/@mercurjs+commission@1.4.3\"*/node_modules/@mercurjs/commission/.medusa/server/src/workflows -type f -name \"*.js\")",
+      "Bash(find \"d:/EffektivMedia/ClickFynd/mercurjs-for-railway-boilerplate/backend/node_modules/.pnpm/@mercurjs+commission@1.4.3\"*/node_modules/@mercurjs/commission/.medusa/server/src/subscribers -type f -name \"*.js\")",
+      "Bash(find \"d:/EffektivMedia/ClickFynd/mercurjs-for-railway-boilerplate/backend/node_modules/.pnpm/@mercurjs+b2c-core@1.4.3\"*/node_modules/@mercurjs/b2c-core/.medusa/server/src/modules/marketplace -type f -name \"*.js\")",
+      "Bash(find \"d:/EffektivMedia/ClickFynd/mercurjs-for-railway-boilerplate/backend/node_modules/.pnpm/@mercurjs+b2c-core@1.4.3\"*/node_modules/@mercurjs/b2c-core/.medusa/server/src/subscribers -type f -name \"*.js\")",
+      "Bash(find \"d:/EffektivMedia/ClickFynd/mercurjs-for-railway-boilerplate/backend/node_modules/.pnpm/@mercurjs+b2c-core@1.4.3\"*/node_modules/@mercurjs/b2c-core/.medusa/server/src/workflows/split-order-payment -type f -name \"*.js\")",
+      "Bash(find \"d:/EffektivMedia/ClickFynd/mercurjs-for-railway-boilerplate/backend/node_modules/.pnpm/@mercurjs+commission@1.4.3\"*/node_modules/@mercurjs/commission/.medusa/server/src/modules -type f -name \"*.js\")",
+      "Bash(find \"d:/EffektivMedia/ClickFynd/mercurjs-for-railway-boilerplate/backend/node_modules/.pnpm/@mercurjs+commission@1.4.3\"*/node_modules/@mercurjs/commission/.medusa/server/src/links -type f -name \"*.js\")",
+      "Bash(find \"d:/EffektivMedia/ClickFynd/mercurjs-for-railway-boilerplate/backend/node_modules/.pnpm/@mercurjs+b2c-core@1.4.3\"*/node_modules/@mercurjs/b2c-core/.medusa/server/src -type f -name \"*.ts\")",
+      "Bash(pnpm --version)",
+      "Bash(pnpm patch *)",
+      "Bash(pnpm patch-commit *)",
+      "Bash(pnpm install *)"
+    ]
+  }
+}
