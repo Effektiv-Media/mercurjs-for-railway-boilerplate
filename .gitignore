@@ -21,6 +21,9 @@ build/
 out/
 .medusa/
 
+# Claude
+.claude/
+
 # Environment files
 .env
 .env.local
