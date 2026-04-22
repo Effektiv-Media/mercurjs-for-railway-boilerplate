@@ -1,7 +1,7 @@
 import { getRequestConfig } from "next-intl/server"
 import { cookies } from "next/headers"
 
-const supportedLocales = ["en", "sv"] as const
+const supportedLocales = ["sv"] as const
 type SupportedLocale = (typeof supportedLocales)[number]
 
 function isSupportedLocale(locale: string): locale is SupportedLocale {
@@ -11,7 +11,7 @@ function isSupportedLocale(locale: string): locale is SupportedLocale {
 function mapRegionToLanguage(locale?: string | null): SupportedLocale {
   const normalized = (locale || "").toLowerCase()
   if (normalized === "sv" || normalized === "se") return "sv"
-  return "en"
+  return "sv"
 }
 
 export default getRequestConfig(async ({ requestLocale }) => {
