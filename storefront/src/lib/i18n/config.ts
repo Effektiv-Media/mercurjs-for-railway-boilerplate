@@ -1,7 +1,7 @@
 import en from "@/messages/en.json"
 import sv from "@/messages/sv.json"
 
-export const SUPPORTED_LANGUAGES = ["en", "sv"] as const
+export const SUPPORTED_LANGUAGES = ["sv"] as const
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number]
 
 export const DEFAULT_LANGUAGE: SupportedLanguage = "sv"
@@ -28,7 +28,7 @@ export function normalizeLanguage(
 export function getLanguageFromRegion(locale?: string | null): SupportedLanguage {
   const normalized = (locale || "").toLowerCase()
   if (normalized === "se" || normalized === "sv") return "sv"
-  return "en"
+  return "sv"
 }
 
 export function resolveLanguage({
