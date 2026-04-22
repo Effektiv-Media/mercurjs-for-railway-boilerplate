@@ -2,5 +2,5 @@ packages:
   - .
 
 patchedDependencies:
+  '@mercurjs/b2c-core@1.4.3': patches/@mercurjs__b2c-core@1.4.3.patch
   '@mercurjs/payment-stripe-connect': patches/@mercurjs__payment-stripe-connect.patch
-  
