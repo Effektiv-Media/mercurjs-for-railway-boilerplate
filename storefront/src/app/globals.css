@@ -322,7 +322,7 @@ button:disabled {
   position: relative;
   display: block;
   width: 134px;
-  height: 34px;
+  height: 42px;
   overflow: visible;
 }
 
@@ -338,6 +338,7 @@ button:disabled {
   font-weight: 900;
   line-height: 1;
   letter-spacing: 0.01em;
+  padding-bottom: 6px;
   transform: translateY(-50%) scale(1);
   transform-origin: left center;
   will-change: transform;
