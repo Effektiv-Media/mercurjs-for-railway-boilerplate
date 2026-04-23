@@ -79,9 +79,9 @@ export default async function AboutPage({
       title: t("pages.about.smooth"),
       text: t("pages.about.smoothText"),
       icon: <IconSparkles />,
-      accent: "text-sky-600",
-      bg: "bg-sky-50",
-      border: "border-sky-100",
+      accent: "text-purple-600",
+      bg: "bg-purple-50",
+      border: "border-purple-100",
     },
   ]
 
@@ -91,17 +91,17 @@ export default async function AboutPage({
         <div className="rounded-3xl border border-slate-200 bg-white shadow-[0_14px_40px_rgba(15,23,42,0.07)] overflow-hidden">
 
           {/* Hero — light sky gradient */}
-          <div className="relative overflow-hidden bg-gradient-to-br from-sky-50 via-white to-blue-50/60 px-6 md:px-10 pt-10 pb-10 border-b border-slate-100">
+          <div className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-pink-50/40 px-6 md:px-10 pt-10 pb-10 border-b border-slate-100">
             {/* Subtle dot pattern */}
             <div
               className="absolute inset-0 opacity-[0.25] pointer-events-none"
               style={{
-                backgroundImage: "radial-gradient(circle, #bae6fd 1px, transparent 1px)",
+                backgroundImage: "radial-gradient(circle, #e9d5ff 1px, transparent 1px)",
                 backgroundSize: "26px 26px",
               }}
               aria-hidden="true"
             />
-            <p className="relative inline-flex rounded-full bg-sky-100 text-sky-700 px-3 py-1 text-xs font-bold uppercase tracking-[0.12em]">
+            <p className="relative inline-flex rounded-full bg-purple-100 text-purple-700 px-3 py-1 text-xs font-bold uppercase tracking-[0.12em]">
               {t("pages.about.badge")}
             </p>
             <h1 className="relative mt-4 heading-lg text-slate-900 max-w-2xl">
@@ -147,7 +147,7 @@ export default async function AboutPage({
             <div className="mt-8">
               <LocalizedClientLink
                 href="/kontakt"
-                className="inline-flex items-center gap-2 rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-white hover:bg-sky-700 transition-colors duration-150 shadow-sm hover:shadow-md"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 px-6 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-white hover:from-purple-700 hover:to-pink-600 transition-colors duration-150 shadow-sm hover:shadow-md"
               >
                 {t("pages.about.contactUs")}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

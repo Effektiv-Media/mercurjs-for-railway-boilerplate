@@ -43,8 +43,7 @@ export const AnimatedLogo = ({
     >
       <span className="cf-logo__frame">
         <span className="cf-logo__text" aria-hidden="true">
-          <span className="cf-logo__click">Click</span>
-          <span className="cf-logo__fynd">fynd</span>
+          Clickfynd
         </span>
 
         <span className="cf-logo__cursor" aria-hidden="true" />

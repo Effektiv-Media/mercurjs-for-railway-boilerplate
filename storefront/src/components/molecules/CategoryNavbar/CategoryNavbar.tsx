@@ -38,7 +38,7 @@ export const CategoryNavbar = ({
         className={cn(
           isMenuOverlay
             ? "label-md flex w-full items-center justify-between rounded-lg px-3 py-3 text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-colors border-b border-slate-100"
-            : "label-lg inline-flex items-center justify-center text-slate-700 hover:text-blue-700 transition-colors"
+            : "label-lg inline-flex items-center justify-center text-slate-700 hover:text-purple-700 transition-colors"
         )}
       >
         {t("allProducts")}
@@ -51,7 +51,7 @@ export const CategoryNavbar = ({
           className={cn(
             isMenuOverlay
               ? "label-md flex w-full items-center justify-between rounded-lg px-3 py-3 text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-colors border-b border-slate-100"
-              : "label-lg inline-flex items-center justify-center text-slate-700 hover:text-blue-700 transition-colors",
+              : "label-lg inline-flex items-center justify-center text-slate-700 hover:text-purple-700 transition-colors",
             handle === category &&
               (isMenuOverlay
                 ? "text-slate-900 font-semibold"
