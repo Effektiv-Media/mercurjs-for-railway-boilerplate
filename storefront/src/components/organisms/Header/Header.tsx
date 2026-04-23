@@ -66,7 +66,7 @@ export const Header = async ({ locale }: { locale: string }) => {
                 href={sellerCtaHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden lg:inline-flex h-10 items-center whitespace-nowrap rounded-full border border-blue-200 bg-white px-4 text-sm font-semibold text-blue-800 transition-colors hover:bg-blue-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                className="hidden lg:inline-flex h-10 items-center whitespace-nowrap rounded-full border border-purple-200 bg-white px-4 text-sm font-semibold text-purple-700 transition-colors hover:bg-purple-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-300 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
               >
                 {t("header.becomeSeller")}
               </a>

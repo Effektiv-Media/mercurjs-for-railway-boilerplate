@@ -39,17 +39,17 @@ export async function Footer({ locale }: { locale: string }) {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="bg-gradient-to-b from-slate-50 to-sky-50/40 border-t border-slate-200">
+    <footer className="bg-gradient-to-b from-slate-50 to-purple-50/30 border-t border-slate-200">
       {/* Accent gradient line */}
-      <div className="h-px bg-gradient-to-r from-transparent via-sky-400/50 to-transparent" />
+      <div className="h-px bg-gradient-to-r from-transparent via-purple-400/50 to-transparent" />
 
       <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 pt-12 pb-8">
 
         {/* Top row: logo + tagline + social icons */}
-        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6 mb-10">
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6 pb-10 border-b border-slate-200">
           <div>
-            <span className="text-[22px] font-extrabold tracking-tight leading-none text-slate-900">
-              Click<span className="text-sky-600">fynd</span>
+            <span className="text-[22px] font-extrabold tracking-tight leading-none bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">
+              Clickfynd
             </span>
             <p className="mt-2 text-sm text-slate-500 max-w-[260px] leading-relaxed">
               Din smarta marknadsplats för begagnat och nytt.
@@ -66,7 +66,7 @@ export async function Footer({ locale }: { locale: string }) {
                 title={label}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center w-9 h-9 rounded-full bg-white border border-slate-200 text-slate-500 shadow-sm hover:border-sky-300 hover:text-sky-600 hover:bg-sky-50 hover:shadow-md transition-all duration-200 hover:scale-110"
+                className="flex items-center justify-center w-9 h-9 rounded-full bg-white border border-slate-200 text-slate-500 shadow-sm hover:border-purple-300 hover:text-purple-600 hover:bg-purple-50 hover:shadow-md transition-all duration-200 hover:scale-110"
               >
                 <SocialSvg icon={icon} />
               </a>
@@ -75,7 +75,7 @@ export async function Footer({ locale }: { locale: string }) {
         </div>
 
         {/* Nav columns */}
-        <div className="grid grid-cols-2 gap-8 border-t border-slate-200 pt-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-10 pt-10">
           <nav aria-label={t("footer.customerServicesNavigation")}>
             <h3 className="text-[11px] uppercase tracking-[0.14em] font-semibold text-slate-400 mb-4">
               {t("footer.customerService")}
@@ -111,15 +111,64 @@ export async function Footer({ locale }: { locale: string }) {
               ))}
             </ul>
           </nav>
+
+          {/* Seller CTA column */}
+          <div className="col-span-2 md:col-span-1 rounded-2xl bg-gradient-to-br from-purple-50 to-pink-50/60 border border-purple-100 px-5 py-5">
+            <h3 className="text-[11px] uppercase tracking-[0.14em] font-semibold text-slate-400 mb-3">
+              Sälj hos oss
+            </h3>
+            <p className="text-sm text-slate-500 leading-relaxed mb-4">
+              Nå tusentals köpare. Gratis att komma igång — du betalar bara när du säljer.
+            </p>
+            <a
+              href={process.env.NEXT_PUBLIC_VENDOR_URL || "https://vendor.mercurjs.com"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 px-4 py-2 text-xs font-semibold text-white hover:from-purple-700 hover:to-pink-600 transition-colors duration-150 shadow-sm"
+            >
+              Bli säljare
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        {/* Trust strip */}
+        <div className="mt-10 pt-8 border-t border-slate-200 grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {([
+            { label: "SSL-krypterat", path: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" },
+            { label: "Trygg handel", path: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14l-4-4 1.41-1.41L10 13.17l6.59-6.58L18 8l-8 8z" },
+            { label: "14 dagars ångerrätt", path: "M9 14l-4-4 1.41-1.42L9 11.17l8.59-8.58L19 4l-10 10z" },
+            { label: "Säkra betalningar", path: "M1 4h22v16H1zM1 10h22" },
+          ] as { label: string; path: string }[]).map(({ label, path }) => (
+            <div key={label} className="flex items-center gap-2">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="flex-shrink-0 text-purple-500"
+                aria-hidden="true"
+              >
+                <path d={path} />
+              </svg>
+              <span className="text-[11px] text-slate-500 font-medium">{label}</span>
+            </div>
+          ))}
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-10 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <div className="mt-6 pt-5 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-2">
           <p className="text-xs text-slate-400">
             © {year} Clickfynd AB
           </p>
-          <p className="text-[11px] text-slate-400 tracking-wide">
-            Säkra betalningar · Trygg handel · SSL-krypterat
+          <p className="text-[11px] text-slate-400">
+            Alla priser visas inkl. moms
           </p>
         </div>
 

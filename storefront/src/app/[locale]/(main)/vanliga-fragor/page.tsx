@@ -99,9 +99,9 @@ const faqs = [
 
 const colorMap: Record<string, { badge: string; dot: string; border: string }> = {
   sky: {
-    badge: "bg-sky-100 text-sky-700",
-    dot: "bg-sky-500",
-    border: "border-sky-100",
+    badge: "bg-purple-100 text-purple-700",
+    dot: "bg-purple-500",
+    border: "border-purple-100",
   },
   emerald: {
     badge: "bg-emerald-100 text-emerald-700",
@@ -134,8 +134,8 @@ export default async function FaqPage({
 
         {/* Hero */}
         <div className="rounded-3xl border border-slate-200 bg-white shadow-[0_14px_40px_rgba(15,23,42,0.07)] overflow-hidden mb-4">
-          <div className="bg-gradient-to-br from-sky-50 via-white to-blue-50/60 px-6 md:px-10 pt-10 pb-10 border-b border-slate-100">
-            <p className="inline-flex rounded-full bg-sky-100 text-sky-700 px-3 py-1 text-xs font-bold uppercase tracking-[0.12em]">
+          <div className="bg-gradient-to-br from-purple-50 via-white to-pink-50/40 px-6 md:px-10 pt-10 pb-10 border-b border-slate-100">
+            <p className="inline-flex rounded-full bg-purple-100 text-purple-700 px-3 py-1 text-xs font-bold uppercase tracking-[0.12em]">
               {t("pages.faq.badge")}
             </p>
             <h1 className="mt-4 heading-lg text-slate-900">
@@ -186,7 +186,7 @@ export default async function FaqPage({
         </div>
 
         {/* Still need help */}
-        <div className="mt-4 rounded-3xl border border-sky-200 bg-gradient-to-br from-sky-50 to-blue-50/50 px-6 md:px-10 py-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="mt-4 rounded-3xl border border-purple-200 bg-gradient-to-br from-purple-50 to-pink-50/40 px-6 md:px-10 py-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <p className="heading-sm text-slate-900">Hittade du inte svaret?</p>
             <p className="mt-1 text-md text-slate-500">
@@ -195,7 +195,7 @@ export default async function FaqPage({
           </div>
           <LocalizedClientLink
             href="/kontakt"
-            className="flex-shrink-0 inline-flex items-center gap-2 rounded-full bg-sky-600 px-5 py-2.5 text-sm font-semibold uppercase tracking-[0.06em] text-white hover:bg-sky-700 transition-colors duration-150 shadow-sm"
+            className="flex-shrink-0 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 px-5 py-2.5 text-sm font-semibold uppercase tracking-[0.06em] text-white hover:from-purple-700 hover:to-pink-600 transition-colors duration-150 shadow-sm"
           >
             Kontakta oss
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

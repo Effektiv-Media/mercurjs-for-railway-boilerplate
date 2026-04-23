@@ -77,7 +77,7 @@ export const MobileNavbar = ({
                   href={process.env.NEXT_PUBLIC_VENDOR_URL || "https://vendor.mercurjs.com"}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 inline-flex w-full items-center justify-center rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-800 hover:bg-blue-100 transition-colors"
+                  className="mt-4 inline-flex w-full items-center justify-center rounded-full border border-purple-200 bg-purple-50 px-4 py-2 text-sm font-semibold text-purple-700 hover:bg-purple-100 transition-colors"
                 >
                   {t("becomeSeller")}
                 </a>

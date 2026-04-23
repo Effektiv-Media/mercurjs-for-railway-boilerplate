@@ -74,8 +74,8 @@ export default async function ReturnsPage({
 
         {/* Hero */}
         <div className="rounded-3xl border border-slate-200 bg-white shadow-[0_14px_40px_rgba(15,23,42,0.07)] overflow-hidden mb-4">
-          <div className="bg-gradient-to-br from-sky-50 via-white to-blue-50/60 px-6 md:px-10 pt-10 pb-10 border-b border-slate-100">
-            <p className="inline-flex rounded-full bg-sky-100 text-sky-700 px-3 py-1 text-xs font-bold uppercase tracking-[0.12em]">
+          <div className="bg-gradient-to-br from-purple-50 via-white to-pink-50/40 px-6 md:px-10 pt-10 pb-10 border-b border-slate-100">
+            <p className="inline-flex rounded-full bg-purple-100 text-purple-700 px-3 py-1 text-xs font-bold uppercase tracking-[0.12em]">
               {t("pages.returns.badge")}
             </p>
             <h1 className="mt-4 heading-lg text-slate-900">
@@ -108,8 +108,8 @@ export default async function ReturnsPage({
                 )}
                 <div className="flex flex-col items-center text-center w-40 flex-shrink-0">
                   <div className="relative w-10 h-10 mb-4">
-                    <div className={`absolute inset-0 rounded-full border-2 border-sky-300/80 step-ping step-ping-${i + 1}`} />
-                    <div className="absolute inset-0 rounded-full bg-sky-600 text-white text-sm font-bold flex items-center justify-center shadow-sm z-10">
+                    <div className={`absolute inset-0 rounded-full border-2 border-purple-300/80 step-ping step-ping-${i + 1}`} />
+                    <div className="absolute inset-0 rounded-full bg-purple-600 text-white text-sm font-bold flex items-center justify-center shadow-sm z-10">
                       {step.num}
                     </div>
                   </div>
@@ -125,8 +125,8 @@ export default async function ReturnsPage({
             {steps.map((step, i) => (
               <div key={step.num} className="flex flex-col items-center text-center">
                 <div className="relative w-10 h-10 mb-3">
-                  <div className={`absolute inset-0 rounded-full border-2 border-sky-300/80 step-ping step-ping-${i + 1}`} />
-                  <div className="absolute inset-0 rounded-full bg-sky-600 text-white text-sm font-bold flex items-center justify-center shadow-sm z-10">
+                  <div className={`absolute inset-0 rounded-full border-2 border-purple-300/80 step-ping step-ping-${i + 1}`} />
+                  <div className="absolute inset-0 rounded-full bg-purple-600 text-white text-sm font-bold flex items-center justify-center shadow-sm z-10">
                     {step.num}
                   </div>
                 </div>
@@ -139,7 +139,7 @@ export default async function ReturnsPage({
           <div className="mt-8">
             <LocalizedClientLink
               href="/user/returns"
-              className="inline-flex items-center gap-2 rounded-full bg-sky-600 px-5 py-2.5 text-sm font-semibold uppercase tracking-[0.06em] text-white hover:bg-sky-700 transition-colors duration-150 shadow-sm"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 px-5 py-2.5 text-sm font-semibold uppercase tracking-[0.06em] text-white hover:from-purple-700 hover:to-pink-600 transition-colors duration-150 shadow-sm"
             >
               Starta en retur
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -191,7 +191,7 @@ export default async function ReturnsPage({
         </div>
 
         {/* Contact CTA */}
-        <div className="rounded-3xl border border-sky-200 bg-gradient-to-br from-sky-50 to-blue-50/50 px-6 md:px-10 py-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="rounded-3xl border border-purple-200 bg-gradient-to-br from-purple-50 to-pink-50/40 px-6 md:px-10 py-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <p className="heading-sm text-slate-900">Behöver du hjälp med din retur?</p>
             <p className="mt-1 text-md text-slate-500">
@@ -200,7 +200,7 @@ export default async function ReturnsPage({
           </div>
           <LocalizedClientLink
             href="/kontakt"
-            className="flex-shrink-0 inline-flex items-center gap-2 rounded-full bg-sky-600 px-5 py-2.5 text-sm font-semibold uppercase tracking-[0.06em] text-white hover:bg-sky-700 transition-colors duration-150 shadow-sm"
+            className="flex-shrink-0 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 px-5 py-2.5 text-sm font-semibold uppercase tracking-[0.06em] text-white hover:from-purple-700 hover:to-pink-600 transition-colors duration-150 shadow-sm"
           >
             Kontakta oss
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

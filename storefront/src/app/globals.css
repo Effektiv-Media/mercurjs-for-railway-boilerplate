@@ -71,7 +71,7 @@ h4 {
 }
 
 .page-shell {
-  @apply min-h-[70vh] w-full bg-gradient-to-b from-sky-50/40 via-white to-white;
+  @apply min-h-[70vh] w-full bg-gradient-to-b from-purple-50/30 via-white to-white;
 }
 
 .page-content {
@@ -103,6 +103,10 @@ h4 {
 
 button:disabled svg path {
   @apply fill-disabled;
+}
+
+button:disabled {
+  background: rgba(var(--bg-disabled)) !important;
 }
 
 .button-text-filled svg path {
@@ -160,7 +164,7 @@ button:disabled svg path {
   left: 0;
   width: 0;
   height: 1px;
-  background: #0284c7; /* sky-600 — visible on light backgrounds */
+  background: #9333ea;
   transition: width 0.2s ease-out;
 }
 .footer-link:hover::after {
@@ -318,7 +322,7 @@ button:disabled svg path {
   position: relative;
   display: block;
   width: 134px;
-  height: 34px;
+  height: 42px;
   overflow: visible;
 }
 
@@ -334,18 +338,16 @@ button:disabled svg path {
   font-weight: 900;
   line-height: 1;
   letter-spacing: 0.01em;
+  padding-bottom: 6px;
   transform: translateY(-50%) scale(1);
   transform-origin: left center;
   will-change: transform;
+  background: linear-gradient(to right, #9333ea, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.cf-logo__click {
-  color: #0f172a;
-}
-
-.cf-logo__fynd {
-  color: #2563eb;
-}
 
 .cf-logo__cursor {
   position: absolute;
@@ -381,10 +383,10 @@ button:disabled svg path {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(#2563eb, #2563eb) center top / 2px 12px no-repeat,
-    linear-gradient(#2563eb, #2563eb) center bottom / 2px 12px no-repeat,
-    linear-gradient(#2563eb, #2563eb) left center / 12px 2px no-repeat,
-    linear-gradient(#2563eb, #2563eb) right center / 12px 2px no-repeat;
+    linear-gradient(#9333ea, #9333ea) center top / 2px 12px no-repeat,
+    linear-gradient(#9333ea, #9333ea) center bottom / 2px 12px no-repeat,
+    linear-gradient(#9333ea, #9333ea) left center / 12px 2px no-repeat,
+    linear-gradient(#9333ea, #9333ea) right center / 12px 2px no-repeat;
 }
 
 .cf-logo__burst::after {

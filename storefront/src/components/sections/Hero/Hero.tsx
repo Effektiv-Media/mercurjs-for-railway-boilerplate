@@ -2,7 +2,6 @@ import Image from "next/image"
 
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
-import button from "@medusajs/icons/dist/components/button"
 
 type HeroProps = {
   image: string
@@ -19,9 +18,9 @@ export const Hero = async ({ image, heading, paragraph, buttons }: HeroProps) =>
       button: t("heroTileButton"),
       path: "/kategorier",
       image: "/images/blog/post-9.png",
-      accent: "from-blue-900/35 via-sky-700/15 to-slate-950/20",
-      pill: "bg-blue-100 text-blue-800",
-      border: "border-blue-200",
+      accent: "from-purple-900/35 via-violet-700/15 to-slate-950/20",
+      pill: "bg-purple-100 text-purple-800",
+      border: "border-purple-200",
     },
     {
       title: t("heroTileFlashDeals"),
@@ -55,7 +54,7 @@ export const Hero = async ({ image, heading, paragraph, buttons }: HeroProps) =>
   return (
     <section className="w-full px-4 lg:px-8 mt-3">
       <div className="grid grid-cols-1 lg:grid-cols-[1.65fr_1fr_1fr] gap-4">
-        <article className="relative overflow-hidden rounded-3xl lg:row-span-2 min-h-[320px] sm:min-h-[390px] lg:min-h-[760px] border-[12px] border-blue-900">
+        <article className="relative overflow-hidden rounded-3xl lg:row-span-2 min-h-[320px] sm:min-h-[390px] lg:min-h-[760px] border-[10px] border-purple-900 sm:border-[12px]">
           <video
             autoPlay
             muted
@@ -68,7 +67,7 @@ export const Hero = async ({ image, heading, paragraph, buttons }: HeroProps) =>
             <source src="/videos/hero/herovideo-optimized.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-gradient-to-b from-slate-950/10 via-slate-950/30 to-slate-950/25" />
-          <div className="absolute right-3 top-3 sm:right-4 sm:top-4 rounded-full bg-blue-500 px-4 py-4 sm:px-6 sm:py-7 text-white shadow-lg z-10 max-w-[140px] sm:max-w-none">
+          <div className="absolute right-3 top-3 sm:right-4 sm:top-4 rounded-full bg-gradient-to-br from-purple-600 to-pink-500 px-4 py-4 sm:px-6 sm:py-7 text-white shadow-lg z-10 max-w-[140px] sm:max-w-none">
             <p className="text-lg font-semibold">{t("heroPriceFrom")}</p>
             <p className="text-4xl sm:text-5xl font-extrabold leading-none">
               {t("heroPriceValue")}
@@ -89,7 +88,7 @@ export const Hero = async ({ image, heading, paragraph, buttons }: HeroProps) =>
                     href={path}
                     className={`inline-flex items-center justify-center rounded-full px-8 py-3 text-xl sm:text-2xl font-semibold transition ${
                       index === 0
-                        ? "bg-blue-500 text-white hover:bg-blue-400"
+                        ? "bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:from-purple-700 hover:to-pink-600"
                         : "border border-white/70 bg-white/10 text-white hover:bg-white/20"
                     }`}
                     aria-label={label}

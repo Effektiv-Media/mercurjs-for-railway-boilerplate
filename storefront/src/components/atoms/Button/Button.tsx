@@ -21,7 +21,7 @@ export function Button({
     "text-md button-text rounded-full disabled:bg-disabled disabled:text-disabled transition-all duration-200 disabled:cursor-not-allowed font-semibold tracking-[0.03em]"
 
   const variantClasses = {
-    filled: `bg-action text-action-on-primary hover:bg-action-hover active:bg-action-pressed ${
+    filled: `bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:from-purple-700 hover:to-pink-600 active:from-purple-800 active:to-pink-700 ${
       loading && "button-text-filled"
     }`,
     tonal:

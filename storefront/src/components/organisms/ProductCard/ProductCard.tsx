@@ -63,7 +63,7 @@ export const ProductCard = ({
         "group relative border rounded-2xl flex flex-col h-full bg-white transition-all duration-300",
         "p-2.5 sm:p-3",
         !isUrgent &&
-          "border-slate-200 shadow-[0_1px_2px_rgba(15,23,42,0.04)] hover:shadow-[0_16px_30px_rgba(2,132,199,0.16)]",
+          "border-slate-200 shadow-[0_1px_2px_rgba(15,23,42,0.04)] hover:shadow-[0_16px_30px_rgba(147,51,234,0.14)]",
         isUrgent &&
           "border-orange-200 shadow-[0_14px_34px_rgba(249,115,22,0.16)] hover:shadow-[0_18px_42px_rgba(244,63,94,0.18)] animate-urgent-glow",
         isCriticalUrgency &&
@@ -166,7 +166,7 @@ export const ProductCard = ({
           {(isTopSeller || isDiscount) ? (
             <div className="absolute top-2 left-2 z-10 flex flex-col items-start gap-2">
               {isTopSeller ? (
-                <span className="inline-flex items-center rounded-md bg-cyan-700 text-white text-xs font-extrabold px-2.5 py-1 shadow-sm">
+                <span className="inline-flex items-center rounded-md bg-purple-700 text-white text-xs font-extrabold px-2.5 py-1 shadow-sm">
                   {t("topSeller")}
                 </span>
               ) : null}
@@ -207,7 +207,7 @@ export const ProductCard = ({
           <Button
             className={clsx(
               "absolute rounded-full h-auto lg:h-[40px] lg:group-hover:block hidden w-[calc(100%-12px)] uppercase bottom-2 left-1.5 z-10 text-sm text-white",
-              !isUrgent && "bg-cyan-600",
+              !isUrgent && "bg-gradient-to-r from-purple-600 to-pink-500",
               isUrgent &&
                 !isCriticalUrgency &&
                 "bg-gradient-to-r from-orange-500 to-amber-500 shadow-[0_10px_24px_rgba(249,115,22,0.28)]",

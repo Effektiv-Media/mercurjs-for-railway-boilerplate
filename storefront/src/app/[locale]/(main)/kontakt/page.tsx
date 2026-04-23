@@ -115,11 +115,11 @@ export default async function ContactPage({
           <div className="rounded-3xl border border-slate-200 bg-white shadow-[0_14px_24px_rgba(15,23,42,0.06)] overflow-hidden">
 
             {/* Hero header */}
-            <div className="relative overflow-hidden bg-gradient-to-br from-sky-50 via-white to-blue-50/60 px-6 md:px-10 pt-10 pb-10 border-b border-slate-100">
+            <div className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-pink-50/40 px-6 md:px-10 pt-10 pb-10 border-b border-slate-100">
               <div
                 className="absolute inset-0 opacity-[0.25] pointer-events-none"
                 style={{
-                  backgroundImage: "radial-gradient(circle, #bae6fd 1px, transparent 1px)",
+                  backgroundImage: "radial-gradient(circle, #e9d5ff 1px, transparent 1px)",
                   backgroundSize: "26px 26px",
                 }}
                 aria-hidden="true"
@@ -141,9 +141,9 @@ export default async function ContactPage({
                 {contactRows.map((row) => (
                   <div
                     key={row.label}
-                    className="group flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 hover:border-sky-200 hover:bg-sky-50/50 hover:shadow-sm transition-all duration-150"
+                    className="group flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 hover:border-purple-200 hover:bg-purple-50/50 hover:shadow-sm transition-all duration-150"
                   >
-                    <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:border-sky-200 group-hover:text-sky-500 transition-colors duration-150 shadow-sm">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:border-purple-200 group-hover:text-purple-500 transition-colors duration-150 shadow-sm">
                       {row.icon}
                     </div>
                     <div className="min-w-0">
@@ -154,7 +154,7 @@ export default async function ContactPage({
                         {row.href ? (
                           <a
                             href={row.href}
-                            className="text-md text-sky-600 hover:text-sky-700 font-medium transition-colors duration-100 truncate block"
+                            className="text-md text-purple-600 hover:text-purple-700 font-medium transition-colors duration-100 truncate block"
                           >
                             {row.value}
                           </a>
@@ -170,13 +170,13 @@ export default async function ContactPage({
           </div>
 
           {/* Sidebar: common cases — light sky design */}
-          <aside className="rounded-3xl border border-sky-200 bg-gradient-to-br from-sky-50 via-white to-blue-50/60 shadow-[0_14px_24px_rgba(15,23,42,0.06)] overflow-hidden">
+          <aside className="rounded-3xl border border-purple-200 bg-gradient-to-br from-purple-50 via-white to-pink-50/40 shadow-[0_14px_24px_rgba(15,23,42,0.06)] overflow-hidden">
             <div className="relative p-6 md:p-8 h-full flex flex-col">
               {/* Subtle dot pattern */}
               <div
                 className="absolute inset-0 opacity-[0.25] pointer-events-none"
                 style={{
-                  backgroundImage: "radial-gradient(circle, #7dd3fc 1px, transparent 1px)",
+                  backgroundImage: "radial-gradient(circle, #d8b4fe 1px, transparent 1px)",
                   backgroundSize: "22px 22px",
                 }}
                 aria-hidden="true"
@@ -192,7 +192,7 @@ export default async function ContactPage({
                     key={item}
                     className="flex items-start gap-2.5 text-sm text-slate-600 leading-relaxed"
                   >
-                    <span className="flex-shrink-0 mt-0.5 w-5 h-5 rounded-full bg-sky-100 border border-sky-200 flex items-center justify-center">
+                    <span className="flex-shrink-0 mt-0.5 w-5 h-5 rounded-full bg-purple-100 border border-purple-200 flex items-center justify-center">
                       <svg
                         width="10"
                         height="10"
@@ -202,7 +202,7 @@ export default async function ContactPage({
                         strokeWidth="3"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="text-sky-600"
+                        className="text-purple-600"
                         aria-hidden="true"
                       >
                         <polyline points="20 6 9 17 4 12" />
@@ -214,11 +214,11 @@ export default async function ContactPage({
               </ul>
 
               {/* Email CTA */}
-              <div className="relative mt-8 pt-6 border-t border-sky-200">
+              <div className="relative mt-8 pt-6 border-t border-purple-200">
                 <p className="text-xs text-slate-500 mb-3">Snabbast svar via e-post:</p>
                 <a
                   href={`mailto:${SUPPORT_EMAIL}`}
-                  className="inline-flex items-center gap-2 rounded-full bg-sky-600 hover:bg-sky-700 px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 shadow-sm hover:shadow-md"
+                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 shadow-sm hover:shadow-md"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <rect x="2" y="4" width="20" height="16" rx="2" />

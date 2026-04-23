@@ -42,7 +42,7 @@ export const NavbarSearch = ({
         changeValue={setSearch}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        className="w-full rounded-full border-blue-200 bg-blue-50/60 text-center text-lg font-medium text-slate-900 placeholder:text-slate-500 focus:border-blue-300"
+        className="w-full rounded-full border-purple-200 bg-purple-50/50 text-center text-lg font-medium text-slate-900 placeholder:text-slate-500 focus:border-purple-300"
       />
       <input type="submit" className="hidden" />
     </form>
