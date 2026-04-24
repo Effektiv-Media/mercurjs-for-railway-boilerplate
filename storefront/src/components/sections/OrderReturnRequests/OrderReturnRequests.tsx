@@ -1,6 +1,5 @@
 import { OrdersPagination } from "@/components/organisms/OrdersPagination/OrdersPagination"
 import { SingleOrderReturn } from "@/components/organisms/SingleOrderReturn/SingleOrderReturn"
-import { Heading } from "@medusajs/ui"
 import { isEmpty } from "lodash"
 
 const LIMIT = 10
@@ -27,13 +26,8 @@ export const OrderReturnRequests = ({
   if (isEmpty(processedReturns)) {
     return (
       <div className="mt-8">
-        <Heading level="h2" className="uppercase text-center heading-lg">
-          No returns
-        </Heading>
         <p className="text-center text-secondary w-96 mt-8 mx-auto">
-          {
-            "You haven't requested any returns yet. Once you request a return, it will appear here."
-          }
+          Inga returer ännu. När du har gjort en returförfrågan kommer den att visas här.
         </p>
       </div>
     )

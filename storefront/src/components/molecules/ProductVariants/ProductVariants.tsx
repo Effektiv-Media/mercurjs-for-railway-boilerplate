@@ -54,8 +54,14 @@ export const ProductVariants = ({
 
   return (
     <div className="my-4 space-y-2">
-      {(product.options || []).map(
-        ({ id, title, values }: HttpTypes.StoreProductOption) => {
+      {(product.options || [])
+        .filter(({ values }) =>
+          !(values || []).every(
+            ({ value }) =>
+              !value || value.trim().toLowerCase() === "default option value"
+          )
+        )
+        .map(({ id, title, values }: HttpTypes.StoreProductOption) => {
           const optionKey = title.toLowerCase()
           const selectedValue = selectedVariant[optionKey]
 
