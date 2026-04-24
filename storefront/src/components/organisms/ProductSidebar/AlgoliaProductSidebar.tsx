@@ -52,7 +52,6 @@ export const AlgoliaProductSidebar = () => {
             />
             <SizeFilter defaultOpen={Boolean(allSearchParams.size)} />
             <ColorFilter defaultOpen={Boolean(allSearchParams.color)} />
-            <ConditionFilter defaultOpen={Boolean(allSearchParams.condition)} />
           </div>
         </Modal>
       )}
@@ -62,7 +61,6 @@ export const AlgoliaProductSidebar = () => {
       <PriceFilter />
       <SizeFilter />
       <ColorFilter />
-      <ConditionFilter />
       {/* <RatingFilter /> */}
     </div>
   )

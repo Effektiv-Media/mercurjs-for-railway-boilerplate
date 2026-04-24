@@ -62,7 +62,7 @@ export const WishlistItem = ({
         </LocalizedClientLink>
         <LocalizedClientLink href={`/produkter/${product.handle}`}>
           <Button className="absolute rounded-sm bg-action text-action-on-primary h-auto lg:h-[48px] lg:group-hover:block hidden w-full uppercase bottom-1 z-10">
-            See More
+            Visa mer
           </Button>
         </LocalizedClientLink>
       </div>
